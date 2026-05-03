@@ -501,7 +501,6 @@ header {
   object-fit: cover;
 }
 
-/* Slide arrows */
 .slider-arrow {
   position: absolute;
   top: 50%;
@@ -527,7 +526,6 @@ header {
 .slider-arrow--prev { left: 32px; }
 .slider-arrow--next { right: 32px; }
 
-/* Slide dots */
 .slider-dots {
   position: absolute;
   bottom: 32px;
@@ -551,7 +549,6 @@ header {
   transform: scale(1.3);
 }
 
-/* Slide counter top-right */
 .slider-counter {
   position: absolute;
   top: 32px;
@@ -563,7 +560,6 @@ header {
   color: rgba(255,255,255,0.4);
 }
 
-/* Slide label bottom-left */
 .slider-label {
   position: absolute;
   bottom: 32px;
@@ -791,7 +787,7 @@ header {
     </div>
   </div>
 
-  <!-- 10 PACKAGING — split (original, unchanged) -->
+  <!-- 10 PACKAGING — split -->
   <div class="panel" data-label="Packaging" data-section="s-packaging" style="flex-direction:row; overflow:hidden;">
     <div class="split" style="flex:1; display:grid; grid-template-columns:1fr 1fr; min-height:0;">
       <div class="split-visual" style="border-right:1px solid var(--border);">
@@ -800,8 +796,8 @@ header {
       <div class="split-text">
         <div class="sec-label r">Packaging</div>
         <h2 class="sec-h2 r">A single line of copy did the work of a campaign.</h2>
-        <p class="sec-body r d1">Printed large on uncoated kraft, I'm not plastic functions less as packaging copy and more as a brand position made physical. No imagery. No eco iconography. Confidence communicated through what was left out.</p>
-        <p class="sec-body r d2" style="margin-top:14px;">The typographic choice was precise: I'M and PLA pulled into color within the phrase, surfacing both the voice and the material in a single gesture.</p>
+        <p class="sec-body r d1">Printed large on uncoated kraft, <em>I'm not p<span style="color:var(--pistachio)">LA</span>stic</em> functions less as packaging copy and more as a brand position made physical. No imagery. No eco iconography. Confidence communicated through what was left out.</p>
+        <p class="sec-body r d2" style="margin-top:14px;">The word <em>plastic</em> does double duty. <span style="color:var(--pistachio)">PLA</span> colored within it surfaces the material name, a creative way to get the message across without a single line of explanation.</p>
       </div>
     </div>
   </div>
@@ -810,15 +806,17 @@ header {
   <div class="panel panel--pkg-slider" data-label="Packaging" data-section="s-packaging-gallery">
 
     <!-- Slider track -->
-    <!-- Slide 1 -->
-<div class="pkg-slide">
-  <img src="images/packaging1.jpg" alt="Packaging" />
-</div>
-      
+    <div class="pkg-slider-track" id="pkgSliderTrack">
+
+      <!-- Slide 1 -->
+      <div class="pkg-slide">
+        <img src="images/packaging1.jpg" alt="Packaging" />
+      </div>
+
       <!-- Slide 2 -->
-<div class="pkg-slide">
-  <img src="images/packaging2.jpg" alt="Packaging" />
-</div>
+      <div class="pkg-slide">
+        <img src="images/packaging2.jpg" alt="Packaging" />
+      </div>
 
       <!-- Slide 3 -->
       <div class="pkg-slide">
@@ -900,7 +898,7 @@ header {
     </div>
   </div>
 
-  <!-- 13 PRESS + QUOTES -->
+  <!-- 13 RECEPTION -->
   <div class="panel" data-label="Reception" data-section="s-reception">
     <div class="panel-inner">
       <div class="sec-label r">What customers said</div>
@@ -999,8 +997,6 @@ panels.forEach(panel => {
 function activatePanel(index) {
   const panel = panels[index];
   const section = panel?.dataset?.section;
-
-  // Map packaging gallery to packaging sidebar link
   const sidebarTarget = section === 's-packaging-gallery' ? 's-packaging' : section;
 
   sidebarLinks.forEach(link => {
