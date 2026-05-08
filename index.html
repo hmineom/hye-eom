@@ -172,52 +172,90 @@ header {
 }
 .sec-body + .sec-body { margin-top: 14px; }
 
-/* ── PANEL VARIANTS ── */
-
-.panel--hero { background: var(--bg); }
-.panel--hero .panel-inner { justify-content: flex-end; padding-bottom: 64px; }
-.hero-title {
-  font-size: clamp(100px, 20vw, 220px);
-  font-weight: 300;
-  letter-spacing: -0.06em;
-  line-height: 0.85;
-  margin-bottom: 40px;
-  flex-shrink: 0;
+/* ── FULL-BLEED VIDEO / IMAGE PANELS ── */
+.panel--fullbleed {
+  position: relative;
+  background: var(--black);
 }
-.hero-meta {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  flex-shrink: 0;
+.panel--fullbleed video,
+.panel--fullbleed img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
-.hero-desc {
-  font-size: 15px;
-  line-height: 1.7;
-  font-weight: 300;
-  max-width: 480px;
-  opacity: 0.65;
-}
-.scroll-hint {
+.panel--fullbleed .caption {
+  position: absolute;
+  bottom: 32px;
+  left: 48px;
+  right: 48px;
   font-family: var(--mono);
   font-size: 10px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  opacity: 0.35;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-shrink: 0;
+  color: rgba(255,255,255,0.45);
+  z-index: 2;
 }
-.scroll-hint::after { content: '↓'; font-size: 14px; }
+.panel--fullbleed .overlay-text {
+  position: absolute;
+  bottom: 32px;
+  left: 48px;
+  right: 48px;
+  z-index: 2;
+  font-size: 13px;
+  font-weight: 300;
+  line-height: 1.6;
+  color: rgba(255,255,255,0.65);
+  max-width: 520px;
+}
 
+/* ── PANEL VARIANTS ── */
 .panel--dark { background: var(--black); color: var(--bg); }
 .panel--dark .sec-label { color: var(--bg); }
 .panel--dark .sec-h2 { color: var(--bg); }
 .panel--dark .sec-body { color: var(--bg); }
-.panel--dark .border-line { border-color: rgba(255,255,255,0.1); }
 
 .panel--mint { background: var(--pistachio); }
 
+/* ── CHALLENGE / SOLUTION SPLIT ── */
+.challenge-solution {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+.cs-block {
+  padding: 52px 56px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+}
+.cs-block + .cs-block {
+  border-left: 1px solid rgba(255,255,255,0.08);
+}
+.cs-tag {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.38;
+  margin-bottom: 24px;
+  flex-shrink: 0;
+}
+.cs-body {
+  font-size: clamp(16px, 1.6vw, 22px);
+  font-weight: 300;
+  line-height: 1.65;
+  letter-spacing: -0.01em;
+  color: rgba(255,255,255,0.88);
+  max-width: 520px;
+}
+
+/* ── SPLIT (image + text) ── */
 .split {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -246,35 +284,98 @@ header {
   display: block;
 }
 
-.panel--image { position: relative; }
-.panel--image .img-ph,
-.panel--image img,
-.panel--image video {
+/* ── PACKAGING SLIDER ── */
+.panel--pkg-slider {
+  background: var(--black);
+  position: relative;
+  overflow: hidden;
+}
+.pkg-slider-track {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.pkg-slide {
+  min-width: 100%;
+  height: 100%;
+  position: relative;
+  flex-shrink: 0;
+}
+.pkg-slide img,
+.pkg-slide .img-ph {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
-.panel--image .caption {
+.slider-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  background: none;
+  border: 1px solid rgba(255,255,255,0.25);
+  color: rgba(255,255,255,0.7);
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 16px;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+}
+.slider-arrow:hover {
+  border-color: rgba(255,255,255,0.7);
+  color: #fff;
+  background: rgba(255,255,255,0.08);
+}
+.slider-arrow--prev { left: 32px; }
+.slider-arrow--next { right: 32px; }
+.slider-dots {
   position: absolute;
   bottom: 32px;
-  left: 48px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.slider-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.3);
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+.slider-dot.active { background: #fff; transform: scale(1.3); }
+.slider-counter {
+  position: absolute;
+  top: 32px;
   right: 48px;
+  z-index: 10;
   font-family: var(--mono);
   font-size: 10px;
   letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.4);
+}
+.slider-label {
+  position: absolute;
+  bottom: 32px;
+  left: 48px;
+  z-index: 10;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  opacity: 0.5;
-  z-index: 2;
-}
-.panel--image.panel--dark .caption { color: var(--bg); }
-
-.panel--centered .panel-inner {
-  align-items: flex-start;
-  justify-content: center;
+  color: rgba(255,255,255,0.45);
 }
 
+/* ── STATS / OUTCOME ── */
 .stats-row {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -302,40 +403,6 @@ header {
   text-transform: uppercase;
   opacity: 0.45;
 }
-
-.palette-row {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 0;
-  height: 80px;
-  margin-top: 28px;
-  flex-shrink: 0;
-  max-width: 500px;
-}
-.swatch {
-  position: relative;
-  display: flex;
-  align-items: flex-end;
-  padding: 6px;
-}
-.swatch-hex {
-  font-family: var(--mono);
-  font-size: 8px;
-  letter-spacing: 0.04em;
-  color: rgba(0,0,0,0.45);
-  line-height: 1.2;
-}
-.swatch.light-text .swatch-hex { color: rgba(255,255,255,0.5); }
-
-.logo-display {
-  font-size: clamp(56px, 10vw, 120px);
-  font-weight: 300;
-  letter-spacing: -0.04em;
-  opacity: 0.85;
-  margin-top: 16px;
-  flex-shrink: 0;
-}
-
 .retail-grid {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
@@ -355,32 +422,7 @@ header {
   text-align: center;
 }
 
-.quote-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  margin-top: 28px;
-  flex-shrink: 0;
-  max-width: 700px;
-}
-.quote-card {
-  border: 1px solid var(--border);
-  padding: 20px 24px;
-}
-.quote-text {
-  font-size: 20px;
-  font-weight: 300;
-  line-height: 1.4;
-  letter-spacing: -0.01em;
-  margin-bottom: 8px;
-}
-.quote-trans {
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.05em;
-  opacity: 0.45;
-}
-
+/* ── SUMMARY TABLE ── */
 .summary-table {
   width: 100%;
   border-collapse: collapse;
@@ -417,6 +459,7 @@ header {
   letter-spacing: 0.05em;
 }
 
+/* ── IMAGE PLACEHOLDER ── */
 .img-ph {
   background: #ddd;
   background-image: repeating-linear-gradient(-45deg, rgba(0,0,0,0.03), rgba(0,0,0,0.03) 1px, transparent 1px, transparent 8px);
@@ -440,136 +483,6 @@ header {
   background: #c8e8d8;
   background-image: repeating-linear-gradient(-45deg, rgba(0,0,0,0.04), rgba(0,0,0,0.04) 1px, transparent 1px, transparent 8px);
   color: rgba(0,0,0,0.35);
-}
-
-.img-strip {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 2px;
-  flex: 1;
-  min-height: 0;
-  overflow: hidden;
-}
-.img-strip > * { height: 100%; }
-
-.grid-2-fill {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2px;
-  flex: 1;
-  min-height: 0;
-  overflow: hidden;
-}
-.grid-2-fill > * { height: 100%; }
-
-.text-then-visual {
-  flex: 1;
-  min-height: 0;
-  margin-top: 28px;
-  overflow: hidden;
-}
-
-.panel-border { border-bottom: 1px solid var(--border); }
-
-/* ── PACKAGING SLIDER ── */
-.panel--pkg-slider {
-  background: var(--black);
-  position: relative;
-  overflow: hidden;
-}
-
-.pkg-slider-track {
-  display: flex;
-  width: 100%;
-  height: 100%;
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.pkg-slide {
-  min-width: 100%;
-  height: 100%;
-  position: relative;
-  flex-shrink: 0;
-}
-
-.pkg-slide img,
-.pkg-slide .img-ph {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.slider-arrow {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 10;
-  background: none;
-  border: 1px solid rgba(255,255,255,0.25);
-  color: rgba(255,255,255,0.7);
-  width: 44px;
-  height: 44px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  font-size: 16px;
-  transition: border-color 0.2s, color 0.2s, background 0.2s;
-}
-.slider-arrow:hover {
-  border-color: rgba(255,255,255,0.7);
-  color: #fff;
-  background: rgba(255,255,255,0.08);
-}
-.slider-arrow--prev { left: 32px; }
-.slider-arrow--next { right: 32px; }
-
-.slider-dots {
-  position: absolute;
-  bottom: 32px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 10;
-  display: flex;
-  gap: 8px;
-  align-items: center;
-}
-.slider-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.3);
-  cursor: pointer;
-  transition: background 0.2s, transform 0.2s;
-}
-.slider-dot.active {
-  background: #fff;
-  transform: scale(1.3);
-}
-
-.slider-counter {
-  position: absolute;
-  top: 32px;
-  right: 48px;
-  z-index: 10;
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.1em;
-  color: rgba(255,255,255,0.4);
-}
-
-.slider-label {
-  position: absolute;
-  bottom: 32px;
-  left: 48px;
-  z-index: 10;
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.45);
 }
 
 /* ── REVEAL ANIMATIONS ── */
@@ -610,14 +523,13 @@ header {
   .split { grid-template-columns: 1fr; }
   .split-text { padding: 36px 28px 24px; }
   .split-visual { height: 45vh; }
+  .challenge-solution { grid-template-columns: 1fr; }
+  .cs-block { padding: 36px 28px; }
   .stats-row { grid-template-columns: 1fr; }
   .retail-grid { grid-template-columns: repeat(3, 1fr); }
-  .quote-grid { grid-template-columns: 1fr; }
-  .hero-title { font-size: clamp(72px, 18vw, 160px); }
-  .img-strip { grid-template-columns: 1fr 1fr; }
-  .panel--footer { padding: 0 28px; flex-direction: column; justify-content: center; gap: 12px; }
   .slider-arrow--prev { left: 16px; }
   .slider-arrow--next { right: 16px; }
+  .panel--footer { padding: 0 28px; flex-direction: column; justify-content: center; gap: 12px; }
 }
 </style>
 </head>
@@ -638,18 +550,12 @@ header {
 <!-- SIDEBAR -->
 <nav class="sidebar" id="sidebar">
   <a href="#" data-target="s-intro" class="active">Intro</a>
-  <a href="#" data-target="s-brief">The brief</a>
-  <a href="#" data-target="s-problem">The problem</a>
-  <a href="#" data-target="s-material">Material</a>
-  <a href="#" data-target="s-product">Product</a>
-  <a href="#" data-target="s-cmf">CMF</a>
+  <a href="#" data-target="s-challenge">Challenge</a>
   <a href="#" data-target="s-logo">Logo</a>
-  <a href="#" data-target="s-identity">Identity</a>
-  <a href="#" data-target="s-photography">Photography</a>
   <a href="#" data-target="s-packaging">Packaging</a>
-  <a href="#" data-target="s-system">System</a>
+  <a href="#" data-target="s-product">Product / CMF</a>
+  <a href="#" data-target="s-process">Process</a>
   <a href="#" data-target="s-outcome">Outcome</a>
-  <a href="#" data-target="s-reception">Reception</a>
   <a href="#" data-target="s-summary">Summary</a>
 </nav>
 
@@ -659,132 +565,48 @@ header {
 <!-- SNAP CONTAINER -->
 <div class="snap-container" id="snapContainer">
 
-  <!-- 01 HERO -->
-  <div class="panel panel--hero" data-label="Intro" data-section="s-intro">
-    <div class="panel-inner" style="justify-content:flex-end; padding-bottom:64px;">
-      <h1 class="hero-title r">HAYAN</h1>
-      <div class="hero-meta">
-        <p class="hero-desc r d1">
-          A sustainable lifestyle brand. Its first product is a biodegradable toothbrush — not because the brand is about toothbrushes, but because the toothbrush is one of the most overlooked objects in the daily ritual of waste.
-        </p>
-        <span class="scroll-hint r d2">Scroll</span>
+  <!-- ══════════════════════════════════════
+       01 · INTRO — full-bleed video loop
+  ══════════════════════════════════════ -->
+  <div class="panel panel--fullbleed" data-label="Intro" data-section="s-intro">
+    <video autoplay loop muted playsinline>
+      <source src="videos/intro.mp4" type="video/mp4">
+      <div class="img-ph dark">Video — intro hero</div>
+    </video>
+    <div class="caption">HAYAN — Sustainable lifestyle brand · 2021</div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       02 · CHALLENGE & SOLUTION
+  ══════════════════════════════════════ -->
+  <div class="panel panel--dark" data-label="Challenge" data-section="s-challenge">
+    <div class="challenge-solution">
+      <div class="cs-block">
+        <div class="cs-tag r">The Challenge</div>
+        <p class="cs-body r d1">Despite its market presence, the eco-friendly toothbrush category had a ceiling. Bamboo handles, muted palettes, design that signaled virtue instead of desire. Eco products never tried to appeal beyond the people who already cared. A higher price needed a reason — without a brand to give it one, it would land as another apologetic eco product.</p>
+      </div>
+      <div class="cs-block">
+        <div class="cs-tag r">The Solution</div>
+        <p class="cs-body r d1">We reframed the category entirely. HAYAN was built around a single belief: sustainability without compromise. A brand that doesn't ask you to sacrifice aesthetics, performance, or desire. The toothbrush became the entry point — not because the brand is about toothbrushes, but because it's one of the most overlooked objects in the daily ritual of waste.</p>
       </div>
     </div>
   </div>
 
-  <!-- 02 THE BRIEF -->
-  <div class="panel" data-label="The brief" data-section="s-brief" style="flex-direction:row; overflow:hidden;">
-    <div class="split" style="flex:1; display:grid; grid-template-columns:1fr 1fr; min-height:0;">
-      <div class="split-text">
-        <div class="sec-label r">The brief, and the reframe</div>
-        <h2 class="sec-h2 r">They came for a toothbrush. I gave them a brand.</h2>
-        <p class="sec-body r d1">Econnect came to me to design a PLA toothbrush. I could have just designed the product. But PLA meant a higher price than bamboo alternatives already on shelf. A higher price needed a reason.</p>
-        <p class="sec-body r d2" style="margin-top:14px;">Without a brand to give it one, it would land as another eco-friendly product with the same apologetic vibes as everything else. So I proposed building a brand around a different idea: sustainability without compromise.</p>
-        <p class="sec-body r d3" style="margin-top:14px; opacity:0.9; font-style:italic;">Econnect agreed. I came on as co-founder, leading creative direction end-to-end.</p>
-      </div>
-      <div class="split-visual" style="border-left:1px solid var(--border);">
-        <div class="img-ph mint">Hero — product in context</div>
-      </div>
-    </div>
+  <!-- ══════════════════════════════════════
+       03 · LOGO — full-bleed video loop
+  ══════════════════════════════════════ -->
+  <div class="panel panel--fullbleed" data-label="Logo" data-section="s-logo">
+    <video autoplay loop muted playsinline>
+      <source src="videos/logo.mp4" type="video/mp4">
+      <div class="img-ph dark">Video — logo identity</div>
+    </video>
+    <div class="overlay-text r">Hand-stamped, deliberately imperfect. A mark that feels as raw and natural as the material behind it.</div>
+    <div class="caption">Logo — wordmark &amp; identity system</div>
   </div>
 
-  <!-- 03 PROBLEM -->
-  <div class="panel" data-label="The problem" data-section="s-problem">
-    <div style="padding:52px 72px 32px; flex-shrink:0;">
-      <div class="sec-label r">The problem</div>
-      <h2 class="sec-h2 r" style="font-size:clamp(22px,3vw,38px); max-width:700px;">The category had a ceiling.</h2>
-      <p class="sec-body r d1" style="margin-top:16px; max-width:580px;">Bamboo handles, muted palettes, design that signaled virtue instead of desire. Eco-friendly toothbrushes never tried to appeal beyond the people who already cared.</p>
-    </div>
-    <div style="flex:1; min-height:0; margin:0; overflow:hidden;">
-      <video autoplay loop muted playsinline style="width:100%;height:100%;object-fit:cover;display:block;">
-        <source src="videos/problem-bamboo.mp4" type="video/mp4">
-        <div class="img-ph" style="height:100%;width:100%;">Video — bamboo product category</div>
-      </video>
-    </div>
-  </div>
-
-  <!-- 04 MATERIAL -->
-  <div class="panel" data-label="Material" data-section="s-material" style="flex-direction:row; overflow:hidden;">
-    <div class="split" style="flex:1; display:grid; grid-template-columns:1fr 1fr; min-height:0;">
-      <div class="split-visual" style="border-right:1px solid var(--border);">
-        <img src="images/material1.jpg" alt="" style="width:100%; height:100%; object-fit:cover;" />
-      </div>
-      <div class="split-text">
-        <div class="sec-label r">The material</div>
-        <h2 class="sec-h2 r">A bioplastic that earns its form.</h2>
-        <p class="sec-body r d1">PLA, a corn-based bioplastic, decomposes in 6–12 months vs 500+ years for conventional plastic. 70% less carbon in manufacturing. Higher elasticity, actually a functional advantage in toothbrush production. And critically, PLA doesn't absorb moisture the way bamboo does. Bamboo's mold problem, gone. The material solved the friction that made bamboo feel like a daily compromise.</p>
-        <p class="sec-body r d2" style="margin-top:14px;">Sustainable didn't mean easy to make. Early composite formulations couldn't withstand tooling temperatures and came out warped, brittle, or too flexible to hold their form. Getting the ratio right required iterative reformulation, and every adjustment shifted how the material absorbed pigment, making color consistency something that had to be actively monitored rather than assumed.</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- 05 PRODUCT DESIGN -->
-  <div class="panel panel--dark" data-label="Product" data-section="s-product">
-    <div class="panel-inner" style="padding-bottom:0; padding-right:0; overflow:hidden; flex:1;">
-      <div class="sec-label r">Product design</div>
-      <h2 class="sec-h2 r" style="color:var(--bg);">Form driven by experience.</h2>
-      <p class="sec-body r d1" style="color:var(--bg); opacity:0.55; margin-bottom:28px;">Handle angled toward the bristle head for easier reach. Bristle count increased from 1,000 to 2,500. Children's version rounded to encourage lighter pressure.</p>
-    </div>
-    <div class="img-strip" style="padding:0 0 0 72px; gap:2px; flex:1; min-height:0; overflow:hidden; padding-left:72px; padding-bottom:0;">
-      <div class="img-ph dark">Handle profile</div>
-      <div class="img-ph dark">Bristle close-up</div>
-      <div class="img-ph dark">Adult vs kids</div>
-      <div class="img-ph dark">Kids' form</div>
-    </div>
-  </div>
-
-  <!-- 06 CMF -->
-  <div class="panel panel--mint" data-label="CMF" data-section="s-cmf" style="flex-direction:row; overflow:hidden;">
-    <div class="split" style="flex:1; display:grid; grid-template-columns:1fr 1fr; min-height:0;">
-      <div class="split-text">
-        <div class="sec-label r">CMF</div>
-        <h2 class="sec-h2 r">Pistachio mint, not earth tones.</h2>
-        <p class="sec-body r d1">Eco products leaned earthy. HAYAN went the other direction. A pistachio mint that doesn't read as "eco." It reads as home.</p>
-        <p class="sec-body r d2" style="margin-top:14px;">A toothbrush sits on the counter every day. Most users hide theirs. HAYAN was designed to be left out. Something you'd be quietly proud to have on the counter.</p>
-        <div class="palette-row r d3">
-          <div class="swatch" style="background:#b4dcc8"><span class="swatch-hex">#B4DCC8</span></div>
-          <div class="swatch" style="background:#e8e8e0"><span class="swatch-hex">#E8E8E0</span></div>
-          <div class="swatch" style="background:#f3f3f3"><span class="swatch-hex">#F3F3F3</span></div>
-          <div class="swatch light-text" style="background:#1a1a1a"><span class="swatch-hex">#1A1A1A</span></div>
-          <div class="swatch" style="background:#d4d4cc"><span class="swatch-hex">#D4D4CC</span></div>
-          <div class="swatch" style="background:#c8d8d0"><span class="swatch-hex">#C8D8D0</span></div>
-        </div>
-      </div>
-      <div class="split-visual" style="border-left:1px solid rgba(0,0,0,0.1);">
-        <div class="img-ph mint" style="background:#a8d4bc;">Styled bathroom counter</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 07 LOGO — full-bleed image -->
-  <div class="panel panel--image" data-label="Logo" data-section="s-logo">
-    <img src="images/logo1b.jpg" alt="" />
-    <div class="caption" style="bottom:auto; top:32px;">Logo — wordmark & identity system</div>
-    <div style="position:absolute; bottom:32px; left:48px; right:48px; z-index:2; font-size:13px; font-weight:300; line-height:1.6; opacity:0.65; max-width:520px;">Hand-stamped, deliberately imperfect. A mark that feels as raw and natural as the material behind it.</div>
-  </div>
-
-  <!-- 08 IDENTITY -->
-  <div class="panel panel--image" data-label="Identity" data-section="s-identity">
-    <div class="img-ph" style="background:#e8e8e4;">Brand specimen — type, color, applications</div>
-    <div class="caption">Brand identity — typography, color system, voice</div>
-  </div>
-
-  <!-- 09 PHOTOGRAPHY -->
-  <div class="panel" data-label="Photography" data-section="s-photography" style="overflow:hidden;">
-    <div class="panel-inner" style="padding-bottom:16px; flex-shrink:0;">
-      <div class="sec-label r">Photography direction</div>
-      <h2 class="sec-h2 r">Soft light. Warm homes. Nothing staged for an eco campaign.</h2>
-    </div>
-    <div style="flex:1; min-height:0; display:grid; grid-template-columns:2fr 1fr 1fr; grid-template-rows:1fr 1fr; gap:2px; overflow:hidden; padding:0 72px 48px;">
-      <div class="img-ph" style="grid-row:1/3;">Photography 01 — hero</div>
-      <div class="img-ph">Photography 02</div>
-      <div class="img-ph">Photography 03</div>
-      <div class="img-ph">Photography 04</div>
-      <div class="img-ph">Photography 05</div>
-    </div>
-  </div>
-
-  <!-- 10 PACKAGING — split -->
+  <!-- ══════════════════════════════════════
+       04 · PACKAGING — split (image + text)
+  ══════════════════════════════════════ -->
   <div class="panel" data-label="Packaging" data-section="s-packaging" style="flex-direction:row; overflow:hidden;">
     <div class="split" style="flex:1; display:grid; grid-template-columns:1fr 1fr; min-height:0;">
       <div class="split-visual" style="border-right:1px solid var(--border);">
@@ -793,73 +615,103 @@ header {
       <div class="split-text">
         <div class="sec-label r">Packaging</div>
         <h2 class="sec-h2 r">Bold message, refined material.</h2>
-        <p class="sec-body r d1">Printed large on uncoated kraft, I'm not plastic functions less as packaging copy and more as a brand position made physical. No imagery. No eco iconography. Confidence communicated through what was left out.</p>
+        <p class="sec-body r d1">Printed large on uncoated kraft, <em>I'm not plastic</em> functions less as packaging copy and more as a brand position made physical. No imagery. No eco iconography. Confidence communicated through what was left out.</p>
         <p class="sec-body r d2" style="margin-top:14px;">The typographic choice was precise: I'M and PLA pulled into color within the phrase, surfacing both the voice and the material in a single gesture.</p>
       </div>
     </div>
   </div>
 
-  <!-- 10b PACKAGING GALLERY — full-bleed slider -->
+  <!-- 04b · PACKAGING GALLERY — full-bleed slider -->
   <div class="panel panel--pkg-slider" data-label="Packaging" data-section="s-packaging-gallery">
-
-    <!-- Slider track -->
     <div class="pkg-slider-track" id="pkgSliderTrack">
-
-      <!-- Slide 1 -->
       <div class="pkg-slide">
         <img src="images/package2.jpg" alt="Packaging" />
       </div>
-
-      <!-- Slide 2 -->
       <div class="pkg-slide">
         <img src="images/package3.jpg" alt="Packaging" />
       </div>
-
-      <!-- Slide 3 -->
       <div class="pkg-slide">
         <img src="images/package4.jpg" alt="Packaging" />
       </div>
-
     </div>
-
-    <!-- Arrows -->
     <button class="slider-arrow slider-arrow--prev" id="pkgPrev" aria-label="Previous">←</button>
     <button class="slider-arrow slider-arrow--next" id="pkgNext" aria-label="Next">→</button>
-
-    <!-- Slide counter -->
     <div class="slider-counter" id="pkgCounter">1 / 3</div>
-
-    <!-- Dots -->
     <div class="slider-dots" id="pkgDots">
       <div class="slider-dot active" data-index="0"></div>
       <div class="slider-dot" data-index="1"></div>
       <div class="slider-dot" data-index="2"></div>
     </div>
-
-    <!-- Label -->
     <div class="slider-label">Packaging details</div>
-
   </div>
 
-  <!-- 11 SYSTEM -->
-  <div class="panel panel--dark" data-label="System" data-section="s-system">
-    <div class="panel-inner" style="justify-content:center;">
-      <div class="sec-label r">The system</div>
-      <h2 class="sec-h2 r" style="color:var(--bg);">A product designed to come back.</h2>
-      <p class="sec-body r d1" style="color:var(--bg); opacity:0.55; margin-bottom:32px;">QR code on packaging links to a return service. Used toothbrushes get mailed back. Subscription handles replenishment. The brand owns the full lifecycle.</p>
-      <div class="r d2" style="display:flex; gap:0; align-items:center; max-width:620px;">
-        <div style="flex:1; text-align:center; padding:20px; border:1px solid rgba(255,255,255,0.15); font-family:var(--mono); font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:rgba(255,255,255,0.5);">Buy</div>
-        <div style="color:rgba(255,255,255,0.2); padding:0 8px; font-size:12px;">→</div>
-        <div style="flex:1; text-align:center; padding:20px; border:1px solid rgba(255,255,255,0.15); font-family:var(--mono); font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:rgba(255,255,255,0.5);">Use</div>
-        <div style="color:rgba(255,255,255,0.2); padding:0 8px; font-size:12px;">→</div>
-        <div style="flex:1; text-align:center; padding:20px; border:1px solid rgba(255,255,255,0.15); font-family:var(--mono); font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:rgba(255,255,255,0.5);">Return</div>
-        <div style="color:rgba(255,255,255,0.2); padding:0 8px; font-size:12px;">→</div>
-        <div style="flex:1; text-align:center; padding:20px; border:1px solid rgba(255,255,255,0.15); font-family:var(--mono); font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:rgba(255,255,255,0.5);">Recycle</div>
+  <!-- ══════════════════════════════════════
+       05 · PRODUCT / CMF — image left + text right
+  ══════════════════════════════════════ -->
+  <div class="panel" data-label="Product / CMF" data-section="s-product" style="flex-direction:row; overflow:hidden;">
+    <div class="split" style="flex:1; display:grid; grid-template-columns:1fr 1fr; min-height:0;">
+      <div class="split-visual" style="border-right:1px solid var(--border);">
+        <img src="images/product1.jpg" alt="Product" />
+      </div>
+      <div class="split-text">
+        <div class="sec-label r">Product &amp; CMF</div>
+        <h2 class="sec-h2 r">Pistachio mint, not earth tones.</h2>
+        <p class="sec-body r d1">Eco products leaned earthy. HAYAN went the other direction. A pistachio mint that doesn't read as "eco." It reads as home. Handle angled toward the bristle head for easier reach. Bristle count increased from 1,000 to 2,500.</p>
+        <p class="sec-body r d2" style="margin-top:14px;">A toothbrush sits on the counter every day. Most users hide theirs. HAYAN was designed to be left out — something you'd be quietly proud to have on the counter.</p>
       </div>
     </div>
   </div>
 
-  <!-- 12 OUTCOME -->
+  <!-- 05b · PRODUCT/CMF — full image -->
+  <div class="panel panel--fullbleed" data-label="Product / CMF" data-section="s-product-img1">
+    <img src="images/product2.jpg" alt="Product detail" />
+    <div class="caption">Product — handle &amp; bristle detail</div>
+  </div>
+
+  <!-- 05c · PRODUCT/CMF — video loop -->
+  <div class="panel panel--fullbleed" data-label="Product / CMF" data-section="s-product-vid1">
+    <video autoplay loop muted playsinline>
+      <source src="videos/product1.mp4" type="video/mp4">
+      <div class="img-ph dark">Video — product in motion</div>
+    </video>
+    <div class="caption">Product — in use</div>
+  </div>
+
+  <!-- 05d · PRODUCT/CMF — full image -->
+  <div class="panel panel--fullbleed" data-label="Product / CMF" data-section="s-product-img2">
+    <img src="images/product3.jpg" alt="CMF detail" />
+    <div class="caption">CMF — color, material, finish</div>
+  </div>
+
+  <!-- 05e · PRODUCT/CMF — full image -->
+  <div class="panel panel--fullbleed" data-label="Product / CMF" data-section="s-product-img3">
+    <img src="images/product4.jpg" alt="CMF detail" />
+    <div class="caption">CMF — adult &amp; children's range</div>
+  </div>
+
+  <!-- 05f · PRODUCT/CMF — video loop -->
+  <div class="panel panel--fullbleed" data-label="Product / CMF" data-section="s-product-vid2">
+    <video autoplay loop muted playsinline>
+      <source src="videos/product2.mp4" type="video/mp4">
+      <div class="img-ph dark">Video — material &amp; CMF</div>
+    </video>
+    <div class="caption">CMF — material story</div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       06 · PROCESS — full-bleed video loop
+  ══════════════════════════════════════ -->
+  <div class="panel panel--fullbleed" data-label="Process" data-section="s-process">
+    <video autoplay loop muted playsinline>
+      <source src="videos/process.mp4" type="video/mp4">
+      <div class="img-ph dark">Video — design &amp; production process</div>
+    </video>
+    <div class="caption">Process — design to production</div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       07 · OUTCOME
+  ══════════════════════════════════════ -->
   <div class="panel" data-label="Outcome" data-section="s-outcome">
     <div class="panel-inner">
       <div class="sec-label r">Outcome</div>
@@ -895,26 +747,9 @@ header {
     </div>
   </div>
 
-  <!-- 13 RECEPTION -->
-  <div class="panel" data-label="Reception" data-section="s-reception">
-    <div class="panel-inner">
-      <div class="sec-label r">What customers said</div>
-      <h2 class="sec-h2 r">The deepest signal: customers changed how they saw their homes.</h2>
-      <div class="quote-grid r d1">
-        <div class="quote-card">
-          <div class="quote-text">"인생칫솔."</div>
-          <div class="quote-trans">The toothbrush of my life.</div>
-        </div>
-        <div class="quote-card">
-          <div class="quote-text">"Hay, Vitra 같은 브랜드 느낌."</div>
-          <div class="quote-trans">Feels like a Hay or Vitra brand.</div>
-        </div>
-      </div>
-      <p class="sec-body r d2" style="margin-top:28px; max-width:560px;">The toothbrush was the entry point. The shift in how people thought about other everyday objects in their homes — that was the goal.</p>
-    </div>
-  </div>
-
-  <!-- 14 SUMMARY -->
+  <!-- ══════════════════════════════════════
+       08 · SUMMARY
+  ══════════════════════════════════════ -->
   <div class="panel" data-label="Summary" data-section="s-summary">
     <div class="panel-inner" style="overflow-y:auto;">
       <div class="sec-label r">Summary</div>
@@ -938,7 +773,7 @@ header {
               <div class="tag-row">
                 <span class="tag">Brand strategy</span>
                 <span class="tag">Naming</span>
-                <span class="tag">Logo & identity</span>
+                <span class="tag">Logo &amp; identity</span>
                 <span class="tag">Product design</span>
                 <span class="tag">CMF</span>
                 <span class="tag">Packaging</span>
@@ -948,7 +783,7 @@ header {
           </tr>
           <tr>
             <td style="font-family:var(--mono);font-size:11px;opacity:0.45;">Partner</td>
-            <td>Econnect (manufacturing & operations)</td>
+            <td>Econnect (manufacturing &amp; operations)</td>
           </tr>
           <tr>
             <td style="font-family:var(--mono);font-size:11px;opacity:0.45;">Closing</td>
@@ -959,7 +794,9 @@ header {
     </div>
   </div>
 
-  <!-- 15 FOOTER -->
+  <!-- ══════════════════════════════════════
+       FOOTER
+  ══════════════════════════════════════ -->
   <div class="panel--footer" data-label="End">
     <div class="footer-copy">© 2025 Hye Min Eom</div>
     <div class="footer-copy">HAYAN — 2021</div>
@@ -976,6 +813,16 @@ const sidebarLinks = Array.from(document.querySelectorAll('.sidebar a'));
 const counter = document.getElementById('sectionCounter');
 const progressBar = document.getElementById('progressBar');
 const total = panels.length;
+
+// Sidebar section grouping map (sub-panels → parent nav item)
+const sectionParentMap = {
+  's-packaging-gallery': 's-packaging',
+  's-product-img1': 's-product',
+  's-product-vid1': 's-product',
+  's-product-img2': 's-product',
+  's-product-img3': 's-product',
+  's-product-vid2': 's-product',
+};
 
 sidebarLinks.forEach(link => {
   link.addEventListener('click', e => {
@@ -994,7 +841,7 @@ panels.forEach(panel => {
 function activatePanel(index) {
   const panel = panels[index];
   const section = panel?.dataset?.section;
-  const sidebarTarget = section === 's-packaging-gallery' ? 's-packaging' : section;
+  const sidebarTarget = sectionParentMap[section] || section;
 
   sidebarLinks.forEach(link => {
     link.classList.toggle('active', link.dataset.target === sidebarTarget);
@@ -1023,12 +870,13 @@ const obs = new IntersectionObserver(entries => {
 panels.forEach(p => obs.observe(p));
 
 document.addEventListener('keydown', e => {
-  const active = panels.findIndex(p => {
-    const activeLink = document.querySelector('.sidebar a.active');
-    return p.dataset.section === activeLink?.dataset?.target;
-  });
-  if (e.key === 'ArrowDown' && active < total - 1) panels[active + 1].scrollIntoView({ behavior: 'smooth' });
-  else if (e.key === 'ArrowUp' && active > 0) panels[active - 1].scrollIntoView({ behavior: 'smooth' });
+  const activeLink = document.querySelector('.sidebar a.active');
+  // Find the currently-visible panel by scroll position
+  const scrollTop = container.scrollTop;
+  const panelHeight = container.clientHeight;
+  const currentIdx = Math.round(scrollTop / panelHeight);
+  if (e.key === 'ArrowDown' && currentIdx < total - 1) panels[currentIdx + 1].scrollIntoView({ behavior: 'smooth' });
+  else if (e.key === 'ArrowUp' && currentIdx > 0) panels[currentIdx - 1].scrollIntoView({ behavior: 'smooth' });
 });
 
 activatePanel(0);
@@ -1053,7 +901,6 @@ prevBtn.addEventListener('click', () => goToSlide(currentSlide - 1));
 nextBtn.addEventListener('click', () => goToSlide(currentSlide + 1));
 dots.forEach(dot => dot.addEventListener('click', () => goToSlide(+dot.dataset.index)));
 
-// Swipe support
 let touchStartX = 0;
 track.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
 track.addEventListener('touchend', e => {
