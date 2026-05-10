@@ -566,13 +566,10 @@ header {
 <div class="snap-container" id="snapContainer">
 
   <!-- ══════════════════════════════════════
-       01 · INTRO — full-bleed video loop
+       01 · INTRO — full-bleed hero image
   ══════════════════════════════════════ -->
   <div class="panel panel--fullbleed" data-label="Intro" data-section="s-intro">
-    <video autoplay loop muted playsinline>
-      <source src="videos/intro.mp4" type="video/mp4">
-      <div class="img-ph dark">Video — intro hero</div>
-    </video>
+    <img src="images/hero.jpg" alt="HAYAN — intro hero" />
     <div class="caption">HAYAN — Sustainable lifestyle brand · 2021</div>
   </div>
 
@@ -870,8 +867,6 @@ const obs = new IntersectionObserver(entries => {
 panels.forEach(p => obs.observe(p));
 
 document.addEventListener('keydown', e => {
-  const activeLink = document.querySelector('.sidebar a.active');
-  // Find the currently-visible panel by scroll position
   const scrollTop = container.scrollTop;
   const panelHeight = container.clientHeight;
   const currentIdx = Math.round(scrollTop / panelHeight);
