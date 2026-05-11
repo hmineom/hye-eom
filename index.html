@@ -375,6 +375,40 @@ header {
   color: rgba(255,255,255,0.45);
 }
 
+/* ── PRESS ROW ── */
+.press-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-top: 24px;
+  margin-bottom: 4px;
+  padding: 18px 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.press-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.38;
+  flex-shrink: 0;
+}
+.press-links {
+  display: flex;
+  gap: 16px;
+}
+.press-link {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--black);
+  text-decoration: none;
+  opacity: 0.7;
+  transition: opacity 0.15s;
+}
+.press-link:hover { opacity: 1; }
+
 /* ── STATS / OUTCOME ── */
 .stats-row {
   display: grid;
@@ -539,7 +573,7 @@ header {
 <header>
   <div class="hdr-left">
     <div class="hdr-brand">HAYAN</div>
-    <div class="hdr-collab">Design Director</div>
+    <div class="hdr-collab">Co-founder · Design Director</div>
   </div>
   <div class="hdr-right">2021</div>
 </header>
@@ -709,21 +743,24 @@ header {
     <div class="panel-inner">
       <div class="sec-label r">Outcome</div>
       <h2 class="sec-h2 r">The brand earned its sales without buying them.</h2>
-      <div class="stats-row r d1">
+      <div class="stats-row r d1" style="grid-template-columns: 1fr 1fr;">
         <div class="stat-block">
           <div class="stat-num">1,495%</div>
           <div class="stat-label">of crowdfunding goal</div>
-        </div>
-        <div class="stat-block">
-          <div class="stat-num">285</div>
-          <div class="stat-label">launch backers</div>
         </div>
         <div class="stat-block">
           <div class="stat-num">15+</div>
           <div class="stat-label">retail partners</div>
         </div>
       </div>
-      <div class="retail-grid r d2">
+      <div class="press-row r d2">
+        <div class="press-label">As seen in</div>
+        <div class="press-links">
+          <a href="https://hypebae.com" target="_blank" rel="noopener" class="press-link">Hypebae ↗</a>
+          <a href="https://ddp.or.kr" target="_blank" rel="noopener" class="press-link">DDP Seoul ↗</a>
+        </div>
+      </div>
+      <div class="retail-grid r d3">
         <div class="retail-cell">DDP Design Store</div>
         <div class="retail-cell">MTL</div>
         <div class="retail-cell">OBSCURA</div>
@@ -739,14 +776,14 @@ header {
       </div>
     </div>
   </div>
-  
-<!-- ══════════════════════════════════════
+
+  <!-- ══════════════════════════════════════
        08 · SUMMARY
   ══════════════════════════════════════ -->
   <div class="panel" data-label="Summary" data-section="s-summary">
     <div class="panel-inner" style="overflow-y:auto;">
       <div class="sec-label r">Summary</div>
-      <p class="sec-body r" style="max-width:580px; margin-bottom:24px; font-style:italic; opacity:0.65;">I came in as a designer and left as a brand strategist. HAYAN showed me how product, identity, and positioning work as one system.</p>
+      <p class="sec-body r" style="max-width:580px; margin-bottom:24px; font-style:italic; opacity:0.65;">HAYAN began with a product brief and ended as a brand built around a single belief: caring for the planet shouldn't feel like a compromise.</p>
       <table class="summary-table r d1">
         <thead>
           <tr><th>Category</th><th>Detail</th></tr>
@@ -754,7 +791,7 @@ header {
         <tbody>
           <tr>
             <td style="font-family:var(--mono);font-size:11px;opacity:0.45;width:140px;">Role</td>
-            <td>Design Director</td>
+            <td>Co-founder · Design Director</td>
           </tr>
           <tr>
             <td style="font-family:var(--mono);font-size:11px;opacity:0.45;">Year</td>
@@ -765,11 +802,12 @@ header {
             <td>
               <div class="tag-row">
                 <span class="tag">Brand strategy</span>
+                <span class="tag">Naming</span>
                 <span class="tag">Logo &amp; identity</span>
                 <span class="tag">Product design</span>
                 <span class="tag">CMF</span>
                 <span class="tag">Packaging</span>
-                <span class="tag">Creative direction</span>
+                <span class="tag">Photography direction</span>
               </div>
             </td>
           </tr>
@@ -783,7 +821,7 @@ header {
           </tr>
           <tr>
             <td style="font-family:var(--mono);font-size:11px;opacity:0.45;">Closing</td>
-            <td style="font-style:italic;opacity:0.6;">A brand built on one belief: sustainability without compromise.</td>
+            <td style="font-style:italic;opacity:0.6;">Sustainability without compromise. Beauty without apology.</td>
           </tr>
         </tbody>
       </table>
