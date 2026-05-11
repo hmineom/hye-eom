@@ -709,6 +709,17 @@ header {
   </div>
 
   <!-- ══════════════════════════════════════
+       01b · INTRO — product video
+  ══════════════════════════════════════ -->
+  <div class="panel panel--fullbleed" data-label="Intro" data-section="s-intro-vid">
+    <video autoplay loop muted playsinline>
+      <source src="videos/product2.mp4" type="video/mp4">
+      <div class="img-ph dark">Video — material &amp; CMF</div>
+    </video>
+    <div class="caption">CMF — material story</div>
+  </div>
+
+  <!-- ══════════════════════════════════════
        02 · CHALLENGE & SOLUTION
   ══════════════════════════════════════ -->
   <div class="panel panel--dark" data-label="Challenge" data-section="s-challenge">
@@ -737,7 +748,51 @@ header {
   </div>
 
   <!-- ══════════════════════════════════════
-       04 · PACKAGING — split (image + text)
+       04 · PRODUCT / CMF — image left + text right
+  ══════════════════════════════════════ -->
+  <div class="panel" data-label="Product / CMF" data-section="s-product" style="flex-direction:row; overflow:hidden;">
+    <div class="split" style="flex:1; display:grid; grid-template-columns:1fr 1fr; min-height:0;">
+      <div class="split-visual" style="border-right:1px solid var(--border);">
+        <img src="images/Product_a.jpg" alt="Product" />
+      </div>
+      <div class="split-text">
+        <div class="sec-label r">Product &amp; CMF</div>
+        <h2 class="sec-h2 r">Pistachio mint, not earth tones.</h2>
+        <p class="sec-body r d1">Eco products leaned earthy. HAYAN went the other direction. A pistachio mint that doesn't read as "eco." It reads as home. Handle angled toward the bristle head for easier reach. Bristle count increased from 1,000 to 2,500.</p>
+        <p class="sec-body r d2" style="margin-top:14px;">A toothbrush sits on the counter every day. Most users hide theirs. HAYAN was designed to be left out — something you'd be quietly proud to have on the counter.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 04b · PRODUCT/CMF — full image -->
+  <div class="panel panel--fullbleed" data-label="Product / CMF" data-section="s-product-img1">
+    <img src="images/Product_b.jpg" alt="Product detail" />
+    <div class="caption">Product — handle &amp; bristle detail</div>
+  </div>
+
+  <!-- 04c · PRODUCT/CMF — video loop -->
+  <div class="panel panel--fullbleed" data-label="Product / CMF" data-section="s-product-vid1">
+    <video autoplay loop muted playsinline>
+      <source src="videos/Product_v1.mp4" type="video/mp4">
+      <div class="img-ph dark">Video — product in motion</div>
+    </video>
+    <div class="caption">Product — in use</div>
+  </div>
+
+  <!-- 04d · PRODUCT/CMF — full image -->
+  <div class="panel panel--fullbleed" data-label="Product / CMF" data-section="s-product-img2">
+    <img src="images/Product_d.jpg" alt="CMF detail" />
+    <div class="caption">CMF — color, material, finish</div>
+  </div>
+
+  <!-- 04e · PRODUCT/CMF — full image -->
+  <div class="panel panel--fullbleed" data-label="Product / CMF" data-section="s-product-img3">
+    <img src="images/Product_e.jpg" alt="CMF detail" />
+    <div class="caption">CMF — adult &amp; children's range</div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       05 · PACKAGING — split (image + text)
   ══════════════════════════════════════ -->
   <div class="panel" data-label="Packaging" data-section="s-packaging" style="flex-direction:row; overflow:hidden;">
     <div class="split" style="flex:1; display:grid; grid-template-columns:1fr 1fr; min-height:0;">
@@ -753,7 +808,7 @@ header {
     </div>
   </div>
 
-  <!-- 04b · PACKAGING GALLERY — full-bleed slider -->
+  <!-- 05b · PACKAGING GALLERY — full-bleed slider -->
   <div class="panel panel--pkg-slider" data-label="Packaging" data-section="s-packaging-gallery">
     <div class="pkg-slider-track" id="pkgSliderTrack">
       <div class="pkg-slide">
@@ -771,59 +826,6 @@ header {
       <div class="slider-dot" data-index="1"></div>
     </div>
     <div class="slider-label">Packaging details</div>
-  </div>
-
-  <!-- ══════════════════════════════════════
-       05 · PRODUCT / CMF — image left + text right
-  ══════════════════════════════════════ -->
-  <div class="panel" data-label="Product / CMF" data-section="s-product" style="flex-direction:row; overflow:hidden;">
-    <div class="split" style="flex:1; display:grid; grid-template-columns:1fr 1fr; min-height:0;">
-      <div class="split-visual" style="border-right:1px solid var(--border);">
-        <img src="images/Product_a.jpg" alt="Product" />
-      </div>
-      <div class="split-text">
-        <div class="sec-label r">Product &amp; CMF</div>
-        <h2 class="sec-h2 r">Pistachio mint, not earth tones.</h2>
-        <p class="sec-body r d1">Eco products leaned earthy. HAYAN went the other direction. A pistachio mint that doesn't read as "eco." It reads as home. Handle angled toward the bristle head for easier reach. Bristle count increased from 1,000 to 2,500.</p>
-        <p class="sec-body r d2" style="margin-top:14px;">A toothbrush sits on the counter every day. Most users hide theirs. HAYAN was designed to be left out — something you'd be quietly proud to have on the counter.</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- 05b · PRODUCT/CMF — full image -->
-  <div class="panel panel--fullbleed" data-label="Product / CMF" data-section="s-product-img1">
-    <img src="images/Product_b.jpg" alt="Product detail" />
-    <div class="caption">Product — handle &amp; bristle detail</div>
-  </div>
-
-  <!-- 05c · PRODUCT/CMF — video loop -->
-  <div class="panel panel--fullbleed" data-label="Product / CMF" data-section="s-product-vid1">
-    <video autoplay loop muted playsinline>
-      <source src="videos/Product_v1.mp4" type="video/mp4">
-      <div class="img-ph dark">Video — product in motion</div>
-    </video>
-    <div class="caption">Product — in use</div>
-  </div>
-
-  <!-- 05d · PRODUCT/CMF — full image -->
-  <div class="panel panel--fullbleed" data-label="Product / CMF" data-section="s-product-img2">
-    <img src="images/Product_d.jpg" alt="CMF detail" />
-    <div class="caption">CMF — color, material, finish</div>
-  </div>
-
-  <!-- 05e · PRODUCT/CMF — full image -->
-  <div class="panel panel--fullbleed" data-label="Product / CMF" data-section="s-product-img3">
-    <img src="images/Product_e.jpg" alt="CMF detail" />
-    <div class="caption">CMF — adult &amp; children's range</div>
-  </div>
-
-  <!-- 05f · PRODUCT/CMF — video loop -->
-  <div class="panel panel--fullbleed" data-label="Product / CMF" data-section="s-product-vid2">
-    <video autoplay loop muted playsinline>
-      <source src="videos/Product_v2.mp4" type="video/mp4">
-      <div class="img-ph dark">Video — material &amp; CMF</div>
-    </video>
-    <div class="caption">CMF — material story</div>
   </div>
 
   <!-- ══════════════════════════════════════
@@ -985,12 +987,12 @@ const total = panels.length;
 
 // Sidebar section grouping map (sub-panels → parent nav item)
 const sectionParentMap = {
+  's-intro-vid': 's-intro',
   's-packaging-gallery': 's-packaging',
   's-product-img1': 's-product',
   's-product-vid1': 's-product',
   's-product-img2': 's-product',
   's-product-img3': 's-product',
-  's-product-vid2': 's-product',
   's-outcome-voice': 's-outcome',
 };
 
