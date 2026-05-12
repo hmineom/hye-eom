@@ -78,6 +78,62 @@ header {
   opacity: 0.4;
 }
 
+/* ── MOBILE NAV TOGGLE ── */
+.mobile-nav-btn {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  margin: -8px;
+  flex-direction: column;
+  gap: 5px;
+  align-items: center;
+  justify-content: center;
+}
+.mobile-nav-btn span {
+  display: block;
+  width: 18px;
+  height: 1px;
+  background: var(--black);
+  transition: transform 0.25s, opacity 0.25s;
+}
+.mobile-nav-btn.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+.mobile-nav-btn.open span:nth-child(2) { opacity: 0; }
+.mobile-nav-btn.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+/* ── MOBILE DRAWER ── */
+.mobile-drawer {
+  display: none;
+  position: fixed;
+  top: var(--hdr);
+  left: 0;
+  right: 0;
+  z-index: 280;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  padding: 16px 24px 20px;
+  transform: translateY(-110%);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.07);
+}
+.mobile-drawer.open { transform: translateY(0); }
+.mobile-drawer a {
+  display: block;
+  font-size: 12px;
+  font-family: var(--mono);
+  letter-spacing: 0.07em;
+  color: var(--black);
+  text-decoration: none;
+  opacity: 0.35;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--border);
+  text-transform: uppercase;
+  transition: opacity 0.15s;
+}
+.mobile-drawer a:last-child { border-bottom: none; }
+.mobile-drawer a.active { opacity: 1; font-weight: 500; }
+
 /* ── SIDEBAR NAV ── */
 .sidebar {
   position: fixed;
@@ -247,7 +303,7 @@ header {
   flex-shrink: 0;
 }
 .cs-body {
-  font-size: clamp(16px, 1.6vw, 22px);
+  font-size: clamp(15px, 1.6vw, 22px);
   font-weight: 300;
   line-height: 1.65;
   letter-spacing: -0.01em;
@@ -375,7 +431,7 @@ header {
   color: rgba(255,255,255,0.45);
 }
 
-/* ── OUTCOME CONSOLIDATED ── */
+/* ── OUTCOME ── */
 .outcome-left {
   width: 42%;
   flex-shrink: 0;
@@ -387,58 +443,6 @@ header {
   border-right: 1px solid var(--border);
   overflow: hidden;
 }
-.outcome-stats {
-  display: flex;
-  gap: 0;
-  margin-bottom: 20px;
-}
-.outcome-stat {
-  flex: 1;
-  padding: 20px 0;
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-}
-.outcome-stat + .outcome-stat {
-  padding-left: 28px;
-  border-left: 1px solid var(--border);
-}
-.outcome-press {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1px;
-  background: var(--border);
-  margin-bottom: 20px;
-}
-.outcome-press-item {
-  background: var(--bg);
-  padding: 16px 18px;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-.outcome-press-name {
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: 0.01em;
-}
-.outcome-press-desc {
-  font-size: 11px;
-  font-family: var(--mono);
-  opacity: 0.45;
-  letter-spacing: 0.03em;
-  line-height: 1.5;
-}
-.outcome-press-link {
-  font-size: 10px;
-  font-family: var(--mono);
-  letter-spacing: 0.08em;
-  color: var(--black);
-  text-decoration: none;
-  opacity: 0.55;
-  margin-top: 6px;
-  transition: opacity 0.15s;
-}
-.outcome-press-link:hover { opacity: 1; }
 .outcome-quotes {
   display: flex;
   flex-direction: column;
@@ -488,29 +492,7 @@ header {
   display: block;
 }
 
-/* ── PRESS BLOCK (legacy, kept for safety) ── */
-.press-block { margin-top: 24px; flex-shrink: 0; }
-.press-block-inner { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--border); }
-.press-outlet { padding: 20px 24px; display: flex; flex-direction: column; gap: 6px; }
-.press-outlet + .press-outlet { border-left: 1px solid var(--border); }
-.press-outlet-name { font-size: 13px; font-weight: 500; }
-.press-outlet-desc { font-size: 12px; font-family: var(--mono); opacity: 0.5; letter-spacing: 0.04em; line-height: 1.5; }
-.press-outlet-link { font-size: 11px; font-family: var(--mono); letter-spacing: 0.07em; color: var(--black); text-decoration: none; opacity: 0.55; margin-top: 4px; transition: opacity 0.15s; }
-.press-outlet-link:hover { opacity: 1; }
-
-/* ── INSTAGRAM GRID (legacy) ── */
-.insta-grid { display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(2, 1fr); gap: 3px; flex: 1; min-height: 0; margin-top: 20px; }
-.insta-cell { overflow: hidden; position: relative; }
-.insta-cell .img-ph { height: 100%; min-height: 120px; }
-
-/* ── QUOTE CARDS (legacy) ── */
-.quotes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: rgba(255,255,255,0.08); margin-top: 28px; flex: 1; min-height: 0; }
-.quote-card { background: var(--black); padding: 36px 40px; display: flex; flex-direction: column; justify-content: center; gap: 10px; }
-.quote-kr { font-size: clamp(16px, 1.8vw, 22px); font-weight: 300; color: rgba(255,255,255,0.9); letter-spacing: -0.01em; line-height: 1.4; }
-.quote-en { font-size: 13px; font-weight: 300; color: rgba(255,255,255,0.45); font-style: italic; line-height: 1.5; }
-.quote-source { font-family: var(--mono); font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.25); margin-top: 6px; }
-
-/* ── STATS / OUTCOME ── */
+/* ── STATS ── */
 .stats-row {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -614,11 +596,6 @@ header {
   background-image: repeating-linear-gradient(-45deg, rgba(255,255,255,0.04), rgba(255,255,255,0.04) 1px, transparent 1px, transparent 8px);
   color: rgba(255,255,255,0.25);
 }
-.img-ph.mint {
-  background: #c8e8d8;
-  background-image: repeating-linear-gradient(-45deg, rgba(0,0,0,0.04), rgba(0,0,0,0.04) 1px, transparent 1px, transparent 8px);
-  color: rgba(0,0,0,0.35);
-}
 
 /* ── REVEAL ANIMATIONS ── */
 .r {
@@ -650,13 +627,15 @@ header {
   letter-spacing: 0.08em;
 }
 
-/* ── RESPONSIVE ── */
+/* ════════════════════════════
+   RESPONSIVE — TABLET (≤900px)
+════════════════════════════ */
 @media (max-width: 900px) {
   .sidebar { display: none; }
   .snap-container { left: 0; }
   .panel-inner { padding: 40px 28px 36px; }
   .split { grid-template-columns: 1fr; }
-  .split-text { padding: 36px 28px 24px; }
+  .split-text { padding: 32px 28px 28px; justify-content: flex-start; }
   .split-visual { height: 45vh; }
   .challenge-solution { grid-template-columns: 1fr; }
   .cs-block { padding: 36px 28px; }
@@ -665,6 +644,179 @@ header {
   .slider-arrow--prev { left: 16px; }
   .slider-arrow--next { right: 16px; }
   .panel--footer { padding: 0 28px; flex-direction: column; justify-content: center; gap: 12px; }
+}
+
+/* ════════════════════════════
+   RESPONSIVE — MOBILE (≤640px)
+════════════════════════════ */
+@media (max-width: 640px) {
+  :root {
+    --hdr: 44px;
+    --sidebar-w: 0px;
+  }
+
+  /* Header */
+  header { padding: 0 20px; }
+  .hdr-collab { display: none; }
+  .mobile-nav-btn { display: flex; }
+
+  /* Mobile drawer visible */
+  .mobile-drawer { display: block; }
+
+  /* Section counter: smaller, bottom-left on mobile to avoid overlap */
+  .section-counter {
+    bottom: 20px;
+    right: 20px;
+    font-size: 9px;
+  }
+
+  /* Snap container */
+  .snap-container { left: 0; }
+
+  /* Panels */
+  .panel { height: calc(100dvh - var(--hdr)); }
+
+  /* Panel inner */
+  .panel-inner {
+    padding: 28px 20px 24px;
+    overflow-y: auto;
+  }
+
+  .sec-label { margin-bottom: 16px; }
+
+  .sec-h2 {
+    font-size: clamp(20px, 6.5vw, 32px);
+    margin-bottom: 16px;
+    letter-spacing: -0.025em;
+  }
+
+  .sec-body { font-size: 14px; line-height: 1.7; }
+
+  /* Full-bleed captions */
+  .panel--fullbleed .caption {
+    left: 20px;
+    right: 20px;
+    bottom: 20px;
+    font-size: 9px;
+  }
+  .panel--fullbleed .overlay-text {
+    left: 20px;
+    right: 20px;
+    bottom: 36px;
+    font-size: 13px;
+  }
+
+  /* Challenge / Solution: stack vertically, scrollable */
+  .challenge-solution {
+    grid-template-columns: 1fr;
+    overflow-y: auto;
+  }
+  .cs-block {
+    padding: 28px 20px;
+    justify-content: flex-start;
+  }
+  .cs-block + .cs-block {
+    border-left: none;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+  .cs-tag { margin-bottom: 14px; }
+  .cs-body { font-size: 15px; }
+
+  /* Split panels: visual on top, text below */
+  .split {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    overflow-y: auto;
+    flex: 1;
+    min-height: 0;
+  }
+  /* Make visual a fixed portion on mobile */
+  .split-visual {
+    height: 40vw;
+    min-height: 180px;
+    max-height: 260px;
+    flex-shrink: 0;
+  }
+  .split-visual[style*="border-right"] {
+    border-right: none !important;
+    border-bottom: 1px solid var(--border);
+  }
+  .split-text {
+    padding: 24px 20px 28px;
+    justify-content: flex-start;
+    overflow-y: auto;
+  }
+
+  /* Outcome panel: full-width stacked */
+  .panel[data-section="s-outcome"] {
+    flex-direction: column !important;
+    overflow-y: auto;
+  }
+  .panel[data-section="s-outcome"] > div {
+    width: 100% !important;
+    flex: none !important;
+    border-right: none !important;
+    border-bottom: 1px solid var(--border);
+    padding: 28px 20px !important;
+  }
+  .panel[data-section="s-outcome"] > div:last-child {
+    border-bottom: none;
+  }
+  .stat-num { font-size: clamp(36px, 10vw, 56px); }
+
+  /* Customer voice panel: full-width stacked */
+  .panel[data-section="s-outcome-voice"] {
+    flex-direction: column !important;
+    overflow-y: auto;
+  }
+  .outcome-left {
+    width: 100%;
+    padding: 28px 20px 20px;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+  .outcome-right {
+    min-height: 260px;
+    max-height: 50vw;
+  }
+  .outcome-insta-grid { gap: 2px; }
+
+  /* Summary panel */
+  .panel[data-section="s-summary"] .panel-inner {
+    overflow-y: auto;
+  }
+  .summary-table th,
+  .summary-table td {
+    padding: 10px 12px;
+    font-size: 12px;
+  }
+  .summary-table th:first-child,
+  .summary-table td:first-child {
+    width: 100px;
+  }
+  .tag { font-size: 10px; padding: 3px 8px; }
+
+  /* Footer */
+  .panel--footer {
+    padding: 0 20px;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+    height: calc(100dvh - var(--hdr));
+    text-align: center;
+  }
+
+  /* Slider arrows smaller on mobile */
+  .slider-arrow { width: 36px; height: 36px; font-size: 13px; }
+  .slider-arrow--prev { left: 12px; }
+  .slider-arrow--next { right: 12px; }
+}
+
+/* Very small phones */
+@media (max-width: 390px) {
+  .sec-h2 { font-size: 19px; }
+  .cs-body { font-size: 14px; }
+  .outcome-right { max-height: 44vw; }
 }
 </style>
 </head>
@@ -676,8 +828,24 @@ header {
     <div class="hdr-brand">HAYAN</div>
     <div class="hdr-collab">Design Director</div>
   </div>
+  <!-- Mobile menu toggle -->
+  <button class="mobile-nav-btn" id="mobileNavBtn" aria-label="Toggle navigation">
+    <span></span><span></span><span></span>
+  </button>
   <div class="hdr-right">2021</div>
 </header>
+
+<!-- MOBILE DRAWER NAV -->
+<nav class="mobile-drawer" id="mobileDrawer">
+  <a href="#" data-target="s-intro" class="active">Intro</a>
+  <a href="#" data-target="s-challenge">Challenge</a>
+  <a href="#" data-target="s-logo">Logo</a>
+  <a href="#" data-target="s-product">Product / CMF</a>
+  <a href="#" data-target="s-packaging">Packaging</a>
+  <a href="#" data-target="s-process">Process</a>
+  <a href="#" data-target="s-outcome">Outcome</a>
+  <a href="#" data-target="s-summary">Summary</a>
+</nav>
 
 <!-- PROGRESS -->
 <div class="progress-bar" id="progressBar"></div>
@@ -700,17 +868,13 @@ header {
 <!-- SNAP CONTAINER -->
 <div class="snap-container" id="snapContainer">
 
-  <!-- ══════════════════════════════════════
-       01 · INTRO — full-bleed hero image
-  ══════════════════════════════════════ -->
+  <!-- 01 · INTRO — full-bleed hero -->
   <div class="panel panel--fullbleed" data-label="Intro" data-section="s-intro">
     <img src="images/hero.jpg" alt="HAYAN — intro hero" />
     <div class="caption">HAYAN — Sustainable lifestyle brand · 2021</div>
   </div>
 
-  <!-- ══════════════════════════════════════
-       01b · INTRO — product video
-  ══════════════════════════════════════ -->
+  <!-- 01b · INTRO — product video -->
   <div class="panel panel--fullbleed" data-label="Intro" data-section="s-intro-vid">
     <video autoplay loop muted playsinline>
       <source src="videos/product2.mp4" type="video/mp4">
@@ -719,15 +883,12 @@ header {
     <div class="caption">CMF — material story</div>
   </div>
 
-  <!-- ══════════════════════════════════════
-       02 · CHALLENGE & SOLUTION
-  ══════════════════════════════════════ -->
+  <!-- 02 · CHALLENGE & SOLUTION -->
   <div class="panel panel--dark" data-label="Challenge" data-section="s-challenge">
     <div class="challenge-solution">
       <div class="cs-block">
         <div class="cs-tag r">The Challenge</div>
-        <p class="cs-body r d1">The eco-friendly toothbrush category had a ceiling. Bamboo handles, muted palettes, design that signaled virtue instead of desire. It never tried to appeal beyond the people who already cared. A higher price needed a reason to exist. Without a brand to give it one, it would land as another apologetic eco product.
-</p>
+        <p class="cs-body r d1">The eco-friendly toothbrush category had a ceiling. Bamboo handles, muted palettes, design that signaled virtue instead of desire. It never tried to appeal beyond the people who already cared. A higher price needed a reason to exist — without a brand to give it one, it would land as another apologetic eco product.</p>
       </div>
       <div class="cs-block">
         <div class="cs-tag r">The Solution</div>
@@ -736,9 +897,7 @@ header {
     </div>
   </div>
 
-  <!-- ══════════════════════════════════════
-       03 · LOGO — full-bleed video loop
-  ══════════════════════════════════════ -->
+  <!-- 03 · LOGO — full-bleed video -->
   <div class="panel panel--fullbleed" data-label="Logo" data-section="s-logo">
     <video autoplay loop muted playsinline>
       <source src="videos/logo.mp4" type="video/mp4">
@@ -748,9 +907,7 @@ header {
     <div class="caption">Logo — wordmark &amp; identity system</div>
   </div>
 
-  <!-- ══════════════════════════════════════
-       04 · PRODUCT / CMF — image left + text right
-  ══════════════════════════════════════ -->
+  <!-- 04 · PRODUCT / CMF — split -->
   <div class="panel" data-label="Product / CMF" data-section="s-product" style="flex-direction:row; overflow:hidden;">
     <div class="split" style="flex:1; display:grid; grid-template-columns:1fr 1fr; min-height:0;">
       <div class="split-visual" style="border-right:1px solid var(--border);">
@@ -771,7 +928,7 @@ header {
     <div class="caption">Product — handle &amp; bristle detail</div>
   </div>
 
-  <!-- 04c · PRODUCT/CMF — video loop -->
+  <!-- 04c · PRODUCT/CMF — video -->
   <div class="panel panel--fullbleed" data-label="Product / CMF" data-section="s-product-vid1">
     <video autoplay loop muted playsinline>
       <source src="videos/Product_v1.mp4" type="video/mp4">
@@ -792,9 +949,7 @@ header {
     <div class="caption">CMF — adult &amp; children's range</div>
   </div>
 
-  <!-- ══════════════════════════════════════
-       05 · PACKAGING — split (image + text)
-  ══════════════════════════════════════ -->
+  <!-- 05 · PACKAGING — split -->
   <div class="panel" data-label="Packaging" data-section="s-packaging" style="flex-direction:row; overflow:hidden;">
     <div class="split" style="flex:1; display:grid; grid-template-columns:1fr 1fr; min-height:0;">
       <div class="split-visual" style="border-right:1px solid var(--border);">
@@ -821,20 +976,20 @@ header {
     <div class="caption">Packaging details</div>
   </div>
 
-  <!-- ══════════════════════════════════════
-       06 · PROCESS — full-bleed video loop
-  ══════════════════════════════════════ -->
+  <!-- 06 · PROCESS — ping-pong canvas video -->
   <div class="panel panel--fullbleed" data-label="Process" data-section="s-process">
-    <video autoplay loop muted playsinline>
-      <source src="videos/Progress.mp4" type="video/mp4">
-      <div class="img-ph dark">Video — design &amp; production process</div>
+    <!-- Hidden video used only as frame source -->
+    <video id="processVideo" muted playsinline preload="auto" style="display:none;">
+      <source src="videos/process.mp4" type="video/mp4">
     </video>
+    <!-- Canvas renders frames forward + backward -->
+    <canvas id="processCanvas" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;"></canvas>
+    <!-- Fallback if video/canvas fails -->
+    <div class="img-ph dark" id="processFallback" style="display:none;">Video — design &amp; production process</div>
     <div class="caption">Process — design to production</div>
   </div>
 
-  <!-- ══════════════════════════════════════
-       07 · OUTCOME — stats + press
-  ══════════════════════════════════════ -->
+  <!-- 07 · OUTCOME — stats + press -->
   <div class="panel" data-label="Outcome" data-section="s-outcome" style="flex-direction:row; overflow:hidden;">
     <!-- LEFT: stats -->
     <div style="flex:1; display:flex; flex-direction:column; justify-content:center; padding:52px 64px; border-right:1px solid var(--border);">
@@ -855,12 +1010,12 @@ header {
       <div class="sec-label r">Press</div>
       <div class="r d1" style="display:flex; flex-direction:column; margin-top:8px;">
         <div style="padding:36px 0; border-top:1px solid var(--border);">
-          <div style="font-size:clamp(28px,3.5vw,48px); font-weight:300; letter-spacing:-0.02em; line-height:1; margin-bottom:12px;">Hypebae</div>
+          <div style="font-size:clamp(22px,3.5vw,48px); font-weight:300; letter-spacing:-0.02em; line-height:1; margin-bottom:12px;">Hypebae</div>
           <div class="stat-label" style="margin-bottom:16px;">Featured as a standout in Korean sustainable design</div>
           <a href="https://hypebae.com/2021/12/hayan-toothbrushes-biodegradable-sustainable-design-launch-price" target="_blank" rel="noopener" style="font-size:10px; font-family:var(--mono); letter-spacing:0.1em; text-transform:uppercase; color:var(--black); text-decoration:none; opacity:0.45; transition:opacity 0.15s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.45">Read article ↗</a>
         </div>
         <div style="padding:36px 0; border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
-          <div style="font-size:clamp(28px,3.5vw,48px); font-weight:300; letter-spacing:-0.02em; line-height:1; margin-bottom:12px;">DDP D-magazine</div>
+          <div style="font-size:clamp(18px,3.5vw,48px); font-weight:300; letter-spacing:-0.02em; line-height:1; margin-bottom:12px;">DDP D-magazine</div>
           <div class="stat-label" style="margin-bottom:16px;">Interview in Dongdaemun Design Plaza's official magazine</div>
           <a href="https://www.ddpdesignstore.org/board/view.php?page=26&bdId=magazine&sno=43" target="_blank" rel="noopener" style="font-size:10px; font-family:var(--mono); letter-spacing:0.1em; text-transform:uppercase; color:var(--black); text-decoration:none; opacity:0.45; transition:opacity 0.15s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.45">Read interview ↗</a>
         </div>
@@ -868,11 +1023,8 @@ header {
     </div>
   </div>
 
-  <!-- ══════════════════════════════════════
-       07b · CUSTOMER — quotes + instagram
-  ══════════════════════════════════════ -->
+  <!-- 07b · CUSTOMER — quotes + instagram -->
   <div class="panel" data-label="Outcome" data-section="s-outcome-voice" style="flex-direction:row; overflow:hidden;">
-    <!-- LEFT: quotes -->
     <div class="outcome-left r">
       <div class="sec-label">Customer Voice</div>
       <div class="outcome-quotes">
@@ -894,7 +1046,6 @@ header {
         </div>
       </div>
     </div>
-    <!-- RIGHT: instagram grid -->
     <div class="outcome-right">
       <div class="outcome-insta-grid">
         <div class="outcome-insta-cell"><img src="images/instagram1.jpg" alt="Customer photo 1" /></div>
@@ -907,9 +1058,7 @@ header {
     </div>
   </div>
 
-  <!-- ══════════════════════════════════════
-       08 · SUMMARY
-  ══════════════════════════════════════ -->
+  <!-- 08 · SUMMARY -->
   <div class="panel" data-label="Summary" data-section="s-summary">
     <div class="panel-inner" style="overflow-y:auto;">
       <div class="sec-label r">Summary</div>
@@ -958,9 +1107,7 @@ header {
     </div>
   </div>
 
-  <!-- ══════════════════════════════════════
-       FOOTER
-  ══════════════════════════════════════ -->
+  <!-- FOOTER -->
   <div class="panel--footer" data-label="End">
     <div class="footer-copy">© 2025 Hye Min Eom</div>
     <div class="footer-copy">HAYAN — 2021</div>
@@ -970,6 +1117,37 @@ header {
 </div><!-- end snap-container -->
 
 <script>
+// ── MOBILE NAV ──
+const mobileNavBtn = document.getElementById('mobileNavBtn');
+const mobileDrawer = document.getElementById('mobileDrawer');
+const drawerLinks = Array.from(mobileDrawer.querySelectorAll('a'));
+
+mobileNavBtn.addEventListener('click', () => {
+  const isOpen = mobileDrawer.classList.toggle('open');
+  mobileNavBtn.classList.toggle('open', isOpen);
+});
+
+drawerLinks.forEach(link => {
+  link.addEventListener('click', e => {
+    e.preventDefault();
+    const target = link.dataset.target;
+    const panel = panels.find(p => p.dataset.section === target);
+    if (panel) panel.scrollIntoView({ behavior: 'smooth' });
+    mobileDrawer.classList.remove('open');
+    mobileNavBtn.classList.remove('open');
+  });
+});
+
+// Close drawer on outside tap
+document.addEventListener('touchstart', e => {
+  if (mobileDrawer.classList.contains('open') &&
+      !mobileDrawer.contains(e.target) &&
+      !mobileNavBtn.contains(e.target)) {
+    mobileDrawer.classList.remove('open');
+    mobileNavBtn.classList.remove('open');
+  }
+}, { passive: true });
+
 // ── MAIN NAV + SCROLL LOGIC ──
 const container = document.getElementById('snapContainer');
 const panels = Array.from(document.querySelectorAll('.panel, .panel--footer'));
@@ -978,7 +1156,6 @@ const counter = document.getElementById('sectionCounter');
 const progressBar = document.getElementById('progressBar');
 const total = panels.length;
 
-// Sidebar section grouping map (sub-panels → parent nav item)
 const sectionParentMap = {
   's-intro-vid': 's-intro',
   's-packaging-img1': 's-packaging',
@@ -1004,6 +1181,12 @@ panels.forEach(panel => {
   revealMap.set(panel, panel.querySelectorAll('.r'));
 });
 
+function syncDrawerActive(sidebarTarget) {
+  drawerLinks.forEach(link => {
+    link.classList.toggle('active', link.dataset.target === sidebarTarget);
+  });
+}
+
 function activatePanel(index) {
   const panel = panels[index];
   const section = panel?.dataset?.section;
@@ -1012,6 +1195,7 @@ function activatePanel(index) {
   sidebarLinks.forEach(link => {
     link.classList.toggle('active', link.dataset.target === sidebarTarget);
   });
+  syncDrawerActive(sidebarTarget);
 
   counter.textContent = String(index + 1).padStart(2, '0') + ' / ' + String(total).padStart(2, '0');
   const pct = total > 1 ? (index / (total - 1)) * 100 : 100;
@@ -1045,32 +1229,148 @@ document.addEventListener('keydown', e => {
 
 activatePanel(0);
 
-// ── PACKAGING SLIDER ──
-const track = document.getElementById('pkgSliderTrack');
-const dots = Array.from(document.querySelectorAll('#pkgDots .slider-dot'));
-const pkgCounter = document.getElementById('pkgCounter');
-const prevBtn = document.getElementById('pkgPrev');
-const nextBtn = document.getElementById('pkgNext');
-const slideCount = 2;
-let currentSlide = 0;
+// ── PROCESS VIDEO PING-PONG ──
+// Plays forward, then backward, then forward — seamlessly on canvas.
+(function () {
+  const video   = document.getElementById('processVideo');
+  const canvas  = document.getElementById('processCanvas');
+  const fallback= document.getElementById('processFallback');
+  const ctx     = canvas.getContext('2d');
 
-function goToSlide(n) {
-  currentSlide = (n + slideCount) % slideCount;
-  track.style.transform = `translateX(-${currentSlide * 100}%)`;
-  dots.forEach((d, i) => d.classList.toggle('active', i === currentSlide));
-  pkgCounter.textContent = `${currentSlide + 1} / ${slideCount}`;
-}
+  if (!video || !canvas || !ctx) return;
 
-prevBtn.addEventListener('click', () => goToSlide(currentSlide - 1));
-nextBtn.addEventListener('click', () => goToSlide(currentSlide + 1));
-dots.forEach(dot => dot.addEventListener('click', () => goToSlide(+dot.dataset.index)));
+  const FPS        = 30;   // capture frame rate
+  const PLAY_FPS   = 30;   // playback frame rate
+  const frames     = [];
+  let   capturing  = false;
+  let   playing    = false;
+  let   frameIdx   = 0;
+  let   direction  = 1;    // 1 = forward, -1 = backward
+  let   rafId      = null;
+  let   lastTime   = 0;
+  const interval   = 1000 / PLAY_FPS;
 
-let touchStartX = 0;
-track.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
-track.addEventListener('touchend', e => {
-  const dx = e.changedTouches[0].clientX - touchStartX;
-  if (Math.abs(dx) > 40) goToSlide(dx < 0 ? currentSlide + 1 : currentSlide - 1);
-});
+  function resizeCanvas() {
+    canvas.width  = canvas.offsetWidth  * window.devicePixelRatio;
+    canvas.height = canvas.offsetHeight * window.devicePixelRatio;
+  }
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas);
+
+  // Draw a frame cover-fitted onto canvas
+  function drawFrame(img) {
+    const cw = canvas.width, ch = canvas.height;
+    const iw = img.width || img.videoWidth  || cw;
+    const ih = img.height|| img.videoHeight || ch;
+    const scale = Math.max(cw / iw, ch / ih);
+    const dw = iw * scale, dh = ih * scale;
+    const dx = (cw - dw) / 2, dy = (ch - dh) / 2;
+    ctx.clearRect(0, 0, cw, ch);
+    ctx.drawImage(img, dx, dy, dw, dh);
+  }
+
+  // Capture every frame into an offscreen canvas array
+  function captureFrames() {
+    if (capturing) return;
+    capturing = true;
+
+    const dur = video.duration;
+    if (!isFinite(dur) || dur === 0) { showFallback(); return; }
+
+    const totalFrames = Math.floor(dur * FPS);
+    let   captured    = 0;
+
+    function seekNext() {
+      if (captured >= totalFrames) {
+        // Done — start ping-pong playback
+        video.pause();
+        startPingPong();
+        return;
+      }
+      video.currentTime = captured / FPS;
+      captured++;
+    }
+
+    video.addEventListener('seeked', function onSeeked() {
+      // Draw current frame into an offscreen canvas and store it
+      const off = document.createElement('canvas');
+      off.width  = video.videoWidth;
+      off.height = video.videoHeight;
+      off.getContext('2d').drawImage(video, 0, 0);
+      frames.push(off);
+      seekNext();
+    });
+
+    seekNext();
+  }
+
+  function startPingPong() {
+    if (playing) return;
+    playing   = true;
+    frameIdx  = 0;
+    direction = 1;
+    lastTime  = 0;
+    rafId = requestAnimationFrame(tick);
+  }
+
+  function tick(now) {
+    rafId = requestAnimationFrame(tick);
+    if (now - lastTime < interval) return;
+    lastTime = now;
+
+    if (frames.length === 0) return;
+    drawFrame(frames[frameIdx]);
+
+    frameIdx += direction;
+
+    // Reverse direction at ends
+    if (frameIdx >= frames.length) {
+      frameIdx  = frames.length - 2;
+      direction = -1;
+    } else if (frameIdx < 0) {
+      frameIdx  = 1;
+      direction = 1;
+    }
+  }
+
+  function showFallback() {
+    canvas.style.display  = 'none';
+    fallback.style.display = '';
+  }
+
+  // Pause/resume ping-pong when panel is not visible (perf)
+  const processPanel = document.querySelector('[data-section="s-process"]');
+  if (processPanel) {
+    const visObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          if (frames.length > 0 && !playing) startPingPong();
+          else if (rafId === null && playing) rafId = requestAnimationFrame(tick);
+        } else {
+          if (rafId !== null) { cancelAnimationFrame(rafId); rafId = null; }
+          playing = false;
+        }
+      });
+    }, { threshold: 0.3 });
+    visObs.observe(processPanel);
+  }
+
+  // Kick off once video metadata is ready
+  function init() {
+    video.muted = true;
+    video.play().then(() => {
+      // Let a tiny bit buffer then pause and start capturing
+      setTimeout(() => { video.pause(); captureFrames(); }, 200);
+    }).catch(showFallback);
+  }
+
+  if (video.readyState >= 1) {
+    init();
+  } else {
+    video.addEventListener('loadedmetadata', init, { once: true });
+    video.addEventListener('error', showFallback, { once: true });
+  }
+})();
 </script>
 </body>
 </html>
