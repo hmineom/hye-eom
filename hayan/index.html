@@ -321,21 +321,26 @@ header {
   max-width: 520px;
 }
 
-/* ── MEDIA PAIR: desktop shows two separate panels, hides combined ── */
-.panel--media-combined { display: none; }
+/* ── MEDIA PAIR ──
+   Desktop: two separate full-bleed panels visible, combined hidden.
+   Mobile:  separate panels hidden, combined shown.
+── */
+.panel--media-pair-a,
+.panel--media-pair-b { display: flex; } /* visible on desktop */
+.panel--media-combined { display: none; } /* hidden on desktop */
 
-/* Combined panel: side-by-side halves, full bleed */
+/* Combined panel styles (only active on mobile) */
 .panel--media-combined {
   background: var(--black);
-  flex-direction: row;
+  flex-direction: column;
 }
 .media-combined-half {
   position: relative;
-  flex: 1;
+  flex: 1;          /* each half = 50% of panel height */
   overflow: hidden;
 }
 .media-combined-half + .media-combined-half {
-  border-left: 1px solid rgba(255,255,255,0.12);
+  border-top: 1px solid rgba(255,255,255,0.12);
 }
 .media-combined-half img,
 .media-combined-half video {
@@ -814,14 +819,23 @@ header {
     font-size: 13px;
   }
 
-  /* ── MEDIA PAIR: swap separate panels for combined on mobile ── */
+  /* ── MEDIA PAIR: swap separate → combined on mobile ── */
   .panel--media-pair-a,
-  .panel--media-pair-b { display: none !important; }
+  .panel--media-pair-b {
+    display: none !important;
+    height: 0 !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+    scroll-snap-align: none !important;
+  }
   .panel--media-combined {
     display: flex !important;
-    flex-direction: row;
-    height: calc(100dvh - var(--hdr));
-    overflow: hidden;
+    flex-direction: column !important;
+    height: calc(100dvh - var(--hdr)) !important;
+    min-height: calc(100dvh - var(--hdr)) !important;
+    overflow: hidden !important;
+    scroll-snap-align: start !important;
+    scroll-snap-stop: always !important;
   }
 
   /* ── CHALLENGE / SOLUTION ── */
