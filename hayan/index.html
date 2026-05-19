@@ -420,44 +420,59 @@ header {
 }
 .outcome-stats {
   flex: 1;
-  display: grid;
-  grid-template-rows: 48px 1fr 1fr;  /* label row + two equal content rows */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   padding: 52px 64px;
   border-right: 1px solid var(--border);
   overflow: hidden;
 }
 .outcome-press {
   flex: 1;
-  display: grid;
-  grid-template-rows: 48px 1fr 1fr;  /* identical grid — lines lock together */
-  padding: 52px 64px;
-  overflow: hidden;
-}
-/* Label sits in its own fixed row */
-.outcome-stats .sec-label,
-.outcome-press .sec-label {
-  margin-bottom: 0;
-  align-self: end;
-}
-/* Each stat/press block fills one grid row, border-top is the shared line */
-.outcome-stat-block,
-.outcome-press-block {
-  border-top: 1px solid var(--border);
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 0;
+  padding: 52px 64px;
+  overflow: hidden;
+}
+.outcome-stat-block {
+  padding: 36px 0;
+  border-top: 1px solid var(--border);
 }
 .outcome-stat-block--bottom {
   border-bottom: 1px solid var(--border);
 }
+.outcome-press-block {
+  padding: 36px 0;
+  border-top: 1px solid var(--border);
+}
 .outcome-press-block--bottom {
   border-bottom: 1px solid var(--border);
 }
-/* The animated wrapper spans both content rows */
-.outcome-stats .r,
-.outcome-press .r {
-  display: contents;
+
+/* ── DESKTOP ONLY: align lines across both columns ── */
+@media (min-width: 901px) {
+  .outcome-stats,
+  .outcome-press {
+    display: grid;
+    grid-template-rows: 48px 1fr 1fr;
+  }
+  .outcome-stats .sec-label,
+  .outcome-press .sec-label {
+    margin-bottom: 0;
+    align-self: end;
+  }
+  .outcome-stat-block,
+  .outcome-press-block {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0;
+  }
+  .outcome-stats .r,
+  .outcome-press .r {
+    display: contents;
+  }
 }
 /* ── SHARED TYPE SCALE for outcome + press ──
    Level 1: .sec-label      — 10px mono, uppercase, 0.14em, opacity 0.38  (already global)
