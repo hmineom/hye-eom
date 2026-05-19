@@ -61,9 +61,25 @@ header {
   height: var(--hdr);
 }
 .hdr-left { display: flex; align-items: center; gap: 20px; }
-.hdr-brand { font-size: 13px; font-weight: 500; letter-spacing: 0.03em; }
+.hdr-brand {
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  color: var(--black);
+  text-decoration: none;
+  transition: opacity 0.15s;
+}
+.hdr-brand:hover { opacity: 0.5; }
 .hdr-collab { font-size: 11px; font-family: var(--mono); opacity: 0.4; letter-spacing: 0.08em; }
-.hdr-right { font-size: 11px; font-family: var(--mono); opacity: 0.4; letter-spacing: 0.08em; }
+.hdr-right { display: flex; align-items: center; }
+.hdr-year {
+  font-size: 11px;
+  font-family: var(--mono);
+  opacity: 0.4;
+  letter-spacing: 0.08em;
+}
+/* Hamburger hidden on desktop */
+.mobile-nav-btn { display: none; }
 
 /* ── PROGRESS ── */
 .progress-bar {
@@ -91,19 +107,20 @@ header {
 
 /* ── MOBILE NAV TOGGLE ── */
 .mobile-nav-btn {
+  /* Always in the DOM; hidden on desktop via CSS */
   display: none;
   background: none;
   border: none;
   cursor: pointer;
-  padding: 8px;
-  margin: -8px;
+  padding: 0;
   flex-direction: column;
   gap: 5px;
   align-items: center;
   justify-content: center;
-  /* Larger tap target */
-  min-width: 44px;
-  min-height: 44px;
+  /* 44px tap target */
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
 }
 .mobile-nav-btn span {
   display: block;
@@ -334,13 +351,13 @@ header {
 }
 
 /* ── SPLIT (image + text) ── */
-/* Replace inline grid styles with a class */
 .panel--split {
   flex-direction: row;
 }
 .split {
+  /* Image column fluid: fills half by default, clamps to 35–55% of panel width */
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: clamp(35%, 50%, 55%) 1fr;
   flex: 1;
   gap: 0;
   overflow: hidden;
@@ -356,9 +373,13 @@ header {
 .split-visual {
   overflow: hidden;
   position: relative;
+  min-height: 0;
 }
+/* Absolute-fill so image always covers its full column at any viewport size */
 .split-visual img,
 .split-visual video {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -644,10 +665,16 @@ header {
   .snap-container { left: 0; }
   .panel-inner { padding: 40px 28px 36px; }
 
-  /* Split panels */
+  /* Split panels — image row: fluid portion of panel height */
   .panel--split { flex-direction: column; }
-  .split { grid-template-columns: 1fr; grid-template-rows: 45vh 1fr; }
-  .split-text { padding: 32px 28px 28px; justify-content: flex-start; }
+  .split {
+    grid-template-columns: 1fr;
+    /* Image takes ~45% of the panel, text gets the rest — both scale with screen */
+    grid-template-rows: 45% 55%;
+    overflow: hidden;
+  }
+  .split-visual { position: relative; min-height: 0; }
+  .split-text { padding: 32px 28px 28px; justify-content: flex-start; overflow-y: auto; }
   .split-visual--bordered { border-right: none; border-bottom: 1px solid var(--border); }
 
   /* Challenge/solution */
@@ -685,6 +712,8 @@ header {
     padding-right: calc(20px + var(--safe-right));
   }
   .hdr-collab { display: none; }
+  /* Swap: hide year text, show hamburger */
+  .hdr-year { display: none; }
   .mobile-nav-btn { display: flex; }
   .mobile-drawer { display: block; }
 
@@ -755,16 +784,16 @@ header {
   .panel--split { flex-direction: column; }
   .split {
     grid-template-columns: 1fr;
-    /* Image height responsive to viewport */
-    grid-template-rows: min(42vw, 260px) 1fr;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
+    /* Image row: 42% of the panel height — scales with every screen size */
+    grid-template-rows: 42% 58%;
     flex: 1;
     min-height: 0;
+    overflow: hidden;
   }
   .split-visual {
-    /* Let grid-template-rows control height */
-    height: auto;
+    position: relative;
+    min-height: 0;
+    /* image fills via absolute-inset rule already set on img/video */
   }
   .split-visual--bordered {
     border-right: none;
@@ -774,6 +803,8 @@ header {
     padding: 24px 20px 28px;
     justify-content: flex-start;
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    min-height: 0;
   }
 
   /* ── OUTCOME STATS + PRESS ── */
@@ -888,14 +919,16 @@ header {
 <!-- HEADER -->
 <header>
   <div class="hdr-left">
-    <div class="hdr-brand">HAYAN</div>
+    <a href="/" class="hdr-brand">Hye Eom</a>
     <div class="hdr-collab">Design Director</div>
   </div>
-  <!-- Mobile menu toggle -->
-  <button class="mobile-nav-btn" id="mobileNavBtn" aria-label="Toggle navigation">
-    <span></span><span></span><span></span>
-  </button>
-  <div class="hdr-right">2021</div>
+  <div class="hdr-right">
+    <!-- Desktop: year label; Mobile: replaced by hamburger via CSS -->
+    <span class="hdr-year">HAYAN · 2021</span>
+    <button class="mobile-nav-btn" id="mobileNavBtn" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
 </header>
 
 <!-- MOBILE DRAWER NAV -->
