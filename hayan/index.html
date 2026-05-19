@@ -349,6 +349,15 @@ header {
   display: block;
 }
 
+/* ── PACKAGING PAIR ── */
+.panel--pkg-pair-a,
+.panel--pkg-pair-b { display: flex; }
+.panel--pkg-combined {
+  display: none;
+  background: var(--black);
+  flex-direction: column;
+}
+
 /* ── PANEL VARIANTS ── */
 .panel--dark { background: var(--black); color: var(--bg); }
 .panel--dark .sec-label { color: var(--bg); }
@@ -770,6 +779,37 @@ header {
   }
   .mobile-drawer { display: block; }
 
+  /* ── PACKAGING PAIR: swap on mobile ── */
+  .panel--pkg-pair-a,
+  .panel--pkg-pair-b {
+    display: none !important;
+    height: 0 !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+    scroll-snap-align: none !important;
+  }
+  .panel--pkg-combined {
+    display: flex !important;
+    flex-direction: column !important;
+    height: calc(100dvh - var(--hdr)) !important;
+    min-height: calc(100dvh - var(--hdr)) !important;
+    overflow: hidden !important;
+    scroll-snap-align: start !important;
+    scroll-snap-stop: always !important;
+  }
+
+  /* ── CONTAIN PANELS: show full image on white bg on mobile ── */
+  .panel--contain-mobile {
+    background: var(--bg) !important;
+  }
+  .panel--contain-mobile img {
+    object-fit: contain !important;
+    object-position: center center !important;
+  }
+  .panel--contain-mobile .caption {
+    color: rgba(0,0,0,0.35) !important;
+  }
+
   /* ── SECTION COUNTER ── */
   .section-counter {
     bottom: calc(20px + var(--safe-bottom));
@@ -1116,13 +1156,13 @@ header {
   </div>
 
   <!-- 04d · PRODUCT/CMF — full image -->
-  <div class="panel panel--fullbleed" data-label="Product / CMF" data-section="s-product-img2">
+  <div class="panel panel--fullbleed panel--contain-mobile" data-label="Product / CMF" data-section="s-product-img2">
     <img src="../images/Product_d.jpg" alt="CMF detail" />
     <div class="caption">CMF — color, material, finish</div>
   </div>
 
   <!-- 04e · PRODUCT/CMF — full image -->
-  <div class="panel panel--fullbleed" data-label="Product / CMF" data-section="s-product-img3">
+  <div class="panel panel--fullbleed panel--contain-mobile" data-label="Product / CMF" data-section="s-product-img3">
     <img src="../images/Product_e.jpg" alt="CMF detail" />
     <div class="caption">CMF — adult &amp; children's range</div>
   </div>
@@ -1142,16 +1182,25 @@ header {
     </div>
   </div>
 
-  <!-- 05b · PACKAGING — full image -->
-  <div class="panel panel--fullbleed" data-label="Packaging" data-section="s-packaging-img1">
+  <!-- 05b+c · PACKAGING — desktop: two panels; mobile: one stacked panel -->
+  <div class="panel panel--fullbleed panel--pkg-pair-a" data-label="Packaging" data-section="s-packaging-img1">
     <img src="../images/package4.jpg" alt="Packaging" />
     <div class="caption">Packaging details</div>
   </div>
 
-  <!-- 05c · PACKAGING — full image -->
-  <div class="panel panel--fullbleed" data-label="Packaging" data-section="s-packaging-img2">
+  <div class="panel panel--fullbleed panel--pkg-pair-b" data-label="Packaging" data-section="s-packaging-img2">
     <img src="../images/package3.jpg" alt="Packaging" />
     <div class="caption">Packaging details</div>
+  </div>
+
+  <!-- Mobile-only: both packaging images stacked 50/50 -->
+  <div class="panel panel--pkg-combined" data-label="Packaging" data-section="s-packaging-combined">
+    <div class="media-combined-half">
+      <img src="../images/package4.jpg" alt="Packaging details" />
+    </div>
+    <div class="media-combined-half">
+      <img src="../images/package3.jpg" alt="Packaging details" />
+    </div>
   </div>
 
   <!-- 07 · OUTCOME — stats + press -->
@@ -1347,6 +1396,7 @@ const sectionParentMap = {
   's-product-img2': 's-product',
   's-product-img3': 's-product',
   's-outcome-voice': 's-outcome',
+  's-packaging-combined': 's-packaging',
 };
 
 sidebarLinks.forEach(link => {
