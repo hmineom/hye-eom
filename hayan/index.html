@@ -449,6 +449,38 @@ header {
 .outcome-press-block--bottom {
   border-bottom: 1px solid var(--border);
 }
+
+/* ── DESKTOP ONLY: lock both columns to identical row grid so lines align ── */
+@media (min-width: 901px) {
+  .outcome-stats,
+  .outcome-press {
+    /* 3 rows: label + two equal content rows */
+    display: grid;
+    grid-template-rows: auto 1fr 1fr;
+    justify-content: unset;
+  }
+  /* Animated wrapper must not create an extra row */
+  .outcome-stats .r,
+  .outcome-press .r {
+    display: contents;
+  }
+  /* Each block fills its grid row; border-top is the shared line */
+  .outcome-stat-block,
+  .outcome-press-block {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* Remove fixed padding — the grid row height controls spacing */
+    padding: 0 0 0 0;
+    border-top: 1px solid var(--border);
+  }
+  .outcome-stat-block--bottom {
+    border-bottom: 1px solid var(--border);
+  }
+  .outcome-press-block--bottom {
+    border-bottom: 1px solid var(--border);
+  }
+}
 /* ── SHARED TYPE SCALE for outcome + press ──
    Level 1: .sec-label      — 10px mono, uppercase, 0.14em, opacity 0.38  (already global)
    Level 2: .stat-num / .press-name — large display figure / publication name
