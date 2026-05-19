@@ -449,51 +449,56 @@ header {
 .outcome-press-block--bottom {
   border-bottom: 1px solid var(--border);
 }
+/* ── SHARED TYPE SCALE for outcome + press ──
+   Level 1: .sec-label      — 10px mono, uppercase, 0.14em, opacity 0.38  (already global)
+   Level 2: .stat-num / .press-name — large display figure / publication name
+   Level 3: .stat-label / .press-desc — 11px mono, lowercase, 0.06em, opacity 0.45
+   Level 4: .press-link     — 10px mono, lowercase, 0.06em, opacity 0.45 + underline on hover
+── */
 .stat-num {
   font-size: clamp(40px, 5.5vw, 72px);
   font-weight: 300;
   letter-spacing: -0.04em;
   line-height: 1;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 .stat-label {
   font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: lowercase;
   opacity: 0.45;
 }
 .press-name {
+  /* Match the weight and feel of stat-num — large, light, tight */
   font-size: clamp(22px, 3.5vw, 48px);
   font-weight: 300;
   letter-spacing: -0.02em;
   line-height: 1;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
 }
 .press-desc {
   font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: lowercase;
   opacity: 0.45;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }
 .press-link {
-  font-size: 10px;
   font-family: var(--mono);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: lowercase;
   color: var(--black);
   text-decoration: none;
   opacity: 0.45;
   transition: opacity 0.15s;
-  /* Better tap target */
-  display: inline-block;
-  padding: 6px 0;
+  display: inline-flex;
+  align-items: center;
   min-height: 44px;
-  line-height: 44px;
 }
-.press-link:hover { opacity: 1; }
+.press-link:hover { opacity: 1; text-decoration: underline; text-underline-offset: 3px; }
 
 /* ── CUSTOMER VOICE PANEL ── */
 .panel--voice {
@@ -605,7 +610,7 @@ header {
   font-family: var(--mono);
   font-size: 10px;
   letter-spacing: 0.05em;
-  text-transform: lowercase;
+  text-transform: capitalize;
   opacity: 0.35;
   border-bottom: 1px solid var(--border);
   padding: 8px 16px;
@@ -886,10 +891,10 @@ header {
   .outcome-press-block { padding: 12px 0; }
   .outcome-press-block--bottom { border-bottom: none; }
   .stat-num { font-size: clamp(32px, 9vw, 52px); }
-  .stat-label { font-size: 9px; margin-top: 6px !important; }
-  .press-name { font-size: clamp(18px, 6vw, 32px); margin-bottom: 6px; }
-  .press-desc { margin-bottom: 8px; }
-  .press-link { min-height: 32px; line-height: 32px; }
+  .stat-label { font-size: 10px; margin-top: 4px; }
+  .press-name { font-size: clamp(18px, 6vw, 32px); }
+  .press-desc { font-size: 10px; margin-bottom: 8px; }
+  .press-link { font-size: 10px; min-height: 36px; }
 
   /* ── CUSTOMER VOICE ── */
   .panel--voice {
