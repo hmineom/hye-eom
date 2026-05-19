@@ -321,31 +321,24 @@ header {
   max-width: 520px;
 }
 
-/* ── MEDIA PAIR: desktop shows separate panels, hides combined ── */
+/* ── MEDIA PAIR: desktop shows two separate panels, hides combined ── */
 .panel--media-combined { display: none; }
 
-/* Combined panel layout */
+/* Combined panel: side-by-side halves, full bleed */
 .panel--media-combined {
   background: var(--black);
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
+  flex-direction: row;
 }
-.media-combined-inner {
-  display: flex;
-  flex-direction: column;
-}
-.media-combined-cell {
+.media-combined-half {
   position: relative;
-  /* Natural 4:3 aspect so full image shows without cropping */
-  aspect-ratio: 4 / 3;
-  width: 100%;
+  flex: 1;
   overflow: hidden;
-  flex-shrink: 0;
 }
-.media-combined-cell img,
-.media-combined-cell video {
+.media-combined-half + .media-combined-half {
+  border-left: 1px solid rgba(255,255,255,0.12);
+}
+.media-combined-half img,
+.media-combined-half video {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -826,13 +819,10 @@ header {
   .panel--media-pair-b { display: none !important; }
   .panel--media-combined {
     display: flex !important;
-    flex-direction: column;
-    overflow-y: auto;
+    flex-direction: row;
     height: calc(100dvh - var(--hdr));
+    overflow: hidden;
   }
-  .media-combined-inner { flex: 1; }
-  /* Use 3:4 portrait ratio on mobile for natural phone framing */
-  .media-combined-cell { aspect-ratio: 3 / 4; }
 
   /* ── CHALLENGE / SOLUTION ── */
   .challenge-solution {
@@ -1102,19 +1092,16 @@ header {
     <div class="caption">Product — in use</div>
   </div>
 
-  <!-- Mobile-only combined panel (hidden on desktop) -->
+  <!-- Mobile-only combined panel: two images side by side, each 50% width, full height -->
   <div class="panel panel--media-combined" data-label="Product / CMF" data-section="s-product-combined">
-    <div class="media-combined-inner">
-      <div class="media-combined-cell">
-        <img src="../images/Product_b.jpg" alt="Product detail" />
-      </div>
-      <div class="media-combined-cell">
-        <video autoplay loop muted playsinline>
-          <source src="../videos/Product_v1.mp4" type="video/mp4">
-        </video>
-      </div>
+    <div class="media-combined-half">
+      <img src="../images/Product_b.jpg" alt="Product detail" />
     </div>
-    <div class="caption" style="color:rgba(255,255,255,0.45);">Product — detail &amp; in use</div>
+    <div class="media-combined-half">
+      <video autoplay loop muted playsinline>
+        <source src="../videos/Product_v1.mp4" type="video/mp4">
+      </video>
+    </div>
   </div>
 
   <!-- 04d · PRODUCT/CMF — full image -->
