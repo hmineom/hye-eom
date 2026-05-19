@@ -452,10 +452,20 @@ header {
 
 /* ── DESKTOP ONLY: align lines across both columns ── */
 @media (min-width: 901px) {
+  /* Force both columns to be identical pixel width regardless of sidebar */
+  .panel--outcome {
+    display: flex;
+  }
   .outcome-stats,
   .outcome-press {
     display: grid;
     grid-template-rows: 48px 1fr 1fr;
+    /* Use vw-based padding so both lines span the exact same length:
+       each column = (100vw - sidebar) / 2
+       inner line = column - padding-left - padding-right
+       We set both sides to 64px so lines are equal */
+    flex: 0 0 calc((100vw - var(--sidebar-w)) / 2);
+    width: calc((100vw - var(--sidebar-w)) / 2);
     padding: 52px 64px;
     box-sizing: border-box;
   }
@@ -470,7 +480,6 @@ header {
     flex-direction: column;
     justify-content: center;
     padding: 0;
-    /* Stretch to fill full grid cell width — no implicit shrinkage */
     align-self: stretch;
     min-width: 0;
   }
