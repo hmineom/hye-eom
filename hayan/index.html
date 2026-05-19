@@ -331,21 +331,21 @@ header {
 
 /* Combined panel styles (only active on mobile) */
 .panel--media-combined {
-  background: var(--bg);
+  background: var(--black);
   flex-direction: column;
 }
 .media-combined-half {
+  position: relative;
   flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   overflow: hidden;
 }
 .media-combined-half img,
 .media-combined-half video {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
   display: block;
 }
 
