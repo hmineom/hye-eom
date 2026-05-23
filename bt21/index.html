@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>BT21 × iOttie — A licensed character collaboration</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300;1,9..40,400&amp;family=DM+Mono:wght@300;400;500&amp;display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #f3f3f3;
+  --black: #1a1a1a;
+  --mid: #888;
+  --border: rgba(0,0,0,0.1);
+  --accent: #e8d4f0; /* soft iridescent lilac — nods to the clear shell CMF */
+  --font: 'DM Sans', sans-serif;
+  --mono: 'DM Mono', monospace;
+  --hdr: 48px;
+  --sidebar-w: 180px;
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+}
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--black);
+  font-family: var(--font);
+  font-size: 15px;
+  line-height: 1.6;
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+header, .sidebar, .progress-bar, .section-counter { isolation: isolate; }
+:root { --hdr-px: 32px; }
+header {
+  position: fixed; top: 0; left: 0; right: 0;
+  padding-top: env(safe-area-inset-top, 0px);
+  z-index: 300;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  padding-left: calc(var(--hdr-px) + var(--safe-left));
+  padding-right: calc(var(--hdr-px) + var(--safe-right));
+  height: var(--hdr);
+}
+.hdr-left { display: flex; align-items: center; gap: 20px; }
+.hdr-brand {
+  font-size: 13px; font-weight: 500; letter-spacing: 0.03em;
+  color: var(--black); text-decoration: none;
+  transition: opacity 0.15s;
+  display: flex; align-items: center; height: var(--hdr);
+}
+.hdr-brand:hover { opacity: 0.5; }
+.hdr-collab {
+  font-size: 11px; font-family: var(--mono);
+  opacity: 0.4; letter-spacing: 0.08em;
+}
+.hdr-right { display: flex; align-items: center; height: var(--hdr); }
+.hdr-year {
+  font-size: 11px; font-family: var(--mono);
+  opacity: 0.4; letter-spacing: 0.08em;
+}
+.mobile-nav-btn {
+  display: none; background: none; border: none; cursor: pointer;
+  width: var(--hdr); height: var(--hdr);
+  margin-right: calc(-1 * var(--hdr-px) + 12px);
+  flex-direction: column; gap: 5px;
+  align-items: center; justify-content: center;
+}
+.progress-bar {
+  position: fixed; top: var(--hdr); left: 0;
+  height: 2px; background: var(--black);
+  width: 0%; z-index: 300;
+  transition: width 0.3s ease;
+}
+.section-counter {
+  position: fixed;
+  bottom: calc(32px + var(--safe-bottom));
+  right: calc(32px + var(--safe-right));
+  z-index: 300;
+  font-family: var(--mono); font-size: 10px;
+  letter-spacing: 0.1em; opacity: 0.4;
+}
+.mobile-nav-btn span {
+  display: block; width: 18px; height: 1px;
+  background: var(--black);
+  transition: transform 0.25s, opacity 0.25s;
+}
+.mobile-nav-btn.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+.mobile-nav-btn.open span:nth-child(2) { opacity: 0; }
+.mobile-nav-btn.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+.mobile-drawer {
+  display: none; position: fixed;
+  top: var(--hdr); left: 0; right: 0;
+  z-index: 280; background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  padding: 16px 24px 20px;
+  padding-bottom: calc(20px + var(--safe-bottom));
+  transform: translateY(-110%);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.07);
+}
+.mobile-drawer.open { transform: translateY(0); }
+.mobile-drawer a {
+  display: flex; align-items: center;
+  font-size: 12px; font-family: var(--mono);
+  letter-spacing: 0.07em;
+  color: var(--black); text-decoration: none;
+  opacity: 0.35; padding: 11px 0;
+  border-bottom: 1px solid var(--border);
+  text-transform: uppercase;
+  transition: opacity 0.15s;
+  min-height: 44px;
+}
+.mobile-drawer a:last-child { border-bottom: none; }
+.mobile-drawer a.active { opacity: 1; font-weight: 500; }
+.sidebar {
+  position: fixed; top: var(--hdr); left: 0;
+  width: var(--sidebar-w);
+  height: calc(100dvh - var(--hdr));
+  z-index: 250;
+  border-right: 1px solid var(--border);
+  background: var(--bg);
+  display: flex; flex-direction: column;
+  padding: 28px 20px; gap: 0;
+  overflow-y: auto;
+}
+.sidebar a {
+  display: block;
+  font-size: 11px; font-family: var(--mono);
+  letter-spacing: 0.07em;
+  color: var(--black); text-decoration: none;
+  opacity: 0.28; padding: 6px 0;
+  transition: opacity 0.15s;
+  text-transform: uppercase; cursor: pointer;
+}
+.sidebar a:hover { opacity: 0.6; }
+.sidebar a.active { opacity: 1; font-weight: 500; }
+.snap-container {
+  position: fixed;
+  top: var(--hdr); left: var(--sidebar-w);
+  right: 0; bottom: 0;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
+}
+.panel {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  height: calc(100dvh - var(--hdr));
+  width: 100%;
+  position: relative;
+  display: flex; flex-direction: column;
+  overflow: hidden;
+}
+.panel-inner {
+  flex: 1;
+  display: flex; flex-direction: column;
+  padding: 52px 72px 48px;
+  overflow: hidden;
+}
+.sec-label {
+  font-size: 10px; font-family: var(--mono);
+  letter-spacing: 0.14em; text-transform: uppercase;
+  opacity: 0.38; margin-bottom: 28px;
+  flex-shrink: 0;
+}
+.sec-h2 {
+  font-size: clamp(24px, 3vw, 42px);
+  font-weight: 300; letter-spacing: -0.02em;
+  line-height: 1.18; margin-bottom: 24px;
+  max-width: 700px; flex-shrink: 0;
+}
+.sec-body {
+  font-size: 15px; line-height: 1.75;
+  font-weight: 300; max-width: 600px;
+  opacity: 0.72;
+}
+.sec-body + .sec-body { margin-top: 14px; }
+.panel--fullbleed { position: relative; background: var(--black); }
+.panel--fullbleed video,
+.panel--fullbleed img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover; display: block;
+}
+.panel--fullbleed .caption {
+  position: absolute;
+  bottom: calc(32px + var(--safe-bottom));
+  left: 48px; right: 48px;
+  font-family: var(--mono); font-size: 10px;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: rgba(255,255,255,0.45); z-index: 2;
+}
+.panel--fullbleed .overlay-text {
+  position: absolute;
+  bottom: calc(56px + var(--safe-bottom));
+  left: 48px; right: 48px; z-index: 2;
+  font-size: 13px; font-weight: 300;
+  line-height: 1.6;
+  color: rgba(255,255,255,0.65);
+  max-width: 520px;
+}
+.panel--dark { background: var(--black); color: var(--bg); }
+.panel--dark .sec-label,
+.panel--dark .sec-h2,
+.panel--dark .sec-body { color: var(--bg); }
+.panel--accent { background: var(--accent); }
+.challenge-solution {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  flex: 1; min-height: 0; overflow: hidden;
+}
+.cs-block {
+  padding: 52px 56px;
+  display: flex; flex-direction: column;
+  justify-content: center; align-items: center;
+  overflow: hidden;
+}
+.cs-block-inner { width: 100%; max-width: 480px; }
+.cs-block + .cs-block { border-left: 1px solid rgba(255,255,255,0.08); }
+.cs-tag {
+  font-family: var(--mono); font-size: 10px;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  opacity: 0.38; margin-bottom: 24px; flex-shrink: 0;
+}
+.cs-body {
+  font-size: clamp(15px, 1.6vw, 22px);
+  font-weight: 300; line-height: 1.65;
+  letter-spacing: -0.01em;
+  color: rgba(255,255,255,0.88);
+  max-width: 520px;
+}
+.panel--split { flex-direction: row; }
+.split {
+  display: grid;
+  grid-template-columns: clamp(35%, 50%, 55%) 1fr;
+  flex: 1; gap: 0;
+  overflow: hidden; min-height: 0;
+}
+.split-text {
+  padding: 52px 56px 48px 72px;
+  display: flex; flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+}
+.split-visual { overflow: hidden; position: relative; min-height: 0; }
+.split-visual img,
+.split-visual video {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover; display: block;
+}
+.split-visual--bordered { border-right: 1px solid var(--border); }
+.panel--outcome { flex-direction: row; }
+.outcome-stats {
+  flex: 1; display: flex; flex-direction: column;
+  justify-content: center;
+  padding: 52px 64px;
+  border-right: 1px solid var(--border);
+  overflow: hidden;
+}
+.outcome-press {
+  flex: 1; display: flex; flex-direction: column;
+  justify-content: center;
+  padding: 52px 64px;
+  overflow: hidden;
+}
+.outcome-stat-block { padding: 36px 0; border-top: 1px solid var(--border); }
+.outcome-stat-block--bottom { border-bottom: 1px solid var(--border); }
+.outcome-press-block { padding: 36px 0; border-top: 1px solid var(--border); }
+.outcome-press-block--bottom { border-bottom: 1px solid var(--border); }
+@media (min-width: 901px) {
+  .outcome-stats,
+  .outcome-press {
+    display: grid;
+    grid-template-rows: auto 1fr 1fr;
+    justify-content: unset;
+  }
+  .outcome-stats .r,
+  .outcome-press .r { display: contents; }
+  .outcome-stat-block,
+  .outcome-press-block {
+    display: flex; flex-direction: column;
+    justify-content: center;
+    padding: 0;
+    border-top: 1px solid var(--border);
+  }
+  .outcome-stat-block--bottom,
+  .outcome-press-block--bottom { border-bottom: 1px solid var(--border); }
+}
+.stat-num {
+  font-size: clamp(40px, 5.5vw, 72px);
+  font-weight: 300; letter-spacing: -0.04em;
+  line-height: 1; margin-bottom: 8px;
+}
+.stat-label {
+  font-family: var(--mono); font-size: 11px;
+  letter-spacing: 0.06em; text-transform: lowercase;
+  opacity: 0.45;
+}
+.press-name {
+  font-size: clamp(22px, 3.5vw, 48px);
+  font-weight: 300; letter-spacing: -0.02em;
+  line-height: 1; margin-bottom: 8px;
+}
+.press-desc {
+  font-family: var(--mono); font-size: 11px;
+  letter-spacing: 0.06em; text-transform: lowercase;
+  opacity: 0.45; margin-bottom: 12px;
+}
+.press-link {
+  font-family: var(--mono); font-size: 11px;
+  letter-spacing: 0.06em; text-transform: lowercase;
+  color: var(--black); text-decoration: none;
+  opacity: 0.45; transition: opacity 0.15s;
+  display: inline-flex; align-items: center;
+  min-height: 44px;
+}
+.press-link:hover { opacity: 1; text-decoration: underline; text-underline-offset: 3px; }
+.panel--colorways { flex-direction: row; }
+.colorways-left {
+  width: 42%; flex-shrink: 0;
+  padding: 48px 48px 48px 72px;
+  display: flex; flex-direction: column;
+  justify-content: center; gap: 0;
+  border-right: 1px solid var(--border);
+  overflow: hidden;
+}
+.colorways-right {
+  flex: 1; display: grid; overflow: hidden;
+}
+.colorway-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 3px;
+  width: 100%; height: 100%;
+}
+.colorway-cell {
+  overflow: hidden; position: relative;
+  display: flex; flex-direction: column;
+  justify-content: flex-end;
+  padding: 24px;
+}
+.colorway-cell .cw-name {
+  font-family: var(--mono); font-size: 10px;
+  letter-spacing: 0.1em; text-transform: uppercase;
+}
+.colorway-cell .cw-hex {
+  font-family: var(--mono); font-size: 9px;
+  opacity: 0.5; margin-top: 4px;
+}
+.cw-black { background: linear-gradient(135deg, #1a1a1a, #2a2a2a); color: #f0e5d4; }
+.cw-silver { background: linear-gradient(135deg, #c8c8c8, #e8e8e8); color: #1a1a1a; }
+.cw-mint { background: linear-gradient(135deg, #b4dcc8, #d4ebdc); color: #1a1a1a; }
+.cw-pink { background: linear-gradient(135deg, #f5c6c0, #f8d9d4); color: #1a1a1a; }
+.summary-table {
+  width: 100%; border-collapse: collapse;
+  font-size: 13px; margin-top: 28px;
+}
+.summary-table th {
+  text-align: left;
+  font-family: var(--mono); font-size: 10px;
+  letter-spacing: 0.05em; text-transform: capitalize;
+  opacity: 0.35;
+  border-bottom: 1px solid var(--border);
+  padding: 8px 16px; font-weight: 400;
+}
+.summary-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+  font-size: 13px; line-height: 1.5;
+}
+.summary-table tr:last-child td { border-bottom: none; }
+.tag-row { display: flex; flex-wrap: wrap; gap: 5px; }
+.tag {
+  display: inline-flex; align-items: center;
+  border: 1px solid var(--border);
+  padding: 4px 10px;
+  font-size: 11px; font-family: var(--mono);
+  letter-spacing: 0.05em;
+}
+.img-ph {
+  background: #ddd;
+  background-image: repeating-linear-gradient(-45deg, rgba(0,0,0,0.03), rgba(0,0,0,0.03) 1px, transparent 1px, transparent 8px);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--mono); font-size: 9px;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: rgba(0,0,0,0.3);
+  width: 100%; height: 100%;
+}
+.img-ph.dark {
+  background: #2a2a2a;
+  background-image: repeating-linear-gradient(-45deg, rgba(255,255,255,0.04), rgba(255,255,255,0.04) 1px, transparent 1px, transparent 8px);
+  color: rgba(255,255,255,0.25);
+}
+.r {
+  opacity: 0; transform: translateY(16px);
+  transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.r.in { opacity: 1; transform: none; }
+.r.d1 { transition-delay: 0.08s; }
+.r.d2 { transition-delay: 0.16s; }
+.r.d3 { transition-delay: 0.24s; }
+.r.d4 { transition-delay: 0.32s; }
+.panel--footer {
+  height: calc(100dvh - var(--hdr));
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  display: flex; align-items: center;
+  justify-content: space-between;
+  padding: 0 72px;
+  padding-bottom: var(--safe-bottom);
+  border-top: 1px solid var(--border);
+}
+.footer-copy {
+  font-family: var(--mono); font-size: 11px;
+  opacity: 0.35; letter-spacing: 0.08em;
+}
+@media (max-width: 900px) {
+  .sidebar { display: none; }
+  .snap-container { left: 0; }
+  .panel-inner { padding: 40px 28px 36px; }
+  .panel--split { flex-direction: column; }
+  .split { grid-template-columns: 1fr; grid-template-rows: 45% 55%; overflow: hidden; }
+  .split-visual { position: relative; min-height: 0; }
+  .split-text { padding: 32px 28px 28px; justify-content: flex-start; overflow-y: auto; }
+  .split-visual--bordered { border-right: none; border-bottom: 1px solid var(--border); }
+  .challenge-solution { grid-template-columns: 1fr; grid-template-rows: 1fr 1fr; overflow: hidden; }
+  .cs-block { padding: 36px 28px; justify-content: center; overflow: hidden; }
+  .cs-block + .cs-block { border-left: none; border-top: 1px solid rgba(255,255,255,0.08); }
+  .panel--outcome { flex-direction: column; overflow-y: auto; }
+  .outcome-stats { flex: none; border-right: none; border-bottom: 1px solid var(--border); padding: 36px 28px; }
+  .outcome-press { flex: none; padding: 36px 28px; }
+  .panel--colorways { flex-direction: column; overflow-y: auto; }
+  .colorways-left { width: 100%; padding: 28px 28px 20px; border-right: none; border-bottom: 1px solid var(--border); }
+  .colorways-right { min-height: 320px; }
+  .panel--footer { padding: 0 28px; flex-direction: column; justify-content: center; gap: 12px; }
+}
+@media (max-width: 640px) {
+  :root { --hdr: 44px; --sidebar-w: 0px; }
+  :root { --hdr-px: 20px; }
+  header {
+    padding-left: calc(var(--hdr-px) + var(--safe-left));
+    padding-right: calc(var(--hdr-px) + var(--safe-right));
+  }
+  .hdr-collab { display: none; }
+  .hdr-year { display: none; }
+  .mobile-nav-btn {
+    display: flex;
+    margin-right: calc(-1 * var(--hdr-px) + 12px);
+  }
+  .mobile-drawer { display: block; }
+  .panel--contain-mobile { background: var(--bg) !important; }
+  .panel--contain-mobile img,
+  .panel--contain-mobile video {
+    object-fit: contain !important;
+    object-position: center center !important;
+  }
+  .panel--contain-mobile .caption { color: rgba(0,0,0,0.35) !important; }
+  .section-counter {
+    bottom: calc(20px + var(--safe-bottom));
+    right: calc(20px + var(--safe-right));
+    font-size: 9px;
+  }
+  .snap-container { left: 0; }
+  .panel, .panel--footer { height: calc(100dvh - var(--hdr)); }
+  .panel-inner {
+    padding: 28px 20px 24px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .sec-label { margin-bottom: 16px; }
+  .sec-h2 { font-size: clamp(20px, 6.5vw, 32px); margin-bottom: 16px; letter-spacing: -0.025em; }
+  .sec-body { font-size: 14px; line-height: 1.7; }
+  .panel--fullbleed .caption {
+    left: 20px; right: 20px;
+    bottom: calc(20px + var(--safe-bottom));
+    font-size: 9px;
+  }
+  .panel--fullbleed .overlay-text {
+    left: 20px; right: 20px;
+    bottom: calc(42px + var(--safe-bottom));
+    font-size: 13px;
+  }
+  .challenge-solution { grid-template-columns: 1fr; grid-template-rows: 1fr 1fr; overflow: hidden; }
+  .cs-block { padding: 28px 20px; justify-content: center; overflow: hidden; }
+  .cs-block + .cs-block { border-left: none; border-top: 1px solid rgba(255,255,255,0.08); }
+  .cs-block-inner { max-width: 100%; }
+  .cs-tag { margin-bottom: 14px; }
+  .cs-body { font-size: 15px; }
+  .panel--split { flex-direction: column; }
+  .split { grid-template-columns: 1fr; grid-template-rows: 42% 58%; flex: 1; min-height: 0; overflow: hidden; }
+  .split-visual { position: relative; min-height: 0; }
+  .split-visual--bordered { border-right: none; border-bottom: 1px solid var(--border); }
+  .split-text {
+    padding: 24px 20px 28px;
+    justify-content: flex-start;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    min-height: 0;
+  }
+  .panel--outcome { flex-direction: column; overflow: hidden; }
+  .outcome-stats {
+    flex: 1; min-height: 0;
+    border-right: none; border-bottom: none;
+    padding: 20px 20px 16px;
+    justify-content: center; overflow: hidden;
+  }
+  .outcome-press {
+    flex: 1; min-height: 0;
+    padding: 20px 20px 16px;
+    justify-content: center; overflow: hidden;
+  }
+  .outcome-stat-block--bottom { border-bottom: none; }
+  .outcome-stat-block { padding: 12px 0; }
+  .outcome-press-block { padding: 12px 0; }
+  .outcome-press-block--bottom { border-bottom: none; }
+  .stat-num { font-size: clamp(32px, 9vw, 52px); }
+  .stat-label { font-size: 10px; margin-top: 4px; }
+  .press-name { font-size: clamp(32px, 9vw, 52px); }
+  .press-desc { font-size: 10px; margin-bottom: 8px; }
+  .press-link { font-size: 10px; min-height: 36px; }
+  .panel--colorways { flex-direction: column; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+  .colorways-left {
+    width: 100%; flex-shrink: 0;
+    padding: 28px 20px 20px;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    justify-content: flex-start;
+  }
+  .colorways-right { flex-shrink: 0; height: min(80vw, 400px); }
+  .colorway-grid { gap: 2px; }
+  .colorway-cell { padding: 16px; }
+  .panel[data-section="s-summary"] .panel-inner {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .summary-table th,
+  .summary-table td { padding: 10px 12px; font-size: 12px; }
+  .summary-table th:first-child,
+  .summary-table td:first-child { width: 100px; }
+  .tag { font-size: 10px; padding: 3px 8px; }
+  .panel--footer {
+    padding: 0 20px;
+    padding-bottom: var(--safe-bottom);
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+    text-align: center;
+  }
+  .press-link {
+    padding: 10px 0; line-height: 1.4;
+    min-height: 44px;
+    display: inline-flex; align-items: center;
+  }
+}
+@media (max-width: 390px) {
+  .sec-h2 { font-size: 19px; }
+  .cs-body { font-size: 14px; }
+  .colorways-right { height: min(70vw, 320px); }
+  .outcome-stat-block { padding: 18px 0; }
+  .outcome-press-block { padding: 18px 0; }
+}
+@media (max-width: 900px) and (orientation: landscape) and (max-height: 500px) {
+  .challenge-solution { overflow-y: auto; }
+  .panel--outcome { overflow-y: auto; }
+  .panel--colorways { overflow-y: auto; }
+  .panel--split .split { overflow-y: auto; }
+  .cs-block { padding: 20px; }
+  .outcome-stats, .outcome-press { padding: 20px; }
+  .colorways-left { padding: 20px; }
+  .split-text { padding: 20px; }
+  .panel-inner { padding: 20px; }
+  .split { grid-template-rows: 40% 60%; }
+  .colorways-right { height: 40vw; }
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="hdr-left">
+    <a href="/" class="hdr-brand">Hye Eom</a>
+    <div class="hdr-collab">Senior Industrial Designer</div>
+  </div>
+  <div class="hdr-right">
+    <span class="hdr-year">BT21 × iOttie · 2024</span>
+    <button class="mobile-nav-btn" id="mobileNavBtn" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+<nav class="mobile-drawer" id="mobileDrawer">
+  <a href="#" data-target="s-intro" class="active">Intro</a>
+  <a href="#" data-target="s-challenge">Challenge</a>
+  <a href="#" data-target="s-concept">Concept</a>
+  <a href="#" data-target="s-product">Product / CMF</a>
+  <a href="#" data-target="s-packaging">Packaging</a>
+  <a href="#" data-target="s-bts">Behind the Scenes</a>
+  <a href="#" data-target="s-outcome">Outcome</a>
+  <a href="#" data-target="s-summary">Summary</a>
+</nav>
+<div class="progress-bar" id="progressBar"></div>
+<nav class="sidebar" id="sidebar">
+  <a href="#" data-target="s-intro" class="active">Intro</a>
+  <a href="#" data-target="s-challenge">Challenge</a>
+  <a href="#" data-target="s-concept">Concept</a>
+  <a href="#" data-target="s-product">Product / CMF</a>
+  <a href="#" data-target="s-packaging">Packaging</a>
+  <a href="#" data-target="s-bts">Behind the Scenes</a>
+  <a href="#" data-target="s-outcome">Outcome</a>
+  <a href="#" data-target="s-summary">Summary</a>
+</nav>
+<div class="section-counter" id="sectionCounter">01 / 13</div>
+<div class="snap-container" id="snapContainer">
+
+  <!-- 01 · INTRO -->
+  <div class="panel panel--fullbleed" data-label="Intro" data-section="s-intro">
+    <img src="../images/bt21/hero.jpg" alt="BT21 × iOttie — intro hero">
+    <div class="caption">BT21 × iOttie — Licensed character collaboration · 2024</div>
+  </div>
+
+  <!-- 02 · CHALLENGE & SOLUTION -->
+  <div class="panel panel--dark" data-label="Challenge" data-section="s-challenge">
+    <div class="challenge-solution">
+      <div class="cs-block">
+        <div class="cs-block-inner">
+          <div class="cs-tag r in">The Challenge</div>
+          <p class="cs-body r d1 in">Licensed character products tend to one of two failures: too literal — a recognizable character printed onto a generic object — or too cautious, where the IP becomes invisible. The brief asked for a BT21 product that fans would recognize as BT21, and that anyone else would want as a piece of industrial design first.</p>
+        </div>
+      </div>
+      <div class="cs-block">
+        <div class="cs-block-inner">
+          <div class="cs-tag r in">The Solution</div>
+          <p class="cs-body r d1 in">Lead with the product. Let CMF and packaging carry the IP. A single refined silhouette across four colorways, each one tuned to a character's emotional register. The result reads as BT21 to fans and as a confident accessory line to everyone else — without compromising either audience.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 03 · CONCEPT -->
+  <div class="panel panel--split" data-label="Concept" data-section="s-concept">
+    <div class="split">
+      <div class="split-visual split-visual--bordered">
+        <img src="../images/bt21/concept.jpg" alt="Concept — character to CMF mapping">
+      </div>
+      <div class="split-text">
+        <div class="sec-label r in">Concept</div>
+        <h2 class="sec-h2 r in">Characters carried by color, not print.</h2>
+        <p class="sec-body r d1 in">BT21 is not one character — it's seven, each with a distinct fanbase. Rather than crowd the product with all of them, we mapped four to four colorways, with character presence carried entirely through CMF and unboxing.</p>
+        <p class="sec-body r d2 in">The product itself stayed neutral. The IP did the emotional work in the package. The result respected both audiences: fans got something unmistakably BT21, and the product earned its place on a shelf next to non-licensed accessories.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 04 · PRODUCT / CMF -->
+  <div class="panel panel--split" data-label="Product / CMF" data-section="s-product">
+    <div class="split">
+      <div class="split-visual split-visual--bordered">
+        <img src="../images/bt21/product_a.jpg" alt="Product — iridescent shell detail">
+      </div>
+      <div class="split-text">
+        <div class="sec-label r">Product &amp; CMF</div>
+        <h2 class="sec-h2 r">An iridescent shell, four times.</h2>
+        <p class="sec-body r d1">The clear iridescent shell became the line's signature — a finish that shifts with light, echoing the unpredictability of the characters without literalizing them. One silhouette, four colorways.</p>
+        <p class="sec-body r d2">Black anchored the line. Silver gave it editorial polish. Mint and pink carried the IP's softer registers. Each colorway moved through four rounds of QC across CN suppliers before the finish landed.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 04b · PRODUCT — full image -->
+  <div class="panel panel--fullbleed panel--contain-mobile" data-label="Product / CMF" data-section="s-product-img1">
+    <img src="../images/bt21/product_b.jpg" alt="Product detail">
+    <div class="caption">Product — iridescent shell detail</div>
+  </div>
+
+  <!-- 04c · PRODUCT — full image -->
+  <div class="panel panel--fullbleed panel--contain-mobile" data-label="Product / CMF" data-section="s-product-img2">
+    <img src="../images/bt21/product_c.jpg" alt="Product — lineup">
+    <div class="caption">CMF — four colorways</div>
+  </div>
+
+  <!-- 05 · PACKAGING -->
+  <div class="panel panel--split" data-label="Packaging" data-section="s-packaging">
+    <div class="split">
+      <div class="split-visual split-visual--bordered">
+        <img src="../images/bt21/package1.jpg" alt="Packaging — sleeve and tray">
+      </div>
+      <div class="split-text">
+        <div class="sec-label r">Packaging</div>
+        <h2 class="sec-h2 r">A matchbox, deliberately staged.</h2>
+        <p class="sec-body r d1">A sleeve-and-tray structure gave the unboxing a two-stage reveal: pull the sleeve, meet the character. The neutral product underneath then earned the unboxing rather than competing with it.</p>
+        <p class="sec-body r d2">Dielines, materials, and lanyard hardware were developed alongside CN suppliers in bilingual cycles — kept in sync with the primary product timeline so the unboxing landed as one designed experience, not two.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 05b · PACKAGING — full image -->
+  <div class="panel panel--fullbleed panel--contain-mobile" data-label="Packaging" data-section="s-packaging-img1">
+    <img src="../images/bt21/package2.jpg" alt="Packaging — open detail">
+    <div class="caption">Packaging — sleeve detail</div>
+  </div>
+
+  <!-- 05c · PACKAGING — full image -->
+  <div class="panel panel--fullbleed panel--contain-mobile" data-label="Packaging" data-section="s-packaging-img2">
+    <img src="../images/bt21/package3.jpg" alt="Packaging — tray detail">
+    <div class="caption">Packaging — tray structure</div>
+  </div>
+
+  <!-- 06 · BEHIND THE SCENES -->
+  <div class="panel panel--split" data-label="Behind the Scenes" data-section="s-bts">
+    <div class="split">
+      <div class="split-visual split-visual--bordered">
+        <img src="../images/bt21/bts.jpg" alt="Licensor approval deck">
+      </div>
+      <div class="split-text">
+        <div class="sec-label r">Behind the Scenes</div>
+        <h2 class="sec-h2 r">The work behind the work.</h2>
+        <p class="sec-body r d1">Three streams of coordination ran in parallel. A bilingual approval deck for 박주희 at IPX / LF Korea — calibrated for a licensor reviewer, not a design reviewer — kept revision cycles from eating the timeline.</p>
+        <p class="sec-body r d2">CN supplier coordination ran across four colorway QC rounds, with finish consistency and shell clarity tested at each pass. A separate lanyard vendor was brought into sync with the primary supplier so the unboxing landed as one designed experience.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 07 · OUTCOME -->
+  <div class="panel panel--outcome" data-label="Outcome" data-section="s-outcome">
+    <div class="outcome-stats">
+      <div class="sec-label r">Outcome</div>
+      <div class="r d1">
+        <div class="outcome-stat-block">
+          <div class="stat-num">Top 3</div>
+          <div class="stat-label" style="margin-top:10px;">seller in iOttie's accessory category</div>
+        </div>
+        <div class="outcome-stat-block outcome-stat-block--bottom">
+          <div class="stat-num">4</div>
+          <div class="stat-label" style="margin-top:10px;">colorways, one shared CMF system</div>
+        </div>
+      </div>
+    </div>
+    <div class="outcome-press">
+      <div class="sec-label r">Scope</div>
+      <div class="r d1">
+        <div class="outcome-press-block">
+          <div class="press-name">KR Launch</div>
+          <div class="press-desc">South Korea market launch with IPX / LF Korea</div>
+        </div>
+        <div class="outcome-press-block outcome-press-block--bottom">
+          <div class="press-name">IPX × iOttie</div>
+          <div class="press-desc">Licensed collaboration, character lineup mapped to colorway system</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 07b · COLORWAYS -->
+  <div class="panel panel--colorways" data-label="Outcome" data-section="s-outcome-colorways">
+    <div class="colorways-left r">
+      <div class="sec-label">Colorways</div>
+      <p class="sec-body" style="margin-top: 8px;">Four CMF directions, one shared silhouette. Each colorway mapped to a character's emotional register without printing the character on the product.</p>
+    </div>
+    <div class="colorways-right">
+      <div class="colorway-grid">
+        <div class="colorway-cell cw-black">
+          <div class="cw-name">Black</div>
+          <div class="cw-hex">#1A1A1A</div>
+        </div>
+        <div class="colorway-cell cw-silver">
+          <div class="cw-name">Silver</div>
+          <div class="cw-hex">#D8D8D8</div>
+        </div>
+        <div class="colorway-cell cw-mint">
+          <div class="cw-name">Mint</div>
+          <div class="cw-hex">#B4DCC8</div>
+        </div>
+        <div class="colorway-cell cw-pink">
+          <div class="cw-name">Pink</div>
+          <div class="cw-hex">#F5C6C0</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 08 · SUMMARY -->
+  <div class="panel" data-label="Summary" data-section="s-summary">
+    <div class="panel-inner" style="overflow-y:auto; -webkit-overflow-scrolling:touch;">
+      <div class="sec-label r">Summary</div>
+      <p class="sec-body r" style="max-width:580px; margin-bottom:24px; font-style:italic; opacity:0.65;">A licensed collaboration is two design problems pretending to be one. The work is making them resolve into a single object that feels inevitable.</p>
+      <table class="summary-table r d1">
+        <thead>
+          <tr><th>Category</th><th>Detail</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="font-family:var(--mono);font-size:11px;opacity:0.45;width:140px;">Role</td>
+            <td>Senior Industrial Designer · Lead ID + CMF</td>
+          </tr>
+          <tr>
+            <td style="font-family:var(--mono);font-size:11px;opacity:0.45;">Year</td>
+            <td>2024</td>
+          </tr>
+          <tr>
+            <td style="font-family:var(--mono);font-size:11px;opacity:0.45;">Client</td>
+            <td>iOttie × IPX / LF Korea</td>
+          </tr>
+          <tr>
+            <td style="font-family:var(--mono);font-size:11px;opacity:0.45;">Scope</td>
+            <td>
+              <div class="tag-row">
+                <span class="tag">Industrial design</span>
+                <span class="tag">CMF</span>
+                <span class="tag">Packaging</span>
+                <span class="tag">Licensor coordination</span>
+                <span class="tag">Supplier QC</span>
+                <span class="tag">Creative direction</span>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td style="font-family:var(--mono);font-size:11px;opacity:0.45;">Launch</td>
+            <td>South Korea</td>
+          </tr>
+          <tr>
+            <td style="font-family:var(--mono);font-size:11px;opacity:0.45;">Licensor</td>
+            <td>박주희 · IPX / LF Korea</td>
+          </tr>
+          <tr>
+            <td style="font-family:var(--mono);font-size:11px;opacity:0.45;">Closing</td>
+            <td style="font-style:italic;opacity:0.6;">Licensed IP, translated. Not printed.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="panel--footer" data-label="End">
+    <div class="footer-copy">© 2025 Hye Min Eom</div>
+    <div class="footer-copy">BT21 × iOttie — 2024</div>
+    <div class="footer-copy">All rights reserved</div>
+  </div>
+
+</div>
+
+<script>
+const mobileNavBtn = document.getElementById('mobileNavBtn');
+const mobileDrawer = document.getElementById('mobileDrawer');
+const drawerLinks = Array.from(mobileDrawer.querySelectorAll('a'));
+mobileNavBtn.addEventListener('click', () => {
+  const isOpen = mobileDrawer.classList.toggle('open');
+  mobileNavBtn.classList.toggle('open', isOpen);
+});
+drawerLinks.forEach(link => {
+  link.addEventListener('click', e => {
+    e.preventDefault();
+    const target = link.dataset.target;
+    const panel = panels.find(p => p.dataset.section === target);
+    if (panel) panel.scrollIntoView({ behavior: 'smooth' });
+    mobileDrawer.classList.remove('open');
+    mobileNavBtn.classList.remove('open');
+  });
+});
+document.addEventListener('touchstart', e => {
+  if (mobileDrawer.classList.contains('open') &&
+      !mobileDrawer.contains(e.target) &&
+      !mobileNavBtn.contains(e.target)) {
+    mobileDrawer.classList.remove('open');
+    mobileNavBtn.classList.remove('open');
+  }
+}, { passive: true });
+
+const container = document.getElementById('snapContainer');
+const allPanelEls = Array.from(document.querySelectorAll('.panel, .panel--footer'));
+const getVisiblePanels = () => allPanelEls.filter(p => getComputedStyle(p).display !== 'none');
+let panels = getVisiblePanels();
+window.addEventListener('resize', () => { panels = getVisiblePanels(); });
+const sidebarLinks = Array.from(document.querySelectorAll('.sidebar a'));
+const counter = document.getElementById('sectionCounter');
+const progressBar = document.getElementById('progressBar');
+let total = panels.length;
+const sectionParentMap = {
+  's-product-img1': 's-product',
+  's-product-img2': 's-product',
+  's-packaging-img1': 's-packaging',
+  's-packaging-img2': 's-packaging',
+  's-outcome-colorways': 's-outcome',
+};
+sidebarLinks.forEach(link => {
+  link.addEventListener('click', e => {
+    e.preventDefault();
+    const target = link.dataset.target;
+    const panel = panels.find(p => p.dataset.section === target);
+    if (panel) panel.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+const revealMap = new Map();
+panels.forEach(panel => { revealMap.set(panel, panel.querySelectorAll('.r')); });
+function syncDrawerActive(sidebarTarget) {
+  drawerLinks.forEach(link => {
+    link.classList.toggle('active', link.dataset.target === sidebarTarget);
+  });
+}
+function activatePanel(index) {
+  const panel = panels[index];
+  const section = panel?.dataset?.section;
+  const sidebarTarget = sectionParentMap[section] || section;
+  sidebarLinks.forEach(link => {
+    link.classList.toggle('active', link.dataset.target === sidebarTarget);
+  });
+  syncDrawerActive(sidebarTarget);
+  total = panels.length;
+  counter.textContent = String(index + 1).padStart(2, '0') + ' / ' + String(total).padStart(2, '0');
+  const pct = total > 1 ? (index / (total - 1)) * 100 : 100;
+  progressBar.style.width = pct + '%';
+  const els = revealMap.get(panel);
+  if (els) {
+    els.forEach(el => { el.classList.remove('in'); void el.offsetWidth; });
+    requestAnimationFrame(() => els.forEach(el => el.classList.add('in')));
+  }
+}
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const idx = panels.indexOf(e.target);
+      if (idx !== -1) activatePanel(idx);
+    }
+  });
+}, { root: container, threshold: 0.5 });
+panels.forEach(p => obs.observe(p));
+document.addEventListener('keydown', e => {
+  const scrollTop = container.scrollTop;
+  const panelHeight = container.clientHeight;
+  const currentIdx = Math.round(scrollTop / panelHeight);
+  if (e.key === 'ArrowDown' && currentIdx < total - 1) panels[currentIdx + 1].scrollIntoView({ behavior: 'smooth' });
+  else if (e.key === 'ArrowUp' && currentIdx > 0) panels[currentIdx - 1].scrollIntoView({ behavior: 'smooth' });
+});
+let resizeTimer;
+let lastKnownIndex = 0;
+window.addEventListener('resize', () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => {
+    if (panels[lastKnownIndex]) {
+      panels[lastKnownIndex].scrollIntoView({ behavior: 'instant' });
+    }
+  }, 100);
+});
+const indexTracker = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      lastKnownIndex = panels.indexOf(e.target);
+    }
+  });
+}, { root: container, threshold: 0.5 });
+panels.forEach(p => indexTracker.observe(p));
+activatePanel(0);
+</script>
+</body></html>
