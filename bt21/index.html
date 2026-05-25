@@ -13,7 +13,7 @@
   --black: #1a1a1a;
   --mid: #888;
   --border: rgba(0,0,0,0.1);
-  --accent: #e8d4f0; /* soft iridescent lilac — nods to the clear shell CMF */
+  --accent: #e8d4f0;
   --font: 'DM Sans', sans-serif;
   --mono: 'DM Mono', monospace;
   --hdr: 48px;
@@ -204,6 +204,49 @@ header {
   color: rgba(255,255,255,0.65);
   max-width: 520px;
 }
+
+/* ============================================================
+   BANNER PANEL — full-bleed image, panel height fits image
+   ============================================================
+   Unlike .panel--fullbleed (which forces 100dvh and crops),
+   .panel--banner lets the image dictate the panel height.
+   The image renders at its natural aspect ratio, width 100%,
+   height capped at the viewport so it never overflows the fold
+   when the image is portrait-oriented or unusually tall.
+*/
+.panel--banner {
+  height: auto;
+  min-height: 0;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  width: 100%;
+  background: var(--black);
+  display: block;
+  position: relative;
+  overflow: hidden;
+}
+.panel--banner img,
+.panel--banner video {
+  position: static;
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: calc(100dvh - var(--hdr));
+  object-fit: contain;
+  margin: 0 auto;
+}
+.panel--banner .caption {
+  position: absolute;
+  bottom: calc(20px + var(--safe-bottom));
+  left: 32px; right: 32px;
+  font-family: var(--mono); font-size: 10px;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: rgba(255,255,255,0.55);
+  z-index: 2;
+  mix-blend-mode: difference;
+  pointer-events: none;
+}
+
 .panel--dark { background: var(--black); color: var(--bg); }
 .panel--dark .sec-label,
 .panel--dark .sec-h2,
@@ -463,6 +506,19 @@ header {
     object-position: center center !important;
   }
   .panel--contain-mobile .caption { color: rgba(0,0,0,0.35) !important; }
+  /* Banner panels on mobile: keep behavior — image dictates height */
+  .panel--banner { background: var(--bg); }
+  .panel--banner img,
+  .panel--banner video {
+    max-height: calc(100dvh - var(--hdr));
+  }
+  .panel--banner .caption {
+    left: 20px; right: 20px;
+    bottom: calc(12px + var(--safe-bottom));
+    font-size: 9px;
+    color: rgba(0,0,0,0.4);
+    mix-blend-mode: normal;
+  }
   .section-counter {
     bottom: calc(20px + var(--safe-bottom));
     right: calc(20px + var(--safe-right));
@@ -658,7 +714,7 @@ header {
     </div>
   </div>
 
-  <!-- 04 · PRODUCT / CMF -->
+  <!-- 04 · PRODUCT / CMF — intro split -->
   <div class="panel panel--split" data-label="Product / CMF" data-section="s-product">
     <div class="split">
       <div class="split-visual split-visual--bordered">
@@ -673,16 +729,40 @@ header {
     </div>
   </div>
 
-  <!-- 04b · PRODUCT — full image -->
-  <div class="panel panel--fullbleed panel--contain-mobile" data-label="Product / CMF" data-section="s-product-img1">
-    <img src="../images/Wall Charger_1c.jpg" alt="Product detail">
-    <div class="caption">Product — iridescent shell detail</div>
+  <!-- 04b · PRODUCT BANNER 1 — height fits image -->
+  <div class="panel--banner" data-label="Product / CMF" data-section="s-product-banner-1">
+    <img src="../images/bt21/product_1.jpg" alt="Product banner 1">
+    <div class="caption">Product — banner 01</div>
   </div>
 
-  <!-- 04c · PRODUCT — full image -->
-  <div class="panel panel--fullbleed panel--contain-mobile" data-label="Product / CMF" data-section="s-product-img2">
-    <img src="../images/bt21/product_c.jpg" alt="Product — lineup">
-    <div class="caption">CMF — four colorways</div>
+  <!-- 04c · PRODUCT BANNER 2 -->
+  <div class="panel--banner" data-label="Product / CMF" data-section="s-product-banner-2">
+    <img src="../images/bt21/product_2.jpg" alt="Product banner 2">
+    <div class="caption">Product — banner 02</div>
+  </div>
+
+  <!-- 04d · PRODUCT BANNER 3 -->
+  <div class="panel--banner" data-label="Product / CMF" data-section="s-product-banner-3">
+    <img src="../images/bt21/product_3.jpg" alt="Product banner 3">
+    <div class="caption">Product — banner 03</div>
+  </div>
+
+  <!-- 04e · PRODUCT BANNER 4 -->
+  <div class="panel--banner" data-label="Product / CMF" data-section="s-product-banner-4">
+    <img src="../images/bt21/product_4.jpg" alt="Product banner 4">
+    <div class="caption">Product — banner 04</div>
+  </div>
+
+  <!-- 04f · PRODUCT BANNER 5 -->
+  <div class="panel--banner" data-label="Product / CMF" data-section="s-product-banner-5">
+    <img src="../images/bt21/product_5.jpg" alt="Product banner 5">
+    <div class="caption">Product — banner 05</div>
+  </div>
+
+  <!-- 04g · PRODUCT BANNER 6 -->
+  <div class="panel--banner" data-label="Product / CMF" data-section="s-product-banner-6">
+    <img src="../images/bt21/product_6.jpg" alt="Product banner 6">
+    <div class="caption">Product — banner 06</div>
   </div>
 
   <!-- 05 · PACKAGING -->
@@ -873,7 +953,8 @@ document.addEventListener('touchstart', e => {
 }, { passive: true });
 
 const container = document.getElementById('snapContainer');
-const allPanelEls = Array.from(document.querySelectorAll('.panel, .panel--footer'));
+// Include .panel--banner so banner panels participate in nav, counter, snap tracking
+const allPanelEls = Array.from(document.querySelectorAll('.panel, .panel--banner, .panel--footer'));
 const getVisiblePanels = () => allPanelEls.filter(p => getComputedStyle(p).display !== 'none');
 let panels = getVisiblePanels();
 window.addEventListener('resize', () => { panels = getVisiblePanels(); });
@@ -882,8 +963,12 @@ const counter = document.getElementById('sectionCounter');
 const progressBar = document.getElementById('progressBar');
 let total = panels.length;
 const sectionParentMap = {
-  's-product-img1': 's-product',
-  's-product-img2': 's-product',
+  's-product-banner-1': 's-product',
+  's-product-banner-2': 's-product',
+  's-product-banner-3': 's-product',
+  's-product-banner-4': 's-product',
+  's-product-banner-5': 's-product',
+  's-product-banner-6': 's-product',
   's-packaging-img1': 's-packaging',
   's-packaging-img2': 's-packaging',
   's-outcome-colorways': 's-outcome',
