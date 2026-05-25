@@ -260,6 +260,13 @@ header {
 .panel--dark .sec-label,
 .panel--dark .sec-h2,
 .panel--dark .sec-body { color: var(--bg); }
+.panel--light { background: #f5f6f6; color: var(--black); }
+.panel--light .cs-tag { color: var(--black); opacity: 0.4; }
+.panel--light .cs-body { color: rgba(0,0,0,0.78); }
+.panel--light .cs-block + .cs-block { border-left: 1px solid rgba(0,0,0,0.08); }
+@media (max-width: 900px) {
+  .panel--light .cs-block + .cs-block { border-left: none; border-top: 1px solid rgba(0,0,0,0.08); }
+}
 .panel--accent { background: var(--accent); }
 .challenge-solution {
   display: grid;
@@ -691,7 +698,7 @@ header {
   </div>
 
   <!-- 02 · CHALLENGE & SOLUTION -->
-  <div class="panel panel--dark" data-label="Challenge" data-section="s-challenge">
+  <div class="panel panel--light" data-label="Challenge" data-section="s-challenge">
     <div class="challenge-solution">
       <div class="cs-block">
         <div class="cs-block-inner">
