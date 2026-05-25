@@ -208,11 +208,9 @@ header {
 /* ============================================================
    BANNER PANEL — full-bleed image, panel height fits image
    ============================================================
-   Unlike .panel--fullbleed (which forces 100dvh and crops),
-   .panel--banner lets the image dictate the panel height.
-   The image renders at its natural aspect ratio, width 100%,
-   height capped at the viewport so it never overflows the fold
-   when the image is portrait-oriented or unusually tall.
+   White background, image at natural aspect, max-height capped
+   at one viewport. Desktop alignment via .align-left / .align-right.
+   Banners 2 & 4 left, 3 & 5 right, 1 & 6 centered.
 */
 .panel--banner {
   height: auto;
@@ -220,7 +218,7 @@ header {
   scroll-snap-align: start;
   scroll-snap-stop: always;
   width: 100%;
-  background: var(--black);
+  background: #ffffff;
   display: block;
   position: relative;
   overflow: hidden;
@@ -235,15 +233,26 @@ header {
   object-fit: contain;
   margin: 0 auto;
 }
+@media (min-width: 901px) {
+  .panel--banner.align-left img,
+  .panel--banner.align-left video {
+    margin-left: 0;
+    margin-right: auto;
+  }
+  .panel--banner.align-right img,
+  .panel--banner.align-right video {
+    margin-left: auto;
+    margin-right: 0;
+  }
+}
 .panel--banner .caption {
   position: absolute;
   bottom: calc(20px + var(--safe-bottom));
   left: 32px; right: 32px;
   font-family: var(--mono); font-size: 10px;
   letter-spacing: 0.1em; text-transform: uppercase;
-  color: rgba(255,255,255,0.55);
+  color: rgba(0,0,0,0.4);
   z-index: 2;
-  mix-blend-mode: difference;
   pointer-events: none;
 }
 
@@ -506,18 +515,18 @@ header {
     object-position: center center !important;
   }
   .panel--contain-mobile .caption { color: rgba(0,0,0,0.35) !important; }
-  /* Banner panels on mobile: keep behavior — image dictates height */
-  .panel--banner { background: var(--bg); }
+  /* Banner panels on mobile: white bg, image dictates height, centered */
+  .panel--banner { background: #ffffff; }
   .panel--banner img,
   .panel--banner video {
     max-height: calc(100dvh - var(--hdr));
+    margin: 0 auto;
   }
   .panel--banner .caption {
     left: 20px; right: 20px;
     bottom: calc(12px + var(--safe-bottom));
     font-size: 9px;
     color: rgba(0,0,0,0.4);
-    mix-blend-mode: normal;
   }
   .section-counter {
     bottom: calc(20px + var(--safe-bottom));
@@ -729,40 +738,40 @@ header {
     </div>
   </div>
 
-  <!-- 04b · PRODUCT BANNER 1 — height fits image -->
+  <!-- 04b · PRODUCT BANNER 1 — centered (Wall Charger) -->
   <div class="panel--banner" data-label="Product / CMF" data-section="s-product-banner-1">
-    <img src="../images/Wall Charger_1c.jpg" alt="Product banner 1">
-    <div class="caption">Product — banner 01</div>
+    <img src="../images/Wall Charger_1c.jpg" alt="Wall Charger">
+    <div class="caption">Wall Charger</div>
   </div>
 
-  <!-- 04c · PRODUCT BANNER 2 -->
-  <div class="panel--banner" data-label="Product / CMF" data-section="s-product-banner-2">
-    <img src="../images/Cable_2c.jpg" alt="Product banner 2">
-    <div class="caption">Product — banner 02</div>
+  <!-- 04c · PRODUCT BANNER 2 — left-aligned on desktop (Cable) -->
+  <div class="panel--banner align-left" data-label="Product / CMF" data-section="s-product-banner-2">
+    <img src="../images/Cable_2c.jpg" alt="Cable">
+    <div class="caption">Cable</div>
   </div>
 
-  <!-- 04d · PRODUCT BANNER 3 -->
-  <div class="panel--banner" data-label="Product / CMF" data-section="s-product-banner-3">
-    <img src="../images/Power Bank_1c.jpg" alt="Product banner 3">
-    <div class="caption">Product — banner 03</div>
+  <!-- 04d · PRODUCT BANNER 3 — right-aligned on desktop (Power Bank) -->
+  <div class="panel--banner align-right" data-label="Product / CMF" data-section="s-product-banner-3">
+    <img src="../images/Power Bank_1c.jpg" alt="Power Bank">
+    <div class="caption">Power Bank</div>
   </div>
 
-  <!-- 04e · PRODUCT BANNER 4 -->
-  <div class="panel--banner" data-label="Product / CMF" data-section="s-product-banner-4">
-    <img src="../images/Treker_3c.jpg" alt="Product banner 4">
-    <div class="caption">Product — banner 04</div>
+  <!-- 04e · PRODUCT BANNER 4 — left-aligned on desktop (Treker) -->
+  <div class="panel--banner align-left" data-label="Product / CMF" data-section="s-product-banner-4">
+    <img src="../images/Treker_3c.jpg" alt="Treker">
+    <div class="caption">Treker</div>
   </div>
 
-  <!-- 04f · PRODUCT BANNER 5 -->
-  <div class="panel--banner" data-label="Product / CMF" data-section="s-product-banner-5">
-    <img src="../images/Treker_1c.jpg" alt="Product banner 5">
-    <div class="caption">Product — banner 05</div>
+  <!-- 04f · PRODUCT BANNER 5 — right-aligned on desktop (Treker) -->
+  <div class="panel--banner align-right" data-label="Product / CMF" data-section="s-product-banner-5">
+    <img src="../images/Treker_1c.jpg" alt="Treker">
+    <div class="caption">Treker</div>
   </div>
 
-  <!-- 04g · PRODUCT BANNER 6 -->
+  <!-- 04g · PRODUCT BANNER 6 — centered (Pouch) -->
   <div class="panel--banner" data-label="Product / CMF" data-section="s-product-banner-6">
-    <img src="../images/Pouch_1c.jpg" alt="Product banner 6">
-    <div class="caption">Product — banner 06</div>
+    <img src="../images/Pouch_1c.jpg" alt="Pouch">
+    <div class="caption">Pouch</div>
   </div>
 
   <!-- 05 · PACKAGING -->
@@ -953,7 +962,6 @@ document.addEventListener('touchstart', e => {
 }, { passive: true });
 
 const container = document.getElementById('snapContainer');
-// Include .panel--banner so banner panels participate in nav, counter, snap tracking
 const allPanelEls = Array.from(document.querySelectorAll('.panel, .panel--banner, .panel--footer'));
 const getVisiblePanels = () => allPanelEls.filter(p => getComputedStyle(p).display !== 'none');
 let panels = getVisiblePanels();
