@@ -569,20 +569,190 @@ header {
 .r.d2 { transition-delay: 0.16s; }
 .r.d3 { transition-delay: 0.24s; }
 .r.d4 { transition-delay: 0.32s; }
+
+/* ============================================================
+   FOOTER PANEL — full viewport, project tiles + copyright strip
+   ============================================================ */
 .panel--footer {
   height: calc(100dvh - var(--hdr));
   scroll-snap-align: start;
   scroll-snap-stop: always;
+  display: flex; flex-direction: column;
+  border-top: 1px solid var(--border);
+  padding-bottom: var(--safe-bottom);
+  background: var(--bg);
+  overflow: hidden;
+}
+.footer-tiles-wrap {
+  flex: 1;
+  display: flex; flex-direction: column;
+  padding: 52px 72px 28px;
+  overflow: hidden;
+  min-height: 0;
+}
+.footer-tiles-head {
+  display: flex; justify-content: space-between; align-items: baseline;
+  margin-bottom: 28px;
+  flex-shrink: 0;
+}
+.footer-tiles-label {
+  font-size: 10px; font-family: var(--mono);
+  letter-spacing: 0.14em; text-transform: uppercase;
+  opacity: 0.38;
+}
+.footer-tiles-aside {
+  font-size: 10px; font-family: var(--mono);
+  letter-spacing: 0.08em;
+  opacity: 0.32;
+}
+.footer-tiles {
+  flex: 1; min-height: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 2px;
+}
+.tile {
+  background: #F6F6F6;
+  position: relative;
+  display: flex; flex-direction: column;
+  text-decoration: none;
+  color: var(--black);
+  overflow: hidden;
+  cursor: pointer;
+  min-height: 0;
+}
+.tile-thumb {
+  width: 100%;
+  flex-shrink: 0;
+  aspect-ratio: 3 / 2;
+  position: relative;
+  overflow: hidden;
+}
+.tile-thumb img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.tile-thumb--ph {
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-family: var(--mono);
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: rgba(0,0,0,0.13);
+  background: #F6F6F6;
+  transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.tile:hover .tile-thumb img,
+.tile:hover .tile-thumb--ph { transform: scale(1.04); }
+.tile-body {
+  padding: 14px 18px 16px;
+  border-top: 1px solid rgba(0,0,0,0.07);
+  flex: 1;
+  display: flex; flex-direction: column;
+  min-height: 0;
+}
+.tile-meta {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 6px;
+  gap: 10px;
+}
+.tile-tags { display: flex; gap: 7px; min-width: 0; }
+.tile-tag {
+  font-size: 9px;
+  font-family: var(--mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--mid);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.tile-year {
+  font-size: 10px;
+  font-family: var(--mono);
+  color: var(--mid);
+  flex-shrink: 0;
+}
+.tile-title {
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.22;
+  letter-spacing: -0.01em;
+  margin-bottom: 4px;
+}
+.tile-desc {
+  font-size: 11px;
+  color: var(--mid);
+  line-height: 1.5;
+}
+.award-pip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+}
+.pip-dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: #e8312a;
+  flex-shrink: 0;
+}
+.pip-text {
+  font-size: 9px;
+  font-family: var(--mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--mid);
+}
+.tile-arrow-circle {
+  position: absolute;
+  top: 14px; right: 14px;
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.22s, transform 0.22s;
+  z-index: 2;
+}
+.tile:hover .tile-arrow-circle { opacity: 1; transform: translateY(0); }
+.tile-arrow-circle svg { width: 11px; height: 11px; stroke: rgba(0,0,0,0.55); }
+.tile.is-current { pointer-events: none; }
+.tile.is-current .tile-thumb img { opacity: 0.55; }
+.tile-current-pill {
+  position: absolute;
+  top: 12px; right: 12px;
+  font-size: 9px; font-family: var(--mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--black);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  padding: 4px 8px;
+  z-index: 2;
+}
+.tile--placeholder { pointer-events: none; }
+.footer-strip {
   display: flex; align-items: center;
   justify-content: space-between;
-  padding: 0 72px;
-  padding-bottom: var(--safe-bottom);
+  padding: 18px 72px;
   border-top: 1px solid var(--border);
+  flex-shrink: 0;
 }
 .footer-copy {
   font-family: var(--mono); font-size: 11px;
   opacity: 0.35; letter-spacing: 0.08em;
 }
+
+@media (max-width: 1200px) {
+  .footer-tiles-wrap { padding: 44px 48px 24px; }
+  .footer-strip { padding: 16px 48px; }
+}
+
 @media (max-width: 900px) {
   .sidebar { display: none; }
   .snap-container { left: 0; }
@@ -601,7 +771,9 @@ header {
   .panel--colorways { flex-direction: column; overflow-y: auto; }
   .colorways-left { width: 100%; padding: 28px 28px 20px; border-right: none; border-bottom: 1px solid var(--border); }
   .colorways-right { min-height: 320px; }
-  .panel--footer { padding: 0 28px; flex-direction: column; justify-content: center; gap: 12px; }
+  .footer-tiles-wrap { padding: 32px 28px 20px; }
+  .footer-tiles { grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(3, 1fr); }
+  .footer-strip { padding: 14px 28px; }
 }
 @media (max-width: 640px) {
   :root { --hdr: 44px; --sidebar-w: 0px; }
@@ -643,7 +815,12 @@ header {
     font-size: 9px;
   }
   .snap-container { left: 0; }
-  .panel, .panel--footer { height: calc(100dvh - var(--hdr)); }
+  .panel { height: calc(100dvh - var(--hdr)); }
+  .panel--footer {
+    height: calc(100dvh - var(--hdr));
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
   .panel-inner {
     padding: 28px 20px 24px;
     overflow-y: auto;
@@ -720,14 +897,21 @@ header {
   .summary-table th:first-child,
   .summary-table td:first-child { width: 100px; }
   .tag { font-size: 10px; padding: 3px 8px; }
-  .panel--footer {
-    padding: 0 20px;
-    padding-bottom: var(--safe-bottom);
+  .footer-tiles-wrap { padding: 24px 20px 16px; }
+  .footer-tiles-head { margin-bottom: 18px; }
+  .footer-tiles { grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(3, 1fr); }
+  .tile-meta { padding: 10px 12px 12px; }
+  .tile-name { font-size: 12px; }
+  .tile-info { font-size: 9px; }
+  .tile-arrow { font-size: 10px; }
+  .footer-strip {
+    padding: 12px 20px;
     flex-direction: column;
     justify-content: center;
-    gap: 10px;
+    gap: 6px;
     text-align: center;
   }
+  .footer-copy { font-size: 9px; }
   .press-link {
     padding: 10px 0; line-height: 1.4;
     min-height: 44px;
@@ -753,6 +937,9 @@ header {
   .panel-inner { padding: 20px; }
   .split { grid-template-rows: 40% 60%; }
   .colorways-right { height: 40vw; }
+  .panel--footer { overflow-y: auto; }
+  .footer-tiles-wrap { padding: 20px; }
+  .footer-strip { padding: 12px 20px; }
 }
 </style>
 </head>
@@ -964,10 +1151,126 @@ header {
     </div>
   </div>
 
+  <!-- 09 · FOOTER — Project tiles + copyright strip -->
   <div class="panel--footer" data-label="End">
-    <div class="footer-copy">© 2025 Hye Min Eom</div>
-    <div class="footer-copy">BT21 × iOttie — 2025</div>
-    <div class="footer-copy">All rights reserved</div>
+    <div class="footer-tiles-wrap">
+      <div class="footer-tiles-head">
+        <div class="footer-tiles-label">More work</div>
+        <div class="footer-tiles-aside">06 projects</div>
+      </div>
+      <div class="footer-tiles">
+
+        <!-- TILE 01 · VELOX 5K -->
+        <a class="tile" href="../velox-5k/index.html">
+          <div class="tile-thumb">
+            <img src="../images/Velox Power Bank.jpg" alt="Velox 5K Power Bank">
+          </div>
+          <div class="tile-arrow-circle">
+            <svg viewBox="0 0 14 14" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12L12 2M12 2H5M12 2v7"/></svg>
+          </div>
+          <div class="tile-body">
+            <div class="tile-meta">
+              <div class="tile-tags"><span class="tile-tag">SENIOR INDUSTRIAL DESIGNER</span></div>
+              <span class="tile-year">2025</span>
+            </div>
+            <div class="tile-title">Velox 5K Power Bank</div>
+            <div class="tile-desc">Consumer Electronics</div>
+            <div class="award-pip"><div class="pip-dot"></div><span class="pip-text">Red Dot Design Award 2026</span></div>
+          </div>
+        </a>
+
+        <!-- TILE 02 · HAYAN -->
+        <a class="tile" href="../hayan/index.html">
+          <div class="tile-thumb">
+            <img src="../images/Product_d.jpg" alt="HAYAN">
+          </div>
+          <div class="tile-arrow-circle">
+            <svg viewBox="0 0 14 14" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12L12 2M12 2H5M12 2v7"/></svg>
+          </div>
+          <div class="tile-body">
+            <div class="tile-meta">
+              <div class="tile-tags"><span class="tile-tag">CO-FOUNDER &amp; DESIGN DIRECTOR</span></div>
+              <span class="tile-year">2021</span>
+            </div>
+            <div class="tile-title">HAYAN</div>
+            <div class="tile-desc">Sustainable Lifestyle Brand</div>
+          </div>
+        </a>
+
+        <!-- TILE 03 · BT21 (current page) -->
+        <a class="tile is-current" href="#" aria-current="page">
+          <div class="tile-thumb">
+            <img src="../images/Wall Charger_1b.jpg" alt="BT21 Line Friends">
+          </div>
+          <div class="tile-current-pill">You are here</div>
+          <div class="tile-body">
+            <div class="tile-meta">
+              <div class="tile-tags"><span class="tile-tag">LEAD DESIGNER</span></div>
+              <span class="tile-year">2025</span>
+            </div>
+            <div class="tile-title">BT21 Line Friends</div>
+            <div class="tile-desc">Licensed IP Collaboration</div>
+          </div>
+        </a>
+
+        <!-- TILE 04 · VELOX PRO -->
+        <a class="tile" href="../velox-pro/index.html">
+          <div class="tile-thumb">
+            <img src="../images/Velox Pro.jpg" alt="Velox Pro">
+          </div>
+          <div class="tile-arrow-circle">
+            <svg viewBox="0 0 14 14" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12L12 2M12 2H5M12 2v7"/></svg>
+          </div>
+          <div class="tile-body">
+            <div class="tile-meta">
+              <div class="tile-tags"><span class="tile-tag">SENIOR INDUSTRIAL DESIGNER</span></div>
+              <span class="tile-year">2025</span>
+            </div>
+            <div class="tile-title">Qi2.2 Wireless Charger for Dashboard &amp; Windshield</div>
+            <div class="tile-desc">Consumer Electronics</div>
+            <div class="award-pip"><div class="pip-dot"></div><span class="pip-text">Made for Google Certification 2025</span></div>
+          </div>
+        </a>
+
+        <!-- TILE 05 · TBD -->
+        <a class="tile tile--placeholder" href="#">
+          <div class="tile-thumb tile-thumb--ph">cover image</div>
+          <div class="tile-arrow-circle">
+            <svg viewBox="0 0 14 14" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12L12 2M12 2H5M12 2v7"/></svg>
+          </div>
+          <div class="tile-body">
+            <div class="tile-meta">
+              <div class="tile-tags"><span class="tile-tag">TBD</span></div>
+              <span class="tile-year">—</span>
+            </div>
+            <div class="tile-title">Project 05</div>
+            <div class="tile-desc">Coming soon</div>
+          </div>
+        </a>
+
+        <!-- TILE 06 · TBD -->
+        <a class="tile tile--placeholder" href="#">
+          <div class="tile-thumb tile-thumb--ph">cover image</div>
+          <div class="tile-arrow-circle">
+            <svg viewBox="0 0 14 14" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12L12 2M12 2H5M12 2v7"/></svg>
+          </div>
+          <div class="tile-body">
+            <div class="tile-meta">
+              <div class="tile-tags"><span class="tile-tag">TBD</span></div>
+              <span class="tile-year">—</span>
+            </div>
+            <div class="tile-title">Project 06</div>
+            <div class="tile-desc">Coming soon</div>
+          </div>
+        </a>
+
+      </div>
+    </div>
+    <div class="footer-strip">
+      <div class="footer-copy">© 2025 Hye Min Eom</div>
+      <div class="footer-copy">BT21 × iOttie — 2025</div>
+      <div class="footer-copy">All rights reserved</div>
+    </div>
   </div>
 
 </div>
