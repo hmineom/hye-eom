@@ -12,7 +12,7 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg:     #f2f2f0;
+  --bg:     #FFFFFF;
   --black:  #1a1a1a;
   --mid:    #888;
   --border: rgba(0,0,0,0.09);
@@ -142,13 +142,8 @@ header {
   position: relative;
   overflow: hidden;
   cursor: pointer;
+  background: #F6F6F6;
 }
-.card:nth-child(1) { background: #1e1e1e; }
-.card:nth-child(2) { background: #e8e3dc; }
-.card:nth-child(3) { background: #d4dde8; }
-.card:nth-child(4) { background: #e8e0d4; }
-.card:nth-child(5) { background: #1c2020; }
-.card:nth-child(6) { background: #dde8dc; }
 
 .card-img-ph {
   width: 100%;
@@ -160,7 +155,7 @@ header {
   font-family: var(--mono);
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.15);
+  color: rgba(0,0,0,0.13);
   transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 .card-img {
@@ -170,10 +165,6 @@ header {
   display: block;
   transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
-.card:nth-child(2) .card-img-ph,
-.card:nth-child(3) .card-img-ph,
-.card:nth-child(4) .card-img-ph,
-.card:nth-child(6) .card-img-ph { color: rgba(0,0,0,0.13); }
 
 .card:hover .card-img,
 .card:hover .card-img-ph { transform: scale(1.04); }
@@ -182,8 +173,6 @@ header {
   padding: 16px 20px 20px;
   border-top: 1px solid rgba(0,0,0,0.07);
 }
-.card:nth-child(1) .card-body,
-.card:nth-child(5) .card-body { border-top-color: rgba(255,255,255,0.07); }
 
 .card-meta {
   display: flex;
@@ -199,15 +188,11 @@ header {
   text-transform: uppercase;
   color: var(--mid);
 }
-.card:nth-child(1) .card-tag,
-.card:nth-child(5) .card-tag { color: rgba(255,255,255,0.25); }
 .card-year {
   font-size: 10px;
   font-family: var(--mono);
   color: var(--mid);
 }
-.card:nth-child(1) .card-year,
-.card:nth-child(5) .card-year { color: rgba(255,255,255,0.25); }
 
 .card-title {
   font-size: 17px;
@@ -216,16 +201,12 @@ header {
   letter-spacing: -0.01em;
   margin-bottom: 4px;
 }
-.card:nth-child(1) .card-title,
-.card:nth-child(5) .card-title { color: rgba(255,255,255,0.88); }
 
 .card-desc {
   font-size: 12px;
   color: var(--mid);
   line-height: 1.5;
 }
-.card:nth-child(1) .card-desc,
-.card:nth-child(5) .card-desc { color: rgba(255,255,255,0.26); }
 
 .award-pip {
   display: inline-flex;
@@ -246,14 +227,13 @@ header {
   text-transform: uppercase;
   color: var(--mid);
 }
-.card:nth-child(1) .pip-text { color: rgba(255,255,255,0.3); }
 
 .card-arrow {
   position: absolute;
   top: 16px; right: 16px;
   width: 30px; height: 30px;
   border-radius: 50%;
-  background: rgba(255,255,255,0.12);
+  background: rgba(0,0,0,0.08);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -262,18 +242,8 @@ header {
   transition: opacity 0.22s, transform 0.22s;
   z-index: 2;
 }
-.card:nth-child(2) .card-arrow,
-.card:nth-child(3) .card-arrow,
-.card:nth-child(4) .card-arrow,
-.card:nth-child(6) .card-arrow { background: rgba(0,0,0,0.08); }
 .card:hover .card-arrow { opacity: 1; transform: translateY(0); }
-.card-arrow svg { width: 12px; height: 12px; }
-.card:nth-child(1) .card-arrow svg,
-.card:nth-child(5) .card-arrow svg { stroke: rgba(255,255,255,0.8); }
-.card:nth-child(2) .card-arrow svg,
-.card:nth-child(3) .card-arrow svg,
-.card:nth-child(4) .card-arrow svg,
-.card:nth-child(6) .card-arrow svg { stroke: rgba(0,0,0,0.55); }
+.card-arrow svg { width: 12px; height: 12px; stroke: rgba(0,0,0,0.55); }
 
 /* ── FOOTER ── */
 footer {
