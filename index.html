@@ -270,6 +270,62 @@ footer {
   transition: color 0.2s;
 }
 .footer-right a:hover { color: var(--black); }
+
+/* ════════════════════════════
+   RESPONSIVE — TABLET (≤900px)
+════════════════════════════ */
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ════════════════════════════
+   RESPONSIVE — MOBILE (≤640px)
+════════════════════════════ */
+@media (max-width: 640px) {
+  header {
+    padding: 0 24px;
+    height: 48px;
+  }
+  .s-content { padding-top: 48px; }
+
+  .s-intro { padding: 64px 24px 64px; }
+  .intro-eyebrow { margin-bottom: 20px; }
+  .intro-headline {
+    font-size: clamp(32px, 9vw, 44px);
+    margin-bottom: 40px;
+  }
+  .intro-sub { gap: 36px; }
+  .intro-bio { font-size: 14px; max-width: 100%; }
+
+  .divider { margin: 0 24px; }
+
+  .work-header { padding: 32px 24px 18px; }
+
+  /* Mobile: one project per row */
+  .grid {
+    padding: 0 24px 56px;
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  /* Always show arrow on mobile (no hover) */
+  .card-arrow {
+    opacity: 1;
+    transform: none;
+  }
+
+  .card-body { padding: 14px 18px 18px; }
+  .card-title { font-size: 16px; }
+
+  footer {
+    padding: 20px 24px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+}
 </style>
 </head>
 <body>
