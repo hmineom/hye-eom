@@ -262,83 +262,96 @@ header {
 
 /* ============================================================
    BANNER WITH SECONDARY INSET — main image + smaller image
-   Desktop: main image stays in its align position (left/right/center),
-   secondary image floats to the opposite side, smaller and centered vertically.
-   Mobile: secondary image stacks below the main image, smaller.
+   Panel fills viewport; flexbox centers the pair horizontally
+   and vertically. Inset is smaller and offset vertically for
+   an editorial composition.
 */
 .panel--banner.has-inset {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: calc(100dvh - var(--hdr));
+  min-height: calc(100dvh - var(--hdr));
+  width: 100%;
+  padding: 0;
+  background: #ffffff;
   position: relative;
+  overflow: hidden;
 }
 .panel--banner.has-inset .banner-stack {
   position: relative;
   display: flex;
   align-items: center;
+  justify-content: center;
   width: 100%;
   height: 100%;
-  max-height: calc(100dvh - var(--hdr));
+  gap: 3%;
 }
 .panel--banner.has-inset .banner-main {
+  position: static;
   display: block;
+  width: auto;
   height: auto;
-  max-height: calc(100dvh - var(--hdr));
   object-fit: contain;
   margin: 0;
+  max-width: none;
+  max-height: none;
 }
 .panel--banner.has-inset .banner-inset {
+  position: static;
   display: block;
+  width: auto;
   height: auto;
   object-fit: contain;
+  margin: 0;
+  max-width: none;
+  max-height: none;
 }
 @media (min-width: 901px) {
   .panel--banner.has-inset .banner-stack {
-    justify-content: flex-start;
-    gap: 4%;
-    padding: 0 4%;
+    justify-content: center;
+    padding: 0 6%;
   }
   .panel--banner.has-inset.align-left .banner-stack {
     justify-content: flex-start;
+    padding: 0 0 0 6%;
   }
   .panel--banner.has-inset.align-right .banner-stack {
     justify-content: flex-end;
+    padding: 0 6% 0 0;
   }
   .panel--banner.has-inset .banner-main {
-    width: 42%;
-    max-width: 42%;
-    max-height: calc(100dvh - var(--hdr) - 40px);
+    max-height: calc(100dvh - var(--hdr) - 80px);
+    max-width: 40%;
   }
   .panel--banner.has-inset .banner-inset {
-    width: 28%;
+    max-height: calc(45dvh);
     max-width: 28%;
-    max-height: calc(60dvh - var(--hdr));
   }
 }
 @media (max-width: 900px) {
   .panel--banner.has-inset .banner-stack {
     flex-direction: column;
-    justify-content: center;
-    gap: 16px;
-    padding: 16px;
+    gap: 14px;
+    padding: 20px;
   }
   .panel--banner.has-inset .banner-main {
-    width: 100%;
-    max-width: 90%;
     max-height: 55dvh;
+    max-width: 80%;
   }
   .panel--banner.has-inset .banner-inset {
-    width: 100%;
-    max-width: 60%;
-    max-height: 30dvh;
+    max-height: 25dvh;
+    max-width: 55%;
   }
 }
 @media (max-width: 640px) {
   .panel--banner.has-inset .banner-main {
-    max-width: 88%;
     max-height: 52dvh;
+    max-width: 78%;
   }
   .panel--banner.has-inset .banner-inset {
-    max-width: 55%;
-    max-height: 28dvh;
+    max-height: 22dvh;
+    max-width: 50%;
   }
 }
 
