@@ -723,7 +723,7 @@ header {
   <div class="panel panel--split" data-label="Concept" data-section="s-concept" style="background:#f5f6f6;">
     <div class="split">
       <div class="split-visual split-visual--bordered">
-        <img src="../images/Journey_1.jpg" alt="Concept — character to CMF mapping">
+        <img src="../images/bt21/concept.jpg" alt="Concept — character to CMF mapping">
       </div>
       <div class="split-text" style="background:#f5f6f6;">
         <div class="sec-label r in">Concept</div>
@@ -753,6 +753,34 @@ header {
   <div class="panel--banner" data-label="Product / CMF" data-section="s-product-banner-1">
     <img src="../images/Wall Charger_1c.jpg" alt="Wall Charger">
     <div class="caption">Wall Charger</div>
+  </div>
+
+  <!-- 04b·2 · COLORWAYS — moved into Product / CMF -->
+  <div class="panel panel--colorways" data-label="Product / CMF" data-section="s-product-colorways">
+    <div class="colorways-left r">
+      <div class="sec-label">Colorways</div>
+      <p class="sec-body" style="margin-top: 8px;">Four CMF directions, one shared silhouette. Each colorway mapped to a character's emotional register without printing the character on the product.</p>
+    </div>
+    <div class="colorways-right">
+      <div class="colorway-grid">
+        <div class="colorway-cell cw-black">
+          <div class="cw-name">Black</div>
+          <div class="cw-hex">#1A1A1A</div>
+        </div>
+        <div class="colorway-cell cw-silver">
+          <div class="cw-name">Silver</div>
+          <div class="cw-hex">#D8D8D8</div>
+        </div>
+        <div class="colorway-cell cw-mint">
+          <div class="cw-name">Mint</div>
+          <div class="cw-hex">#B4DCC8</div>
+        </div>
+        <div class="colorway-cell cw-pink">
+          <div class="cw-name">Pink</div>
+          <div class="cw-hex">#F5C6C0</div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- 04c · PRODUCT BANNER 2 — left-aligned on desktop (Cable) -->
@@ -785,18 +813,13 @@ header {
     <div class="caption">Pouch</div>
   </div>
 
-  <!-- 05 · PACKAGING -->
-  <div class="panel panel--split" data-label="Packaging" data-section="s-packaging">
-    <div class="split">
-      <div class="split-visual split-visual--bordered">
-        <img src="../images/bt21/package1.jpg" alt="Packaging — sleeve and tray">
-      </div>
-      <div class="split-text">
-        <div class="sec-label r">Packaging</div>
-        <h2 class="sec-h2 r">A matchbox, deliberately staged.</h2>
-        <p class="sec-body r d1">A sleeve-and-tray structure gave the unboxing a two-stage reveal: pull the sleeve, meet the character. The neutral product underneath then earned the unboxing rather than competing with it.</p>
-        <p class="sec-body r d2">Dielines, materials, and lanyard hardware were developed alongside CN suppliers in bilingual cycles — kept in sync with the primary product timeline so the unboxing landed as one designed experience, not two.</p>
-      </div>
+  <!-- 05 · PACKAGING — text only -->
+  <div class="panel" data-label="Packaging" data-section="s-packaging">
+    <div class="panel-inner" style="justify-content:center;">
+      <div class="sec-label r">Packaging</div>
+      <h2 class="sec-h2 r">A matchbox, deliberately staged.</h2>
+      <p class="sec-body r d1">A sleeve-and-tray structure gave the unboxing a two-stage reveal: pull the sleeve, meet the character. The neutral product underneath then earned the unboxing rather than competing with it.</p>
+      <p class="sec-body r d2">Dielines, materials, and lanyard hardware were developed alongside CN suppliers in bilingual cycles — kept in sync with the primary product timeline so the unboxing landed as one designed experience, not two.</p>
     </div>
   </div>
 
@@ -852,34 +875,6 @@ header {
         <div class="outcome-press-block outcome-press-block--bottom">
           <div class="press-name">IPX × iOttie</div>
           <div class="press-desc">Licensed collaboration, character lineup mapped to colorway system</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 07b · COLORWAYS -->
-  <div class="panel panel--colorways" data-label="Outcome" data-section="s-outcome-colorways">
-    <div class="colorways-left r">
-      <div class="sec-label">Colorways</div>
-      <p class="sec-body" style="margin-top: 8px;">Four CMF directions, one shared silhouette. Each colorway mapped to a character's emotional register without printing the character on the product.</p>
-    </div>
-    <div class="colorways-right">
-      <div class="colorway-grid">
-        <div class="colorway-cell cw-black">
-          <div class="cw-name">Black</div>
-          <div class="cw-hex">#1A1A1A</div>
-        </div>
-        <div class="colorway-cell cw-silver">
-          <div class="cw-name">Silver</div>
-          <div class="cw-hex">#D8D8D8</div>
-        </div>
-        <div class="colorway-cell cw-mint">
-          <div class="cw-name">Mint</div>
-          <div class="cw-hex">#B4DCC8</div>
-        </div>
-        <div class="colorway-cell cw-pink">
-          <div class="cw-name">Pink</div>
-          <div class="cw-hex">#F5C6C0</div>
         </div>
       </div>
     </div>
@@ -983,6 +978,7 @@ const progressBar = document.getElementById('progressBar');
 let total = panels.length;
 const sectionParentMap = {
   's-product-banner-1': 's-product',
+  's-product-colorways': 's-product',
   's-product-banner-2': 's-product',
   's-product-banner-3': 's-product',
   's-product-banner-4': 's-product',
@@ -990,7 +986,6 @@ const sectionParentMap = {
   's-product-banner-6': 's-product',
   's-packaging-img1': 's-packaging',
   's-packaging-img2': 's-packaging',
-  's-outcome-colorways': 's-outcome',
 };
 sidebarLinks.forEach(link => {
   link.addEventListener('click', e => {
