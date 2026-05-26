@@ -676,7 +676,6 @@ header {
   <a href="#" data-target="s-challenge">Challenge</a>
   <a href="#" data-target="s-concept">Concept</a>
   <a href="#" data-target="s-product">Product / CMF</a>
-  <a href="#" data-target="s-packaging">Packaging</a>
   <a href="#" data-target="s-bts">Behind the Scenes</a>
   <a href="#" data-target="s-outcome">Outcome</a>
   <a href="#" data-target="s-summary">Summary</a>
@@ -687,7 +686,6 @@ header {
   <a href="#" data-target="s-challenge">Challenge</a>
   <a href="#" data-target="s-concept">Concept</a>
   <a href="#" data-target="s-product">Product / CMF</a>
-  <a href="#" data-target="s-packaging">Packaging</a>
   <a href="#" data-target="s-bts">Behind the Scenes</a>
   <a href="#" data-target="s-outcome">Outcome</a>
   <a href="#" data-target="s-summary">Summary</a>
@@ -778,6 +776,12 @@ header {
     <div class="caption">Wall Charger</div>
   </div>
 
+  <!-- 04b·2 · PRODUCT BANNER 1b — centered (Wall Charger 2) -->
+  <div class="panel--banner" data-label="Product / CMF" data-section="s-product-banner-1b">
+    <img src="../images/Wall Charger_2c.jpg" alt="Wall Charger">
+    <div class="caption">Wall Charger</div>
+  </div>
+
   <!-- 04c · PRODUCT BANNER 2 — left-aligned on desktop (Cable) -->
   <div class="panel--banner align-left" data-label="Product / CMF" data-section="s-product-banner-2">
     <img src="../images/Cable_2c.jpg" alt="Cable">
@@ -806,28 +810,6 @@ header {
   <div class="panel--banner" data-label="Product / CMF" data-section="s-product-banner-6">
     <img src="../images/Pouch_1c.jpg" alt="Pouch">
     <div class="caption">Pouch</div>
-  </div>
-
-  <!-- 05 · PACKAGING — text only -->
-  <div class="panel" data-label="Packaging" data-section="s-packaging">
-    <div class="panel-inner" style="justify-content:center;">
-      <div class="sec-label r">Packaging</div>
-      <h2 class="sec-h2 r">A matchbox, deliberately staged.</h2>
-      <p class="sec-body r d1">A sleeve-and-tray structure gave the unboxing a two-stage reveal: pull the sleeve, meet the character. The neutral product underneath then earned the unboxing rather than competing with it.</p>
-      <p class="sec-body r d2">Dielines, materials, and lanyard hardware were developed alongside CN suppliers in bilingual cycles — kept in sync with the primary product timeline so the unboxing landed as one designed experience, not two.</p>
-    </div>
-  </div>
-
-  <!-- 05b · PACKAGING — full image -->
-  <div class="panel panel--fullbleed panel--contain-mobile" data-label="Packaging" data-section="s-packaging-img1">
-    <img src="../images/bt21/package2.jpg" alt="Packaging — open detail">
-    <div class="caption">Packaging — sleeve detail</div>
-  </div>
-
-  <!-- 05c · PACKAGING — full image -->
-  <div class="panel panel--fullbleed panel--contain-mobile" data-label="Packaging" data-section="s-packaging-img2">
-    <img src="../images/bt21/package3.jpg" alt="Packaging — tray detail">
-    <div class="caption">Packaging — tray structure</div>
   </div>
 
   <!-- 06 · BEHIND THE SCENES -->
@@ -973,14 +955,13 @@ const progressBar = document.getElementById('progressBar');
 let total = panels.length;
 const sectionParentMap = {
   's-product-banner-1': 's-product',
+  's-product-banner-1b': 's-product',
   's-product-colorways': 's-product',
   's-product-banner-2': 's-product',
   's-product-banner-3': 's-product',
   's-product-banner-4': 's-product',
   's-product-banner-5': 's-product',
   's-product-banner-6': 's-product',
-  's-packaging-img1': 's-packaging',
-  's-packaging-img2': 's-packaging',
 };
 sidebarLinks.forEach(link => {
   link.addEventListener('click', e => {
