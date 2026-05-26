@@ -310,23 +310,24 @@ header {
 @media (min-width: 901px) {
   .panel--banner.has-inset .banner-stack {
     justify-content: center;
-    padding: 0 6%;
+    padding: 0 4%;
+    gap: 4%;
   }
   .panel--banner.has-inset.align-left .banner-stack {
     justify-content: flex-start;
-    padding: 0 0 0 6%;
+    padding: 0 0 0 4%;
   }
   .panel--banner.has-inset.align-right .banner-stack {
     justify-content: flex-end;
-    padding: 0 6% 0 0;
+    padding: 0 4% 0 0;
   }
   .panel--banner.has-inset .banner-main {
-    max-height: calc(100dvh - var(--hdr) - 80px);
-    max-width: 40%;
+    max-height: calc(100dvh - var(--hdr));
+    max-width: 55%;
   }
   .panel--banner.has-inset .banner-inset {
-    max-height: calc(45dvh);
-    max-width: 28%;
+    max-height: 50dvh;
+    max-width: 30%;
   }
 }
 @media (max-width: 900px) {
@@ -772,7 +773,7 @@ header {
   <a href="#" data-target="s-intro" class="active">Intro</a>
   <a href="#" data-target="s-challenge">Challenge</a>
   <a href="#" data-target="s-concept">Concept</a>
-  <a href="#" data-target="s-product">Product / CMF</a>
+  <a href="#" data-target="s-product-banner-1">Product / CMF</a>
   <a href="#" data-target="s-bts">Behind the Scenes</a>
   <a href="#" data-target="s-outcome">Outcome</a>
   <a href="#" data-target="s-summary">Summary</a>
@@ -782,7 +783,7 @@ header {
   <a href="#" data-target="s-intro" class="active">Intro</a>
   <a href="#" data-target="s-challenge">Challenge</a>
   <a href="#" data-target="s-concept">Concept</a>
-  <a href="#" data-target="s-product">Product / CMF</a>
+  <a href="#" data-target="s-product-banner-1">Product / CMF</a>
   <a href="#" data-target="s-bts">Behind the Scenes</a>
   <a href="#" data-target="s-outcome">Outcome</a>
   <a href="#" data-target="s-summary">Summary</a>
@@ -825,44 +826,6 @@ header {
         <h2 class="sec-h2 r in">Characters carried by color, not print.</h2>
         <p class="sec-body r d1 in">BT21 is not one character — it's seven, each with a distinct fanbase. Rather than crowd the product with all of them, we mapped four to four colorways, with character presence carried entirely through CMF and unboxing.</p>
         <p class="sec-body r d2 in">The product itself stayed neutral. The IP did the emotional work in the package. The result respected both audiences: fans got something unmistakably BT21, and the product earned its place on a shelf next to non-licensed accessories.</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- 04 · PRODUCT / CMF — text only -->
-  <div class="panel" data-label="Product / CMF" data-section="s-product">
-    <div class="panel-inner" style="justify-content:center;">
-      <div class="sec-label r">Product &amp; CMF</div>
-      <h2 class="sec-h2 r">An iridescent shell, four times.</h2>
-      <p class="sec-body r d1">The clear iridescent shell became the line's signature — a finish that shifts with light, echoing the unpredictability of the characters without literalizing them. One silhouette, four colorways.</p>
-      <p class="sec-body r d2">Black anchored the line. Silver gave it editorial polish. Mint and pink carried the IP's softer registers. Each colorway moved through four rounds of QC across CN suppliers before the finish landed.</p>
-    </div>
-  </div>
-
-  <!-- 04·1 · COLORWAYS — sits right after the Product/CMF intro -->
-  <div class="panel panel--colorways" data-label="Product / CMF" data-section="s-product-colorways">
-    <div class="colorways-left r">
-      <div class="sec-label">Colorways</div>
-      <p class="sec-body" style="margin-top: 8px;">Four CMF directions, one shared silhouette. Each colorway mapped to a character's emotional register without printing the character on the product.</p>
-    </div>
-    <div class="colorways-right">
-      <div class="colorway-grid">
-        <div class="colorway-cell cw-black">
-          <div class="cw-name">Black</div>
-          <div class="cw-hex">#1A1A1A</div>
-        </div>
-        <div class="colorway-cell cw-silver">
-          <div class="cw-name">Silver</div>
-          <div class="cw-hex">#D8D8D8</div>
-        </div>
-        <div class="colorway-cell cw-mint">
-          <div class="cw-name">Mint</div>
-          <div class="cw-hex">#B4DCC8</div>
-        </div>
-        <div class="colorway-cell cw-pink">
-          <div class="cw-name">Pink</div>
-          <div class="cw-hex">#F5C6C0</div>
-        </div>
       </div>
     </div>
   </div>
@@ -1057,14 +1020,12 @@ const counter = document.getElementById('sectionCounter');
 const progressBar = document.getElementById('progressBar');
 let total = panels.length;
 const sectionParentMap = {
-  's-product-banner-1': 's-product',
-  's-product-banner-1b': 's-product',
-  's-product-colorways': 's-product',
-  's-product-banner-2': 's-product',
-  's-product-banner-3': 's-product',
-  's-product-banner-4': 's-product',
-  's-product-banner-5': 's-product',
-  's-product-banner-6': 's-product',
+  's-product-banner-1b': 's-product-banner-1',
+  's-product-banner-2': 's-product-banner-1',
+  's-product-banner-3': 's-product-banner-1',
+  's-product-banner-4': 's-product-banner-1',
+  's-product-banner-5': 's-product-banner-1',
+  's-product-banner-6': 's-product-banner-1',
 };
 sidebarLinks.forEach(link => {
   link.addEventListener('click', e => {
