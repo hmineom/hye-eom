@@ -967,9 +967,6 @@ header {
     text-align: center;
   }
 
-  /* ── PROCESS PANEL CANVAS ── */
-  #processCanvas { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-
   /* ── PRESS LINKS — better tap targets on mobile ── */
   .press-link {
     padding: 10px 0;
@@ -1034,9 +1031,9 @@ header {
   <a href="#" data-target="s-logo">Logo</a>
   <a href="#" data-target="s-product">Product / CMF</a>
   <a href="#" data-target="s-packaging">Packaging</a>
+  <a href="#" data-target="s-bts">Behind the Scenes</a>
   <a href="#" data-target="s-outcome">Outcome</a>
   <a href="#" data-target="s-summary">Summary</a>
-  <a href="#" data-target="s-process">Process</a>
 </nav>
 
 <!-- PROGRESS -->
@@ -1049,9 +1046,9 @@ header {
   <a href="#" data-target="s-logo">Logo</a>
   <a href="#" data-target="s-product">Product / CMF</a>
   <a href="#" data-target="s-packaging">Packaging</a>
+  <a href="#" data-target="s-bts">Behind the Scenes</a>
   <a href="#" data-target="s-outcome">Outcome</a>
   <a href="#" data-target="s-summary">Summary</a>
-  <a href="#" data-target="s-process">Process</a>
 </nav>
 
 <!-- SECTION COUNTER -->
@@ -1160,6 +1157,23 @@ header {
   <div class="panel panel--fullbleed panel--contain-mobile" data-label="Packaging" data-section="s-packaging-img2">
     <img src="../images/package3.jpg" alt="Packaging" />
     <div class="caption">Packaging details</div>
+  </div>
+
+  <!-- 06 · BEHIND THE SCENES -->
+  <div class="panel panel--split" data-label="Behind the Scenes" data-section="s-bts">
+    <div class="split">
+      <div class="split-visual split-visual--bordered">
+        <video autoplay muted loop playsinline preload="auto">
+          <source src="../videos/hayan_wip.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="split-text">
+        <div class="sec-label r">Behind the Scenes</div>
+        <h2 class="sec-h2 r">The work behind the work.</h2>
+        <p class="sec-body r d1">From sustainable material sourcing to final production, every stage was hands-on. I led PLA bristle and bio-based handle development with our suppliers, running multiple QC rounds to validate finish consistency, color matching, and structural integrity across the adult and children's range.</p>
+        <p class="sec-body r d2">Beyond designing the product, I oversaw brand strategy, packaging structure, photography direction, and the crowdfunding launch on Wadiz, keeping every layer aligned with the brand's quiet confidence.</p>
+      </div>
+    </div>
   </div>
 
   <!-- 07 · OUTCOME — stats + press -->
@@ -1278,16 +1292,6 @@ header {
         </tbody>
       </table>
     </div>
-  </div>
-
-  <!-- 09 · PROCESS — ping-pong canvas video -->
-  <div class="panel panel--fullbleed" data-label="Process" data-section="s-process">
-    <video id="processVideo" muted playsinline preload="auto" style="display:none;">
-      <source src="../videos/Progress.mp4" type="video/mp4">
-    </video>
-    <canvas id="processCanvas" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;"></canvas>
-    <div class="img-ph dark" id="processFallback" style="display:none;">Video — design &amp; production process</div>
-    <div class="caption">Process — design to production</div>
   </div>
 
   <!-- FOOTER -->
@@ -1445,114 +1449,6 @@ const indexTracker = new IntersectionObserver(entries => {
 panels.forEach(p => indexTracker.observe(p));
 
 activatePanel(0);
-
-// ── PROCESS VIDEO PING-PONG ──
-(function () {
-  const video    = document.getElementById('processVideo');
-  const canvas   = document.getElementById('processCanvas');
-  const fallback = document.getElementById('processFallback');
-
-  if (!video || !canvas) return;
-
-  // On mobile, skip canvas — direct video is more reliable on iOS Safari
-  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-
-  let ctx = null;
-  if (!isMobile) {
-    ctx = canvas.getContext('2d');
-  } else {
-    canvas.style.display = 'none';
-    video.style.cssText = 'display:block; position:absolute; inset:0; width:100%; height:100%; object-fit:cover;';
-  }
-
-  const SPEED     = 0.4;
-  let   direction = 1;
-  let   rafId     = null;
-  let   active    = false;
-  let   duration  = 0;
-
-  function resizeCanvas() {
-    if (!ctx) return;
-    canvas.width  = canvas.offsetWidth  * Math.min(window.devicePixelRatio, 2);
-    canvas.height = canvas.offsetHeight * Math.min(window.devicePixelRatio, 2);
-  }
-  resizeCanvas();
-  window.addEventListener('resize', resizeCanvas);
-
-  function drawToCanvas() {
-    if (!ctx) return;
-    const cw = canvas.width, ch = canvas.height;
-    const vw = video.videoWidth  || cw;
-    const vh = video.videoHeight || ch;
-    const scale = Math.max(cw / vw, ch / vh);
-    const dw = vw * scale, dh = vh * scale;
-    ctx.drawImage(video, (cw - dw) / 2, (ch - dh) / 2, dw, dh);
-  }
-
-  function tick() {
-    if (!active) return;
-    rafId = requestAnimationFrame(tick);
-    const next = video.currentTime + direction * SPEED * (1 / 60);
-    if (next >= duration) {
-      video.currentTime = duration - 0.001;
-      direction = -1;
-    } else if (next <= 0) {
-      video.currentTime = 0.001;
-      direction = 1;
-    } else {
-      video.currentTime = next;
-    }
-    if (ctx) drawToCanvas();
-  }
-
-  function start() {
-    if (active) return;
-    active = true;
-    rafId = requestAnimationFrame(tick);
-  }
-
-  function stop() {
-    active = false;
-    if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
-  }
-
-  function showFallback() {
-    canvas.style.display   = 'none';
-    video.style.display    = 'none';
-    fallback.style.display = '';
-  }
-
-  function init() {
-    duration = video.duration;
-    if (!isFinite(duration) || duration === 0) { showFallback(); return; }
-    video.currentTime = 0;
-    video.addEventListener('seeked', function onReady() {
-      video.removeEventListener('seeked', onReady);
-      if (panelVisible) start();
-    }, { once: true });
-    video.currentTime = 0.001;
-  }
-
-  let panelVisible = false;
-  const processPanel = document.querySelector('[data-section="s-process"]');
-  if (processPanel) {
-    new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        panelVisible = e.isIntersecting;
-        if (panelVisible && duration > 0) start();
-        else stop();
-      });
-    }, { threshold: 0.3 }).observe(processPanel);
-  }
-
-  video.muted = true;
-  if (video.readyState >= 1) {
-    init();
-  } else {
-    video.addEventListener('loadedmetadata', init, { once: true });
-    video.addEventListener('error', showFallback, { once: true });
-  }
-})();
 </script>
 </body>
 </html>
