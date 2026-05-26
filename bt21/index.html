@@ -857,18 +857,18 @@ header {
     <div class="caption">Power Bank</div>
   </div>
 
-  <!-- 04e · PRODUCT BANNER 4 — right-aligned on desktop (Treker) with inset gif -->
-  <div class="panel--banner align-right has-inset" data-label="Product / CMF" data-section="s-product-banner-4">
-    <div class="banner-stack">
-      <img class="banner-inset" src="../images/Treker_gif.gif" alt="Treker animation">
-      <img class="banner-main" src="../images/Treker_3c.jpg" alt="Treker">
-    </div>
+  <!-- 04e · PRODUCT BANNER 4 — left-aligned on desktop (Treker) -->
+  <div class="panel--banner align-left" data-label="Product / CMF" data-section="s-product-banner-4">
+    <img src="../images/Treker_3c.jpg" alt="Treker">
     <div class="caption">Treker</div>
   </div>
 
-  <!-- 04f · PRODUCT BANNER 5 — right-aligned on desktop (Treker) -->
-  <div class="panel--banner align-right" data-label="Product / CMF" data-section="s-product-banner-5">
-    <img src="../images/Treker_1c.jpg" alt="Treker">
+  <!-- 04f · PRODUCT BANNER 5 — right-aligned on desktop (Treker) with inset video -->
+  <div class="panel--banner align-right has-inset" data-label="Product / CMF" data-section="s-product-banner-5">
+    <div class="banner-stack">
+      <video class="banner-inset" src="../images/Treker_gif.gif" autoplay muted loop playsinline preload="metadata"></video>
+      <img class="banner-main" src="../images/Treker_1c.jpg" alt="Treker">
+    </div>
     <div class="caption">Treker</div>
   </div>
 
@@ -882,7 +882,9 @@ header {
   <div class="panel panel--split" data-label="Behind the Scenes" data-section="s-bts">
     <div class="split">
       <div class="split-visual split-visual--bordered">
-        <video src="../images/bt21_wip.mp4" autoplay muted loop playsinline preload="metadata"></video>
+        <video autoplay muted loop playsinline preload="auto">
+          <source src="../images/bt21_wip.mp4" type="video/mp4">
+        </video>
       </div>
       <div class="split-text">
         <div class="sec-label r">Behind the Scenes</div>
