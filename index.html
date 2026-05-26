@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hye Min Eom</title>
+<title>Hye Min Eom — Designer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,200;0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,200;1,9..40,300;1,9..40,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
@@ -21,8 +21,6 @@
 }
 
 html, body {
-  height: 100%;
-  overflow: auto;
   font-family: var(--font);
   font-size: 15px;
   -webkit-font-smoothing: antialiased;
@@ -38,15 +36,7 @@ header {
   height: 52px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
   padding: 0 40px;
-  transition: background 0.5s ease, border-color 0.5s ease;
-}
-header.on-dark {
-  background: transparent;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
-}
-header.on-light {
   background: var(--bg);
   border-bottom: 1px solid var(--border);
 }
@@ -54,103 +44,17 @@ header.on-light {
   font-size: 13px;
   font-weight: 500;
   letter-spacing: 0.02em;
-  transition: color 0.5s ease;
-}
-header.on-dark .hdr-name  { color: rgba(242,242,240,0.82); }
-header.on-light .hdr-name { color: var(--black); }
-.hdr-right { display: flex; align-items: center; gap: 28px; }
-.hdr-right a {
-  font-size: 11px;
-  font-family: var(--mono);
-  text-decoration: none;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  transition: color 0.2s;
-}
-header.on-dark  .hdr-right a       { color: rgba(242,242,240,0.38); }
-header.on-dark  .hdr-right a:hover { color: rgba(242,242,240,0.88); }
-header.on-light .hdr-right a       { color: var(--mid); }
-header.on-light .hdr-right a:hover { color: var(--black); }
-
-/* ── S1: video hero ── */
-.snap-full {
-  height: 100vh;
-  width: 100%;
-  position: relative;
-  overflow: hidden;
+  color: var(--black);
 }
 
-/* ── S2: content ── */
-.snap-free {
-  width: 100%;
-  position: relative;
-}
-
-/* ────────────────────────────────────
-   S1 — VIDEO HERO
-──────────────────────────────────── */
-.s-hero { background: #111; }
-
-.hero-video {
-  position: absolute;
-  inset: 0;
-  width: 100%; height: 100%;
-  object-fit: cover;
-}
-.hero-fade {
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 160px;
-  background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.35));
-  pointer-events: none;
-  z-index: 1;
-}
-.scroll-cue {
-  position: absolute;
-  bottom: 30px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  opacity: 0;
-  animation: fadeIn 1s ease 1.5s forwards;
-}
-.scroll-cue-line {
-  width: 1px;
-  height: 40px;
-  background: rgba(255,255,255,0.15);
-  overflow: hidden;
-  position: relative;
-}
-.scroll-cue-line::after {
-  content: '';
-  position: absolute;
-  top: -100%; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(255,255,255,0.7);
-  animation: lineDown 1.8s ease-in-out 1.7s infinite;
-}
-.scroll-cue-label {
-  font-size: 9px;
-  font-family: var(--mono);
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.28);
-}
-
-/* ────────────────────────────────────
-   S2 — CONTENT (intro + grid)
-──────────────────────────────────── */
+/* ── MAIN CONTENT ── */
 .s-content {
-  background: var(--bg);
   padding-top: 52px; /* clears fixed header */
 }
 
+/* ── INTRO ── */
 .s-intro {
-  padding: 80px 40px 72px;
+  padding: 120px 40px 96px;
 }
 .intro-eyebrow {
   font-size: 10px;
@@ -158,15 +62,15 @@ header.on-light .hdr-right a:hover { color: var(--black); }
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--mid);
-  margin-bottom: 24px;
+  margin-bottom: 28px;
 }
 .intro-headline {
-  font-size: clamp(36px, 5vw, 68px);
+  font-size: clamp(40px, 6vw, 80px);
   font-weight: 200;
-  line-height: 1.06;
+  line-height: 1.04;
   letter-spacing: -0.025em;
-  max-width: 860px;
-  margin-bottom: 48px;
+  max-width: 980px;
+  margin-bottom: 56px;
 }
 .intro-headline em { font-style: italic; font-weight: 200; }
 .intro-sub {
@@ -179,7 +83,7 @@ header.on-light .hdr-right a:hover { color: var(--black); }
   font-size: 14px;
   line-height: 1.78;
   color: #555;
-  max-width: 400px;
+  max-width: 420px;
 }
 .intro-meta { display: flex; flex-direction: column; gap: 10px; padding-top: 2px; }
 .intro-meta-row { display: flex; align-items: baseline; gap: 16px; }
@@ -194,8 +98,6 @@ header.on-light .hdr-right a:hover { color: var(--black); }
 }
 .intro-meta-val { font-size: 13px; color: var(--black); }
 
-
-
 /* ── DIVIDER ── */
 .divider {
   height: 1px;
@@ -203,10 +105,7 @@ header.on-light .hdr-right a:hover { color: var(--black); }
   margin: 0 40px;
 }
 
-/* ────────────────────────────────────
-   WORK GRID
-──────────────────────────────────── */
-
+/* ── WORK GRID ── */
 .work-header {
   padding: 40px 40px 20px;
   display: flex;
@@ -401,159 +300,129 @@ footer {
   transition: color 0.2s;
 }
 .footer-right a:hover { color: var(--black); }
-
-/* ── ANIMATIONS ── */
-@keyframes fadeIn  { to { opacity: 1; } }
-@keyframes lineDown {
-  0%   { top: -100%; }
-  100% { top: 100%; }
-}
 </style>
 </head>
 <body>
 
-<!-- FIXED HEADER -->https://github.com/hmineom/hayan-case-study/blob/main/index.html
-<header id="hdr" class="on-dark">
+<!-- FIXED HEADER -->
+<header>
   <span class="hdr-name">Hye Min Eom</span>
-  <div class="hdr-right"></div>
 </header>
 
-<!-- S1: VIDEO HERO -->
-  <section class="snap-full s-hero" id="sHero">
-    <video class="hero-video" autoplay loop muted playsinline>
-       <source src="../videos/Homepage.mp4" type="video/mp4">
-    </video>
-    <div class="hero-fade"></div>
-    <div class="scroll-cue">
-      <div class="scroll-cue-line"></div>
-      <span class="scroll-cue-label">Scroll</span>
-    </div>
-  </section>
+<!-- MAIN CONTENT -->
+<section class="s-content">
 
-  <!-- S2: ALL CONTENT — free scroll after video snap -->
-  <section class="snap-free s-content" id="sContent">
-
-    <!-- INTRO -->
-    <div class="s-intro" id="sIntro">
-      <div class="intro-eyebrow">Senior Industrial Designer &nbsp;·&nbsp; New York City</div>
-      <h1 class="intro-headline">
-        Designing objects<br>that earn their <em>place.</em>
-      </h1>
-      <div class="intro-sub">
-        <p class="intro-bio">
-          Senior Industrial Designer working across product design, CMF, and brand strategy. I originated brands and developed products from brief to production, always with one eye on the object and one on the business.
-        </p>
-        <div class="intro-meta">
-          <div class="intro-meta-row">
-            <span class="intro-meta-key">Based</span>
-            <span class="intro-meta-val">New York City</span>
-          </div>
-          <div class="intro-meta-row">
-            <span class="intro-meta-key">Awards</span>
-            <span class="intro-meta-val">Red Dot 2026, Red Dot 2024, CES</span>
-          </div>
+  <!-- INTRO -->
+  <div class="s-intro">
+    <div class="intro-eyebrow">Industrial Designer &nbsp;·&nbsp; New York City</div>
+    <h1 class="intro-headline">
+      Designing objects<br>that earn their <em>place.</em>
+    </h1>
+    <div class="intro-sub">
+      <p class="intro-bio">
+        Senior Industrial Designer at iOttie, working across product design, CMF, and brand strategy. I originated brands, developed products from brief to production, and built sub-brands from scratch — always with one eye on the object and one on the business.
+      </p>
+      <div class="intro-meta">
+        <div class="intro-meta-row">
+          <span class="intro-meta-key">Based</span>
+          <span class="intro-meta-val">New York City</span>
+        </div>
+        <div class="intro-meta-row">
+          <span class="intro-meta-key">Currently</span>
+          <span class="intro-meta-val">iOttie — Senior ID</span>
+        </div>
+        <div class="intro-meta-row">
+          <span class="intro-meta-key">Awards</span>
+          <span class="intro-meta-val">Red Dot 2026, iF 2025</span>
         </div>
       </div>
     </div>
+  </div>
 
-    <div class="divider"></div>
+  <div class="divider"></div>
 
-    <!-- WORK GRID -->
-    <div class="work-header">
-      <span class="work-label">Selected Work</span>
-      <span class="work-count">06 Projects</span>
-    </div>
+  <!-- WORK GRID -->
+  <div class="work-header">
+    <span class="work-label">Selected Work</span>
+    <span class="work-count">06 Projects</span>
+  </div>
 
-    <div class="grid">
+  <div class="grid">
 
-      <!-- 01 — HAYAN -->
-      <a class="card" href="velox-5k/index.html">
-        <div class="card-img-ph">cover image</div>
-        <!-- <img class="card-img" src="velox-5k/images/cover.jpg"> -->
-        <div class="card-arrow"><svg viewBox="0 0 14 14" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12L12 2M12 2H5M12 2v7"/></svg></div>
-        <div class="card-body">
-          <div class="card-meta"><div class="card-tags"><span class="card-tag">ID</span><span class="card-tag">CMF</span></div><span class="card-year">2024</span></div>
-          <div class="card-title">HAYAN/div>
-          <div class="card-desc">Sustainable lifestyle brand — Co-founder & Design Director</div>
-          <div class="award-pip"><div class="pip-dot"></div><span class="pip-text">Red Dot Design Award 2026</span></div>
-        </div>
-      </a>
-
-      <!-- 02 — BT21 -->
-      <a class="card" href="hayan/index.html">
-        <div class="card-img-ph">cover image</div>
-        <!-- <img class="card-img" src="hayan/images/cover.jpg"> -->
-        <div class="card-arrow"><svg viewBox="0 0 14 14" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12L12 2M12 2H5M12 2v7"/></svg></div>
-        <div class="card-body">
-          <div class="card-meta"><div class="card-tags"><span class="card-tag">Brand</span><span class="card-tag">ID</span></div><span class="card-year">2021</span></div>
-          <div class="card-title">BT21 Line Friends</div>
-          <div class="card-desc">Sustainable lifestyle brand — Co-founder & Design Director</div>
-        </div>
-      </a>
-
-      <!-- 03 -->
-      <a class="card" href="#">
-        <div class="card-img-ph">cover image</div>
-        <div class="card-arrow"><svg viewBox="0 0 14 14" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12L12 2M12 2H5M12 2v7"/></svg></div>
-        <div class="card-body">
-          <div class="card-meta"><div class="card-tags"><span class="card-tag">TBD</span></div><span class="card-year">—</span></div>
-          <div class="card-title">Project 03</div><div class="card-desc">Coming soon</div>
-        </div>
-      </a>
-
-      <!-- 04 -->
-      <a class="card" href="#">
-        <div class="card-img-ph">cover image</div>
-        <div class="card-arrow"><svg viewBox="0 0 14 14" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12L12 2M12 2H5M12 2v7"/></svg></div>
-        <div class="card-body">
-          <div class="card-meta"><div class="card-tags"><span class="card-tag">TBD</span></div><span class="card-year">—</span></div>
-          <div class="card-title">Project 04</div><div class="card-desc">Coming soon</div>
-        </div>
-      </a>
-
-      <!-- 05 -->
-      <a class="card" href="#">
-        <div class="card-img-ph">cover image</div>
-        <div class="card-arrow"><svg viewBox="0 0 14 14" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12L12 2M12 2H5M12 2v7"/></svg></div>
-        <div class="card-body">
-          <div class="card-meta"><div class="card-tags"><span class="card-tag">TBD</span></div><span class="card-year">—</span></div>
-          <div class="card-title">Project 05</div><div class="card-desc">Coming soon</div>
-        </div>
-      </a>
-
-      <!-- 06 -->
-      <a class="card" href="#">
-        <div class="card-img-ph">cover image</div>
-        <div class="card-arrow"><svg viewBox="0 0 14 14" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12L12 2M12 2H5M12 2v7"/></svg></div>
-        <div class="card-body">
-          <div class="card-meta"><div class="card-tags"><span class="card-tag">TBD</span></div><span class="card-year">—</span></div>
-          <div class="card-title">Project 06</div><div class="card-desc">Coming soon</div>
-        </div>
-      </a>
-
-    </div>
-
-    <footer>
-      <span class="footer-left">© 2025 Hye Min Eom</span>
-      <div class="footer-right">
-        <a href="mailto:hyemin@example.com">Email</a>
-        <a href="#">LinkedIn</a>
+    <!-- 01 — VELOX 5K -->
+    <a class="card" href="velox-5k/index.html">
+      <div class="card-img-ph">cover image</div>
+      <div class="card-arrow"><svg viewBox="0 0 14 14" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12L12 2M12 2H5M12 2v7"/></svg></div>
+      <div class="card-body">
+        <div class="card-meta"><div class="card-tags"><span class="card-tag">ID</span><span class="card-tag">CMF</span></div><span class="card-year">2024</span></div>
+        <div class="card-title">Velox 5K Power Bank</div>
+        <div class="card-desc">iOttie — Consumer Electronics</div>
+        <div class="award-pip"><div class="pip-dot"></div><span class="pip-text">Red Dot Design Award 2026</span></div>
       </div>
-    </footer>
+    </a>
 
-  </section><!-- end s-content -->
+    <!-- 02 — HAYAN -->
+    <a class="card" href="hayan/index.html">
+      <div class="card-img-ph">cover image</div>
+      <div class="card-arrow"><svg viewBox="0 0 14 14" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12L12 2M12 2H5M12 2v7"/></svg></div>
+      <div class="card-body">
+        <div class="card-meta"><div class="card-tags"><span class="card-tag">Brand</span><span class="card-tag">ID</span></div><span class="card-year">2021</span></div>
+        <div class="card-title">HAYAN</div>
+        <div class="card-desc">Sustainable lifestyle brand — Co-founder & Design Director</div>
+      </div>
+    </a>
 
-<script>
-  const hdr     = document.getElementById('hdr');
-  const sHero   = document.getElementById('sHero');
+    <!-- 03 -->
+    <a class="card" href="#">
+      <div class="card-img-ph">cover image</div>
+      <div class="card-arrow"><svg viewBox="0 0 14 14" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12L12 2M12 2H5M12 2v7"/></svg></div>
+      <div class="card-body">
+        <div class="card-meta"><div class="card-tags"><span class="card-tag">TBD</span></div><span class="card-year">—</span></div>
+        <div class="card-title">Project 03</div><div class="card-desc">Coming soon</div>
+      </div>
+    </a>
 
-  const io = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      hdr.className = e.isIntersecting ? 'on-dark' : 'on-light';
-    });
-  }, { threshold: 0.3 });
+    <!-- 04 -->
+    <a class="card" href="#">
+      <div class="card-img-ph">cover image</div>
+      <div class="card-arrow"><svg viewBox="0 0 14 14" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12L12 2M12 2H5M12 2v7"/></svg></div>
+      <div class="card-body">
+        <div class="card-meta"><div class="card-tags"><span class="card-tag">TBD</span></div><span class="card-year">—</span></div>
+        <div class="card-title">Project 04</div><div class="card-desc">Coming soon</div>
+      </div>
+    </a>
 
-  io.observe(sHero);
-</script>
+    <!-- 05 -->
+    <a class="card" href="#">
+      <div class="card-img-ph">cover image</div>
+      <div class="card-arrow"><svg viewBox="0 0 14 14" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12L12 2M12 2H5M12 2v7"/></svg></div>
+      <div class="card-body">
+        <div class="card-meta"><div class="card-tags"><span class="card-tag">TBD</span></div><span class="card-year">—</span></div>
+        <div class="card-title">Project 05</div><div class="card-desc">Coming soon</div>
+      </div>
+    </a>
+
+    <!-- 06 -->
+    <a class="card" href="#">
+      <div class="card-img-ph">cover image</div>
+      <div class="card-arrow"><svg viewBox="0 0 14 14" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12L12 2M12 2H5M12 2v7"/></svg></div>
+      <div class="card-body">
+        <div class="card-meta"><div class="card-tags"><span class="card-tag">TBD</span></div><span class="card-year">—</span></div>
+        <div class="card-title">Project 06</div><div class="card-desc">Coming soon</div>
+      </div>
+    </a>
+
+  </div>
+
+  <footer>
+    <span class="footer-left">© 2025 Hye Min Eom</span>
+    <div class="footer-right">
+      <a href="mailto:hyemin@example.com">Email</a>
+      <a href="#">LinkedIn</a>
+    </div>
+  </footer>
+
+</section>
+
 </body>
 </html>
