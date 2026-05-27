@@ -321,11 +321,6 @@ header {
   max-width: 520px;
 }
 
-/* ── MEDIA PAIR ──
-
-
-
-
 /* ── PANEL VARIANTS ── */
 .panel--dark { background: var(--black); color: var(--bg); }
 .panel--dark .sec-label { color: var(--bg); }
@@ -481,12 +476,6 @@ header {
     border-bottom: 1px solid var(--border);
   }
 }
-/* ── SHARED TYPE SCALE for outcome + press ──
-   Level 1: .sec-label      — 10px mono, uppercase, 0.14em, opacity 0.38  (already global)
-   Level 2: .stat-num / .press-name — large display figure / publication name
-   Level 3: .stat-label / .press-desc — 11px mono, lowercase, 0.06em, opacity 0.45
-   Level 4: .press-link     — 10px mono, lowercase, 0.06em, opacity 0.45 + underline on hover
-── */
 .stat-num {
   font-size: clamp(40px, 5.5vw, 72px);
   font-weight: 300;
@@ -699,23 +688,177 @@ header {
 .r.d3 { transition-delay: 0.24s; }
 .r.d4 { transition-delay: 0.32s; }
 
-/* ── FOOTER PANEL ── */
+/* ============================================================
+   FOOTER PANEL — project list + copyright strip
+   ============================================================ */
 .panel--footer {
   height: calc(100dvh - var(--hdr));
   scroll-snap-align: start;
   scroll-snap-stop: always;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 72px;
+  display: flex; flex-direction: column;
+  border-top: 1px solid var(--border);
   padding-bottom: var(--safe-bottom);
+  background: var(--bg);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.footer-tiles-wrap {
+  flex: 1;
+  display: flex; flex-direction: column;
+  padding: 52px 72px 28px;
+  overflow: hidden;
+  min-height: 0;
+}
+.footer-tiles-head {
+  display: flex; justify-content: space-between; align-items: baseline;
+  margin-bottom: 28px;
+  flex-shrink: 0;
+}
+.footer-tiles-label {
+  font-size: 10px; font-family: var(--mono);
+  letter-spacing: 0.14em; text-transform: uppercase;
+  opacity: 0.38;
+}
+.footer-tiles-aside {
+  font-size: 10px; font-family: var(--mono);
+  letter-spacing: 0.08em;
+  opacity: 0.32;
+}
+.footer-tiles {
+  flex: 1; min-height: 0;
+  display: flex; flex-direction: column;
   border-top: 1px solid var(--border);
 }
-.footer-copy {
-  font-family: var(--mono);
-  font-size: 11px;
-  opacity: 0.35;
+.proj-row {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 2fr) minmax(0, 1.5fr) minmax(0, 1fr) 56px;
+  align-items: center;
+  gap: 24px;
+  padding: 22px 4px;
+  border-bottom: 1px solid var(--border);
+  text-decoration: none;
+  color: var(--black);
+  transition: background 0.2s ease, padding 0.25s ease;
+  position: relative;
+}
+.proj-row:hover {
+  background: rgba(0,0,0,0.025);
+  padding-left: 14px;
+  padding-right: 14px;
+}
+.proj-row:hover .proj-arrow { opacity: 1; transform: translate(3px, -3px); }
+.proj-num {
+  font-family: var(--mono); font-size: 10px;
   letter-spacing: 0.08em;
+  color: var(--mid);
+}
+.proj-title-cell { min-width: 0; }
+.proj-title {
+  font-size: 17px;
+  font-weight: 300;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.proj-desc {
+  font-size: 11px;
+  color: var(--mid);
+  line-height: 1.4;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.proj-role {
+  font-family: var(--mono); font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--mid);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.proj-meta {
+  display: flex; flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+.proj-year {
+  font-family: var(--mono); font-size: 11px;
+  color: var(--black);
+  opacity: 0.7;
+}
+.proj-award {
+  display: inline-flex; align-items: center; gap: 6px;
+}
+.proj-award-dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: #e8312a;
+  flex-shrink: 0;
+}
+.proj-award-text {
+  font-family: var(--mono); font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--mid);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.proj-arrow {
+  font-family: var(--mono); font-size: 14px;
+  color: var(--black);
+  opacity: 0.3;
+  justify-self: end;
+  transition: opacity 0.22s, transform 0.22s;
+  line-height: 1;
+}
+.proj-row.is-current {
+  pointer-events: none;
+  background: rgba(0,0,0,0.025);
+}
+.proj-row.is-current .proj-title { opacity: 0.6; }
+.proj-row.is-current .proj-desc,
+.proj-row.is-current .proj-role,
+.proj-row.is-current .proj-year { opacity: 0.4; }
+.proj-row.is-current .proj-arrow {
+  font-family: var(--mono); font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border: 1px solid var(--border);
+  padding: 4px 8px;
+  opacity: 0.7;
+  background: var(--bg);
+  line-height: 1.2;
+}
+.proj-row.is-placeholder {
+  pointer-events: none;
+}
+.proj-row.is-placeholder .proj-title,
+.proj-row.is-placeholder .proj-desc,
+.proj-row.is-placeholder .proj-role,
+.proj-row.is-placeholder .proj-year,
+.proj-row.is-placeholder .proj-arrow {
+  opacity: 0.35;
+}
+.footer-strip {
+  display: flex; align-items: center;
+  justify-content: space-between;
+  padding: 18px 72px;
+  border-top: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.footer-copy {
+  font-family: var(--mono); font-size: 11px;
+  opacity: 0.35; letter-spacing: 0.08em;
+}
+
+@media (max-width: 1200px) {
+  .footer-tiles-wrap { padding: 44px 48px 24px; }
+  .footer-strip { padding: 16px 48px; }
 }
 
 /* ════════════════════════════
@@ -755,7 +898,17 @@ header {
 
   .stats-row { grid-template-columns: 1fr; }
   .retail-grid { grid-template-columns: repeat(3, 1fr); }
-  .panel--footer { padding: 0 28px; flex-direction: column; justify-content: center; gap: 12px; }
+
+  /* Footer */
+  .footer-tiles-wrap { padding: 32px 28px 20px; }
+  .proj-row {
+    grid-template-columns: 28px minmax(0, 1.6fr) minmax(0, 1fr) auto 24px;
+    gap: 18px;
+    padding: 18px 4px;
+  }
+  .proj-role { display: none; }
+  .panel--footer { height: auto; min-height: calc(100dvh - var(--hdr)); }
+  .footer-strip { padding: 14px 28px; }
 }
 
 /* ════════════════════════════
@@ -809,8 +962,7 @@ header {
   .snap-container { left: 0; }
 
   /* ── PANELS — use dvh so address bar changes don't break snapping ── */
-  .panel,
-  .panel--footer {
+  .panel {
     height: calc(100dvh - var(--hdr));
   }
 
@@ -958,14 +1110,30 @@ header {
   .tag { font-size: 10px; padding: 3px 8px; }
 
   /* ── FOOTER ── */
-  .panel--footer {
-    padding: 0 20px;
-    padding-bottom: var(--safe-bottom);
+  .footer-tiles-wrap { padding: 24px 20px 16px; }
+  .footer-tiles-head { margin-bottom: 18px; }
+  .proj-row {
+    grid-template-columns: 24px minmax(0, 1fr) auto 18px;
+    gap: 12px;
+    padding: 14px 2px;
+  }
+  .proj-role { display: none; }
+  .proj-meta { align-items: flex-end; }
+  .proj-title { font-size: 14px; }
+  .proj-desc { font-size: 10px; }
+  .proj-year { font-size: 10px; }
+  .proj-award-text { font-size: 8px; }
+  .proj-arrow { font-size: 13px; }
+  .proj-row.is-current .proj-arrow { font-size: 8px; padding: 3px 6px; }
+  .proj-row:hover { padding-left: 8px; padding-right: 8px; }
+  .footer-strip {
+    padding: 12px 20px;
     flex-direction: column;
     justify-content: center;
-    gap: 10px;
+    gap: 6px;
     text-align: center;
   }
+  .footer-copy { font-size: 9px; }
 
   /* ── PRESS LINKS — better tap targets on mobile ── */
   .press-link {
@@ -1004,6 +1172,11 @@ header {
   /* Shrink fixed-height visual on landscape */
   .split { grid-template-rows: 40% 60%; }
   .outcome-right { height: 40vw; }
+
+  /* Footer */
+  .panel--footer { overflow-y: auto; }
+  .footer-tiles-wrap { padding: 20px; }
+  .footer-strip { padding: 12px 20px; }
 }
 </style>
 </head>
@@ -1294,11 +1467,114 @@ header {
     </div>
   </div>
 
-  <!-- FOOTER -->
+  <!-- 09 · FOOTER — Project list + copyright strip -->
   <div class="panel--footer" data-label="End">
-    <div class="footer-copy">© 2025 Hye Min Eom</div>
-    <div class="footer-copy">HAYAN — 2021</div>
-    <div class="footer-copy">All rights reserved</div>
+    <div class="footer-tiles-wrap">
+      <div class="footer-tiles-head">
+        <div class="footer-tiles-label">More work</div>
+        <div class="footer-tiles-aside">06 projects</div>
+      </div>
+      <div class="footer-tiles">
+
+        <!-- 01 · VELOX 5K -->
+        <a class="proj-row" href="../velox-5k/index.html">
+          <div class="proj-num">01</div>
+          <div class="proj-title-cell">
+            <div class="proj-title">Velox 5K Power Bank</div>
+            <div class="proj-desc">Consumer Electronics</div>
+          </div>
+          <div class="proj-role">Senior Industrial Designer</div>
+          <div class="proj-meta">
+            <div class="proj-year">2025</div>
+            <div class="proj-award">
+              <div class="proj-award-dot"></div>
+              <span class="proj-award-text">Red Dot 2026</span>
+            </div>
+          </div>
+          <div class="proj-arrow">↗</div>
+        </a>
+
+        <!-- 02 · HAYAN (current) -->
+        <a class="proj-row is-current" href="#" aria-current="page">
+          <div class="proj-num">02</div>
+          <div class="proj-title-cell">
+            <div class="proj-title">HAYAN</div>
+            <div class="proj-desc">Sustainable Lifestyle Brand</div>
+          </div>
+          <div class="proj-role">Co-Founder &amp; Design Director</div>
+          <div class="proj-meta">
+            <div class="proj-year">2021</div>
+          </div>
+          <div class="proj-arrow">You are here</div>
+        </a>
+
+        <!-- 03 · BT21 -->
+        <a class="proj-row" href="../bt21/index.html">
+          <div class="proj-num">03</div>
+          <div class="proj-title-cell">
+            <div class="proj-title">BT21 Line Friends</div>
+            <div class="proj-desc">Licensed IP Collaboration</div>
+          </div>
+          <div class="proj-role">Lead Designer</div>
+          <div class="proj-meta">
+            <div class="proj-year">2025</div>
+          </div>
+          <div class="proj-arrow">↗</div>
+        </a>
+
+        <!-- 04 · VELOX PRO -->
+        <a class="proj-row" href="../velox-pro/index.html">
+          <div class="proj-num">04</div>
+          <div class="proj-title-cell">
+            <div class="proj-title">Qi2.2 Wireless Charger for Dashboard &amp; Windshield</div>
+            <div class="proj-desc">Consumer Electronics</div>
+          </div>
+          <div class="proj-role">Senior Industrial Designer</div>
+          <div class="proj-meta">
+            <div class="proj-year">2025</div>
+            <div class="proj-award">
+              <div class="proj-award-dot"></div>
+              <span class="proj-award-text">Made for Google 2025</span>
+            </div>
+          </div>
+          <div class="proj-arrow">↗</div>
+        </a>
+
+        <!-- 05 · TBD -->
+        <a class="proj-row is-placeholder" href="#">
+          <div class="proj-num">05</div>
+          <div class="proj-title-cell">
+            <div class="proj-title">Project 05</div>
+            <div class="proj-desc">Coming soon</div>
+          </div>
+          <div class="proj-role">TBD</div>
+          <div class="proj-meta">
+            <div class="proj-year">—</div>
+          </div>
+          <div class="proj-arrow">↗</div>
+        </a>
+
+        <!-- 06 · TBD -->
+        <a class="proj-row is-placeholder" href="#">
+          <div class="proj-num">06</div>
+          <div class="proj-title-cell">
+            <div class="proj-title">Project 06</div>
+            <div class="proj-desc">Coming soon</div>
+          </div>
+          <div class="proj-role">TBD</div>
+          <div class="proj-meta">
+            <div class="proj-year">—</div>
+          </div>
+          <div class="proj-arrow">↗</div>
+        </a>
+
+      </div>
+    </div>
+    <div class="footer-strip">
+      <div class="footer-copy">© 2025 Hye Min Eom</div>
+      <div class="footer-copy">HAYAN — 2021</div>
+      <div class="footer-copy">All rights reserved</div>
+    </div>
   </div>
 
 </div><!-- end snap-container -->
